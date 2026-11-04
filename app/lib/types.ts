@@ -15,5 +15,18 @@ export interface LawItem {
   sourceUrl: string; // 인증키 없이 열리는 법제처 공개 화면 주소
 }
 
+/** 법제처에서 확인된 판례(법원) 또는 헌법재판소 결정 한 건 */
+export interface CaseItem {
+  kind: "case";
+  source: "prec" | "detc"; // prec = 법원 판례, detc = 헌법재판소 결정
+  id: string; // 법제처 일련번호
+  title: string; // 사건명
+  caseNumber: string; // 사건번호(예: 2024두31284)
+  court: string; // 법원 이름(예: 대법원, 헌법재판소)
+  decisionDate: string; // 선고일·결정일 YYYY-MM-DD
+  decisionType: string; // 판결, 결정 등
+  sourceUrl: string; // 인증키 없이 열리는 법제처 공개 화면 주소
+}
+
 /** 화면에 올릴 수 있는 확인된 자료 */
-export type VerifiedItem = LawItem;
+export type VerifiedItem = LawItem | CaseItem;

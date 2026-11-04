@@ -12,7 +12,7 @@ const LAW_PUBLIC_BASE = "https://www.law.go.kr/";
 const TIMEOUT_MS = 10_000;
 
 /** 법제처에서 조회할 수 있는 자료 종류 */
-export type LawTarget = "law" | "prec" | "expc" | "decc" | "ordin";
+export type LawTarget = "law" | "prec" | "detc" | "expc" | "decc" | "ordin";
 
 interface TargetInfo {
   label: string; // 화면에 쓸 이름
@@ -40,6 +40,14 @@ const TARGETS: Record<LawTarget, TargetInfo> = {
     serialField: "판례일련번호",
     publicPath: "precInfoP.do",
     publicParam: "precSeq",
+  },
+  detc: {
+    label: "헌법재판소 결정",
+    rootKey: "DetcSearch",
+    listKey: "Detc",
+    serialField: "헌재결정례일련번호",
+    publicPath: "detcInfoP.do",
+    publicParam: "detcSeq",
   },
   expc: {
     label: "법령해석례",
