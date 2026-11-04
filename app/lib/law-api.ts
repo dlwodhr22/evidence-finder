@@ -115,7 +115,10 @@ function fail(code: LawApiErrorCode, lawApiMessage?: string): { ok: false; error
   };
 }
 
-function isRecord(value: unknown): value is Record<string, unknown> {
+/** 다른 도구(laws.ts 등)에서 같은 모양의 실패를 만들 때 쓴다 */
+export const lawApiFailure = fail;
+
+export function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
@@ -204,10 +207,21 @@ export async function callLawApi(
 export async function searchLaw(
   target: LawTarget,
   query: string,
-  { page = 1, display = 20 }: { page?: number; display?: number } = {},
+  {
+    page = 1,
+    display = 20,
+    search,
+  }: { page?: number; display?: number; search?: number } = {},
 ): Promise<LawApiResult<LawSearchPage>> {
   const info = TARGETS[target];
-  const result = await callLawApi("lawSearch.do", { target, query, page, display });
+  // search: 법제처 검색 방식(1 = 이름, 2 = 본문). 없으면 법제처 기본값(이름)을 쓴다.
+  const result = await callLawApi("lawSearch.do", {
+    target,
+    query,
+    page,
+    display,
+    ...(search !== undefined ? { search } : {}),
+  });
   if (!result.ok) return result;
 
   const root = isRecord(result.data) ? result.data[info.rootKey] : undefined;
