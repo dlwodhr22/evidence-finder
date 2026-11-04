@@ -14,6 +14,7 @@ import { z } from "zod";
 // 기본 모델. .env에 OPENAI_MODEL을 넣으면 그 모델을 쓴다.
 const DEFAULT_MODEL = "gpt-5.5";
 const TIMEOUT_MS = 60_000;
+const WEB_SEARCH_TIMEOUT_MS = 90_000; // 웹검색은 여러 페이지를 열어 보느라 더 오래 걸린다
 
 /** 오류 종류 */
 export type AiErrorCode =
@@ -107,6 +108,100 @@ export async function askAiJson<T>(req: AskJsonRequest<T>): Promise<AiResult<T>>
     return { ok: true, data: checked.data };
   } catch (err) {
     // 오류 내용은 그대로 내보내지 않는다(요청 정보가 섞일 수 있음).
+    if (err instanceof OpenAI.APIConnectionTimeoutError) return fail("TIMEOUT");
+    if (err instanceof OpenAI.APIError) return fail("API_ERROR");
+    return fail("BAD_OUTPUT");
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// 웹검색을 함께 쓰는 요청 (PLAN 작업 11)
+// ─────────────────────────────────────────────────────────────
+
+/** AI가 웹검색으로 실제로 열어 본 페이지 */
+export interface WebSource {
+  url: string;
+  title?: string; // 인용 표시(url_citation)에 제목이 있을 때만
+}
+
+/** 웹검색 응답에서 실제로 검색·인용된 페이지 주소를 모은다(AI가 쓴 글이 아니라 검색 기록에서) */
+export function collectWebSources(output: unknown[]): WebSource[] {
+  const byUrl = new Map<string, WebSource>();
+  const add = (url: unknown, title?: unknown) => {
+    if (typeof url !== "string" || !/^https?:\/\//i.test(url)) return;
+    const prev = byUrl.get(url);
+    const t = typeof title === "string" && title.trim() ? title.trim() : prev?.title;
+    byUrl.set(url, t ? { url, title: t } : { url });
+  };
+  for (const item of output) {
+    if (typeof item !== "object" || item === null) continue;
+    const it = item as Record<string, unknown>;
+    // 1) 웹검색 기록: action.sources[].url
+    if (it.type === "web_search_call" && typeof it.action === "object" && it.action !== null) {
+      const sources = (it.action as { sources?: unknown }).sources;
+      if (Array.isArray(sources)) for (const s of sources) add((s as { url?: unknown })?.url);
+    }
+    // 2) 답변 속 인용 표시: content[].annotations[] (type = url_citation)
+    if (it.type === "message" && Array.isArray(it.content)) {
+      for (const part of it.content as Record<string, unknown>[]) {
+        if (!Array.isArray(part?.annotations)) continue;
+        for (const a of part.annotations as Record<string, unknown>[]) {
+          if (a?.type === "url_citation") add(a.url, a.title);
+        }
+      }
+    }
+  }
+  return [...byUrl.values()];
+}
+
+export interface AskWithWebSearchRequest<T> extends AskJsonRequest<T> {
+  /** 검색할 사이트를 이 주소들로 한정한다(예: ["go.kr"]). 비우면 제한 없음. */
+  allowedDomains?: string[];
+}
+
+/**
+ * AI가 웹검색을 하면서 답하게 하고, 약속한 모양(JSON)의 답과 실제로 검색된 페이지 목록을 함께 돌려준다.
+ * 웹 문장은 화면에 쓰지 않는다. 이 결과는 단서 찾기에만 쓴다(PRD 5번 A).
+ */
+export async function askAiJsonWithWebSearch<T>(
+  req: AskWithWebSearchRequest<T>,
+): Promise<AiResult<{ answer: T; sources: WebSource[] }>> {
+  if (typeof window !== "undefined") throw new Error("ai는 서버에서만 사용할 수 있습니다.");
+
+  const apiKey = process.env.OPENAI_API_KEY?.trim();
+  if (!apiKey) return fail("MISSING_KEY");
+  const model = process.env.OPENAI_MODEL?.trim() || DEFAULT_MODEL;
+
+  try {
+    const response = await getClient(apiKey).responses.parse({
+      model,
+      instructions: `${BASE_RULES}\n\n${req.instructions}`,
+      input: req.input,
+      tools: [
+        {
+          type: "web_search",
+          search_context_size: "medium",
+          user_location: { type: "approximate", country: "KR", timezone: "Asia/Seoul" },
+          ...(req.allowedDomains?.length ? { filters: { allowed_domains: req.allowedDomains } } : {}),
+        },
+      ],
+      include: ["web_search_call.action.sources"],
+      text: { format: zodTextFormat(req.schema, req.schemaName) },
+      store: false,
+    }, { timeout: WEB_SEARCH_TIMEOUT_MS });
+
+    for (const item of response.output) {
+      if (item.type === "message") {
+        for (const part of item.content) {
+          if (part.type === "refusal") return fail("REFUSAL");
+        }
+      }
+    }
+
+    const checked = req.schema.safeParse(response.output_parsed);
+    if (!checked.success) return fail("BAD_OUTPUT");
+    return { ok: true, data: { answer: checked.data, sources: collectWebSources(response.output) } };
+  } catch (err) {
     if (err instanceof OpenAI.APIConnectionTimeoutError) return fail("TIMEOUT");
     if (err instanceof OpenAI.APIError) return fail("API_ERROR");
     return fail("BAD_OUTPUT");
