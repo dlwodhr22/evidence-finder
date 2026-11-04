@@ -24,6 +24,7 @@ export interface CaseSearchOptions {
   mode?: CaseSearchMode;
   page?: number;
   display?: number;
+  newestFirst?: boolean; // true면 선고일 최신순
 }
 
 export interface CaseItemPage {
@@ -186,7 +187,7 @@ export function toConstitutionalItem(raw: LawRawItem): CaseItem | null {
 async function searchAndMap(
   source: CaseSource,
   query: string,
-  { mode = "name", page = 1, display = 10 }: CaseSearchOptions,
+  { mode = "name", page = 1, display = 10, newestFirst = false }: CaseSearchOptions,
 ): Promise<LawApiResult<CaseItemPage>> {
   const trimmed = query.trim();
   if (!trimmed) return { ok: true, data: { totalCount: 0, items: [] } };
@@ -195,6 +196,7 @@ async function searchAndMap(
     page,
     display,
     ...(mode === "fulltext" ? { search: 2 } : {}),
+    ...(newestFirst ? { sort: "ddes" as const } : {}),
   });
   if (!result.ok) return result;
 

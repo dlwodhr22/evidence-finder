@@ -95,6 +95,9 @@ export type LawApiResult<T> =
   | { ok: true; data: T }
   | { ok: false; error: LawApiError };
 
+/** 검색 정렬 방식. ddes = 날짜 최신순(2026-11-04에 판례·해석례·행정심판례에서 동작 확인) */
+export type LawSort = "ddes";
+
 /** 검색 결과 한 쪽(page) */
 export interface LawSearchPage {
   target: LawTarget;
@@ -219,16 +222,19 @@ export async function searchLaw(
     page = 1,
     display = 20,
     search,
-  }: { page?: number; display?: number; search?: number } = {},
+    sort,
+  }: { page?: number; display?: number; search?: number; sort?: LawSort } = {},
 ): Promise<LawApiResult<LawSearchPage>> {
   const info = TARGETS[target];
   // search: 법제처 검색 방식(1 = 이름, 2 = 본문). 없으면 법제처 기본값(이름)을 쓴다.
+  // sort: 정렬 방식. 없으면 법제처 기본값(대체로 이름 가나다순)을 쓴다.
   const result = await callLawApi("lawSearch.do", {
     target,
     query,
     page,
     display,
     ...(search !== undefined ? { search } : {}),
+    ...(sort !== undefined ? { sort } : {}),
   });
   if (!result.ok) return result;
 

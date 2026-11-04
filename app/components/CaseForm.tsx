@@ -14,8 +14,24 @@ import {
   type CaseInputErrors,
 } from "../lib/case-input";
 import { describeFindings, maskPii, PII_NOTICE } from "../lib/pii";
+import type { SearchResponse, SearchResults } from "../lib/search";
 
 const EMPTY: CaseInput = { facts: "", issue: "", field: "", localGov: "" };
+
+// 결과 요약에 쓸 자료 종류 이름
+const RESULT_LABELS: Record<keyof SearchResults, string> = {
+  statutes: "법령",
+  ordinances: "조례·규칙",
+  cases: "판례·헌재 결정",
+  interpretations: "법령해석례",
+  tribunals: "행정심판례",
+};
+
+type SearchState =
+  | { status: "idle" }
+  | { status: "loading"; piiNotice: string }
+  | { status: "done"; piiNotice: string; data: SearchResponse }
+  | { status: "error"; message: string };
 
 // 칸별 안내 문구와 예시
 const FIELD_INFO: Record<CaseField, { placeholder: string; hint?: string; required: boolean; rows?: number }> = {
@@ -45,7 +61,7 @@ export default function CaseForm() {
   const idPrefix = useId();
   const [values, setValues] = useState<CaseInput>(EMPTY);
   const [errors, setErrors] = useState<CaseInputErrors>({});
-  const [submitted, setSubmitted] = useState<{ masked: CaseInput; notice: string } | null>(null);
+  const [search, setSearch] = useState<SearchState>({ status: "idle" });
 
   // 칸마다 지금 적힌 글에서 가려질 개인정보 안내(적는 동안 바로 보여준다)
   const liveNotices = useMemo(() => {
@@ -62,21 +78,42 @@ export default function CaseForm() {
   function update(field: CaseField, value: string) {
     setValues((prev) => ({ ...prev, [field]: value }));
     setErrors((prev) => ({ ...prev, [field]: undefined }));
-    setSubmitted(null);
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (search.status === "loading") return;
     const checked = validateCaseInput(values);
     if (!checked.ok) {
       setErrors(checked.errors);
-      setSubmitted(null);
+      setSearch({ status: "idle" });
       return;
     }
+    // 보내기 전에 화면에서 개인정보를 먼저 가린다. 가린 내용만 서버로 보낸다.
     const { masked, findings } = maskCaseInput(checked.data);
+    const piiNotice = describeFindings(findings);
     setErrors({});
-    setSubmitted({ masked, notice: describeFindings(findings) });
-    // 작업 10번에서 여기서 가린 내용(masked)을 서버의 /api/search로 보낸다.
+    setSearch({ status: "loading", piiNotice });
+
+    try {
+      const res = await fetch("/api/search", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(masked),
+      });
+      const json: unknown = await res.json();
+      if (!res.ok || typeof json !== "object" || json === null || !("data" in json)) {
+        const message =
+          typeof json === "object" && json !== null && "error" in json
+            ? String((json as { error: { message?: string } }).error.message ?? "")
+            : "";
+        setSearch({ status: "error", message: message || "근거를 찾지 못했습니다. 잠시 뒤 다시 시도해 주세요." });
+        return;
+      }
+      setSearch({ status: "done", piiNotice, data: (json as { data: SearchResponse }).data });
+    } catch {
+      setSearch({ status: "error", message: "서버에 연결하지 못했습니다. 인터넷 연결을 확인해 주세요." });
+    }
   }
 
   return (
@@ -159,31 +196,60 @@ export default function CaseForm() {
 
       <button
         type="submit"
-        className="self-start rounded-md bg-blue-700 px-5 py-2.5 font-semibold text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        disabled={search.status === "loading"}
+        aria-busy={search.status === "loading"}
+        className="self-start rounded-md bg-blue-700 px-5 py-2.5 font-semibold text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-wait disabled:bg-zinc-400"
       >
-        근거 찾기
+        {search.status === "loading" ? "근거를 찾는 중…" : "근거 찾기"}
       </button>
 
-      {submitted && (
-        <section
-          aria-live="polite"
-          className="rounded-md border border-black/10 bg-zinc-50 p-4 text-sm dark:border-white/15 dark:bg-zinc-900"
-        >
-          <h3 className="font-semibold">보낼 내용 미리보기 (개인정보를 가린 뒤)</h3>
-          {submitted.notice && <p className="mt-1 text-amber-700 dark:text-amber-300">{submitted.notice}</p>}
-          <dl className="mt-2 flex flex-col gap-2">
-            {FIELDS.filter((f) => submitted.masked[f]).map((f) => (
-              <div key={f}>
-                <dt className="text-xs text-zinc-500">{CASE_LABELS[f]}</dt>
-                <dd className="whitespace-pre-wrap">{submitted.masked[f]}</dd>
-              </div>
-            ))}
-          </dl>
-          <p className="mt-3 text-xs text-zinc-500">
-            입력 확인이 끝났습니다. 법제처에서 근거를 찾는 기능은 다음 작업(PLAN 작업 10번)에서 연결합니다.
+      <div aria-live="polite">
+        {search.status === "loading" && (
+          <p className="text-sm text-zinc-600 dark:text-zinc-400">
+            법제처에서 법령·판례·해석례·행정심판례를 찾고 있습니다. 10~30초쯤 걸릴 수 있습니다.
           </p>
-        </section>
-      )}
+        )}
+
+        {search.status === "error" && (
+          <p role="alert" className="rounded-md border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-800">
+            {search.message}
+          </p>
+        )}
+
+        {search.status === "done" && (
+          <section className="rounded-md border border-black/10 bg-zinc-50 p-4 text-sm dark:border-white/15 dark:bg-zinc-900">
+            <h3 className="font-semibold">찾은 결과 요약</h3>
+            {search.piiNotice && <p className="mt-1 text-amber-700 dark:text-amber-300">{search.piiNotice}</p>}
+            {search.data.notices.map((n) => (
+              <p key={n} className="mt-1 text-amber-700 dark:text-amber-300">
+                {n}
+              </p>
+            ))}
+
+            <p className="mt-2">
+              <span className="text-zinc-500">찾은 검색어{search.data.terms.source === "fallback" ? "(입력 내용에서)" : "(AI가 뽑음)"}: </span>
+              {[...search.data.terms.lawNames, ...search.data.terms.keywords].join(", ") || "없음"}
+            </p>
+
+            {search.data.foundNothing ? (
+              <p className="mt-2 font-medium">
+                법제처에서 확인된 자료를 찾지 못했습니다. 사안을 조금 더 구체적으로 적거나 쟁점을 바꿔 다시 찾아 보세요.
+              </p>
+            ) : (
+              <ul className="mt-2 flex flex-col gap-1">
+                {(Object.keys(RESULT_LABELS) as (keyof SearchResults)[]).map((kind) => (
+                  <li key={kind}>
+                    {RESULT_LABELS[kind]} <strong>{search.data.results[kind].length}건</strong>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <p className="mt-3 text-xs text-zinc-500">
+              모두 법제처 검색 결과에서 나온 자료입니다. 자료 목록 화면은 PLAN 작업 13번에서 만듭니다.
+            </p>
+          </section>
+        )}
+      </div>
     </form>
   );
 }

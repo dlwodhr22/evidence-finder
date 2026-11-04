@@ -29,6 +29,7 @@ export interface RulingSearchOptions {
   mode?: "name" | "fulltext"; // 안건명·사건명(또는 번호)으로 찾기 / 본문으로 찾기
   page?: number;
   display?: number;
+  newestFirst?: boolean; // true면 회신일·재결일 최신순
 }
 
 export interface RulingItemPage<T extends RulingItem> {
@@ -111,7 +112,7 @@ async function searchAndMap<T extends RulingItem>(
   source: RulingSource,
   toItem: (raw: LawRawItem) => T | null,
   query: string,
-  { mode = "name", page = 1, display = 10 }: RulingSearchOptions,
+  { mode = "name", page = 1, display = 10, newestFirst = false }: RulingSearchOptions,
 ): Promise<LawApiResult<RulingItemPage<T>>> {
   const trimmed = query.trim();
   if (!trimmed) return { ok: true, data: { totalCount: 0, items: [] } };
@@ -120,6 +121,7 @@ async function searchAndMap<T extends RulingItem>(
     page,
     display,
     ...(mode === "fulltext" ? { search: 2 } : {}),
+    ...(newestFirst ? { sort: "ddes" as const } : {}),
   });
   if (!result.ok) return result;
 
