@@ -1,14 +1,10 @@
 // PLAN 작업 2: 메인 화면의 기본 틀. 실제 기능은 뒤의 작업에서 각 칸에 채운다.
 // Design Ref: §3.1 — 한 페이지에서 ① 입력 → ② 목록 → ③ 원문 → ④ 판단 후보·초안 순서로 진행한다.
 
-// 화면에 보여줄 네 단계와, 각 단계를 만드는 PLAN 작업 번호
+import CaseForm from "./components/CaseForm";
+
+// 아직 만들지 않은 단계와, 각 단계를 만드는 PLAN 작업 번호(① 사안 입력은 작업 9번에서 만들었다)
 const STEPS = [
-  {
-    no: "①",
-    title: "사안 입력",
-    description: "사안 내용, 판단해야 할 쟁점, 관련 분야를 입력합니다.",
-    planTask: 9,
-  },
   {
     no: "②",
     title: "확인된 자료 목록",
@@ -41,6 +37,15 @@ export default function Home() {
       </section>
 
       <ol className="flex flex-col gap-4">
+        {/* ① 사안 입력 */}
+        <li className="rounded-lg border border-black/10 p-4 dark:border-white/15">
+          <h2 className="text-lg font-semibold">① 사안 입력</h2>
+          <p className="mt-1 mb-4 text-sm text-zinc-700 dark:text-zinc-300">
+            사안 내용과 판단해야 할 쟁점을 적어 주세요. 법령·판례 이름을 몰라도 됩니다.
+          </p>
+          <CaseForm />
+        </li>
+
         {STEPS.map((step) => (
           <li
             key={step.no}
