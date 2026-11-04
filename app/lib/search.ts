@@ -15,6 +15,7 @@ import { searchConstitutionalDecisions, searchPrecedents } from "./cases";
 import type { LawApiResult } from "./law-api";
 import { searchOrdinances, searchStatutes } from "./laws";
 import type { PiiFinding } from "./pii";
+import type { SearchResults } from "./results";
 import { searchInterpretations, searchTribunalDecisions } from "./rulings";
 import type { CaseItem, InterpretationItem, LawItem, TribunalItem } from "./types";
 
@@ -31,14 +32,8 @@ export interface SearchTerms {
   source: "ai" | "fallback"; // AI가 뽑았는지, AI 실패로 입력 내용에서 대신 만들었는지
 }
 
-/** 검색 결과(모두 법제처 검색 결과에서 나온 것) */
-export interface SearchResults {
-  statutes: LawItem[]; // 법률·시행령·시행규칙 등
-  ordinances: LawItem[]; // 조례·규칙
-  cases: CaseItem[]; // 법원 판례·헌법재판소 결정
-  interpretations: InterpretationItem[]; // 법령해석례
-  tribunals: TribunalItem[]; // 행정심판례
-}
+// 검색 결과(모두 법제처 검색 결과에서 나온 것)의 모양은 results.ts에 있다(화면에서도 쓰기 때문).
+export type { SearchResults };
 
 export interface SearchResponse {
   maskedInput: CaseInput; // 서버에서 한 번 더 가린 입력(원래 글은 돌려주지 않는다)

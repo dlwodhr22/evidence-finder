@@ -14,7 +14,40 @@ import {
   type CaseInputErrors,
 } from "../lib/case-input";
 import { describeFindings, maskPii, PII_NOTICE } from "../lib/pii";
-import type { SearchResponse, SearchResults } from "../lib/search";
+import { mergeVerified, type SearchResults } from "../lib/results";
+import type { SearchResponse } from "../lib/search";
+import type { ClueVerification } from "../lib/verify";
+import type { ReferenceLink } from "../lib/web-clues";
+
+// PLAN 작업 12: 웹 단서 확인 결과(/api/clues). 법제처 직접 검색 결과를 먼저 보여주고, 이것이 오면 합친다.
+type CluesData = ClueVerification & { references: ReferenceLink[]; notices: string[] };
+type CluesState =
+  | { status: "idle" }
+  | { status: "loading" }
+  | { status: "done"; data: CluesData }
+  | { status: "error"; message: string };
+
+/** 서버 주소에 JSON을 보내고, 성공이면 data를, 실패면 사용자에게 보여줄 안내를 돌려준다 */
+async function postJson<T>(url: string, body: unknown): Promise<{ ok: true; data: T } | { ok: false; message: string }> {
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const json: unknown = await res.json();
+    if (res.ok && typeof json === "object" && json !== null && "data" in json) {
+      return { ok: true, data: (json as { data: T }).data };
+    }
+    const message =
+      typeof json === "object" && json !== null && "error" in json
+        ? String((json as { error: { message?: string } }).error.message ?? "")
+        : "";
+    return { ok: false, message: message || "요청을 처리하지 못했습니다. 잠시 뒤 다시 시도해 주세요." };
+  } catch {
+    return { ok: false, message: "서버에 연결하지 못했습니다. 인터넷 연결을 확인해 주세요." };
+  }
+}
 
 const EMPTY: CaseInput = { facts: "", issue: "", field: "", localGov: "" };
 
@@ -62,6 +95,7 @@ export default function CaseForm() {
   const [values, setValues] = useState<CaseInput>(EMPTY);
   const [errors, setErrors] = useState<CaseInputErrors>({});
   const [search, setSearch] = useState<SearchState>({ status: "idle" });
+  const [clues, setClues] = useState<CluesState>({ status: "idle" });
 
   // 칸마다 지금 적힌 글에서 가려질 개인정보 안내(적는 동안 바로 보여준다)
   const liveNotices = useMemo(() => {
@@ -82,11 +116,12 @@ export default function CaseForm() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (search.status === "loading") return;
+    if (search.status === "loading" || clues.status === "loading") return;
     const checked = validateCaseInput(values);
     if (!checked.ok) {
       setErrors(checked.errors);
       setSearch({ status: "idle" });
+      setClues({ status: "idle" });
       return;
     }
     // 보내기 전에 화면에서 개인정보를 먼저 가린다. 가린 내용만 서버로 보낸다.
@@ -94,26 +129,16 @@ export default function CaseForm() {
     const piiNotice = describeFindings(findings);
     setErrors({});
     setSearch({ status: "loading", piiNotice });
+    setClues({ status: "loading" });
 
-    try {
-      const res = await fetch("/api/search", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(masked),
-      });
-      const json: unknown = await res.json();
-      if (!res.ok || typeof json !== "object" || json === null || !("data" in json)) {
-        const message =
-          typeof json === "object" && json !== null && "error" in json
-            ? String((json as { error: { message?: string } }).error.message ?? "")
-            : "";
-        setSearch({ status: "error", message: message || "근거를 찾지 못했습니다. 잠시 뒤 다시 시도해 주세요." });
-        return;
-      }
-      setSearch({ status: "done", piiNotice, data: (json as { data: SearchResponse }).data });
-    } catch {
-      setSearch({ status: "error", message: "서버에 연결하지 못했습니다. 인터넷 연결을 확인해 주세요." });
-    }
+    // 두 요청을 함께 보낸다. 법제처 직접 검색(빠름)은 먼저 보여주고, 웹 단서 확인(느림)은 오는 대로 합친다.
+    const searchDone = postJson<SearchResponse>("/api/search", masked).then((r) =>
+      setSearch(r.ok ? { status: "done", piiNotice, data: r.data } : { status: "error", message: r.message }),
+    );
+    const cluesDone = postJson<CluesData>("/api/clues", masked).then((r) =>
+      setClues(r.ok ? { status: "done", data: r.data } : { status: "error", message: r.message }),
+    );
+    await Promise.all([searchDone, cluesDone]);
   }
 
   return (
@@ -196,8 +221,8 @@ export default function CaseForm() {
 
       <button
         type="submit"
-        disabled={search.status === "loading"}
-        aria-busy={search.status === "loading"}
+        disabled={search.status === "loading" || clues.status === "loading"}
+        aria-busy={search.status === "loading" || clues.status === "loading"}
         className="self-start rounded-md bg-blue-700 px-5 py-2.5 font-semibold text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-wait disabled:bg-zinc-400"
       >
         {search.status === "loading" ? "근거를 찾는 중…" : "근거 찾기"}
@@ -216,7 +241,11 @@ export default function CaseForm() {
           </p>
         )}
 
-        {search.status === "done" && (
+        {search.status === "done" && (() => {
+          // 웹 단서로 확인된 자료가 오면 합친다(확인된 것만).
+          const merged = clues.status === "done" ? mergeVerified(search.data.results, clues.data.verified) : search.data.results;
+          const foundNothing = Object.values(merged).every((list) => list.length === 0);
+          return (
           <section className="rounded-md border border-black/10 bg-zinc-50 p-4 text-sm dark:border-white/15 dark:bg-zinc-900">
             <h3 className="font-semibold">찾은 결과 요약</h3>
             {search.piiNotice && <p className="mt-1 text-amber-700 dark:text-amber-300">{search.piiNotice}</p>}
@@ -231,7 +260,7 @@ export default function CaseForm() {
               {[...search.data.terms.lawNames, ...search.data.terms.keywords].join(", ") || "없음"}
             </p>
 
-            {search.data.foundNothing ? (
+            {foundNothing && clues.status !== "loading" ? (
               <p className="mt-2 font-medium">
                 법제처에서 확인된 자료를 찾지 못했습니다. 사안을 조금 더 구체적으로 적거나 쟁점을 바꿔 다시 찾아 보세요.
               </p>
@@ -239,16 +268,47 @@ export default function CaseForm() {
               <ul className="mt-2 flex flex-col gap-1">
                 {(Object.keys(RESULT_LABELS) as (keyof SearchResults)[]).map((kind) => (
                   <li key={kind}>
-                    {RESULT_LABELS[kind]} <strong>{search.data.results[kind].length}건</strong>
+                    {RESULT_LABELS[kind]} <strong>{merged[kind].length}건</strong>
                   </li>
                 ))}
               </ul>
             )}
+
+            {/* 웹 단서 확인 상태 */}
+            <div className="mt-3 border-t border-black/10 pt-3 dark:border-white/15">
+              {clues.status === "loading" && (
+                <p className="text-zinc-600 dark:text-zinc-400">
+                  웹에서 이 사안과 관련된 실제 사례를 찾아 법제처에서 확인하는 중입니다. 1분쯤 걸릴 수 있습니다…
+                </p>
+              )}
+              {clues.status === "error" && <p className="text-amber-700 dark:text-amber-300">{clues.message} 법제처에서 직접 찾은 결과만 보여드립니다.</p>}
+              {clues.status === "done" && (
+                <>
+                  {clues.data.notices.map((n) => (
+                    <p key={n} className="text-amber-700 dark:text-amber-300">{n}</p>
+                  ))}
+                  <p>
+                    웹 사례 단서 중 <strong>{clues.data.verified.length}건</strong>을 법제처에서 확인해 목록에 더했습니다.
+                  </p>
+                  {clues.data.failed.length > 0 && (
+                    <p className="text-zinc-600 dark:text-zinc-400">
+                      확인되지 않은 단서 {clues.data.failed.length}건은 근거로 쓰지 않습니다(검증 실패 항목).
+                    </p>
+                  )}
+                  {clues.data.references.length > 0 && (
+                    <p className="text-zinc-600 dark:text-zinc-400">
+                      참고, 검증 안 됨: 정부 사이트 질의회신 {clues.data.references.length}건(제목·링크만)
+                    </p>
+                  )}
+                </>
+              )}
+            </div>
             <p className="mt-3 text-xs text-zinc-500">
-              모두 법제처 검색 결과에서 나온 자료입니다. 자료 목록 화면은 PLAN 작업 13번에서 만듭니다.
+              목록에 오르는 자료는 모두 법제처에서 확인된 것입니다. 자료 목록 화면은 PLAN 작업 13번에서 만듭니다.
             </p>
           </section>
-        )}
+          );
+        })()}
       </div>
     </form>
   );

@@ -88,9 +88,11 @@ export function sanitizeClues(raw: RawAnswer["clues"]): WebClue[] {
   const out: WebClue[] = [];
   const seen = new Set<string>();
   for (const c of raw) {
+    // 해석례 안건번호는 "법제처-07-0367"처럼 기관 이름이 붙어 오기도 한다. "07-0367" 부분만 쓴다.
+    const expcNumber = c.kind === "expc" ? c.caseNumber.match(/\d{2}\s*-\s*\d{4}/)?.[0] : undefined;
     const clue: WebClue = {
       kind: c.kind,
-      caseNumber: normalizeCaseNumber(c.caseNumber),
+      caseNumber: normalizeCaseNumber(expcNumber ?? c.caseNumber),
       court: c.court.replace(/\s+/g, " ").trim(),
       decisionDate: normalizeDate(c.decisionDate),
       lawName: c.lawName.replace(/[「」]/g, "").replace(/\s+/g, " ").trim(),

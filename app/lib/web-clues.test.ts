@@ -26,6 +26,11 @@ describe("단서 정리 — 검증에 필요한 칸이 없으면 버린다", () 
     expect(clues[0]).toMatchObject({ kind: "expc", caseNumber: "06-0007", court: "", decisionDate: "2006-03-10" });
   });
 
+  it('해석례 번호 앞에 붙은 기관 이름("법제처-")은 뗀다', () => {
+    const [c] = sanitizeClues([{ ...blank, kind: "expc", caseNumber: "법제처-07-0367", decisionDate: "2007.12.07" }]);
+    expect(c.caseNumber).toBe("07-0367");
+  });
+
   it("헌재 결정의 법원은 헌법재판소로 맞춘다", () => {
     const [c] = sanitizeClues([{ ...blank, kind: "detc", caseNumber: "2021헌마918", court: "헌재", decisionDate: "2021-08-17" }]);
     expect(c.court).toBe("헌법재판소");
