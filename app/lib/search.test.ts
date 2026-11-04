@@ -54,6 +54,7 @@ describe("관련 지자체 조례를 앞으로", () => {
     lawType: "조례",
     authority,
     isCurrent: true,
+    notYetEffective: false,
     effectiveDate: "2026-01-01",
     sourceUrl: "",
   });

@@ -12,6 +12,7 @@ export interface LawItem {
   authority: string; // 소관부처 또는 지자체 이름
   isCurrent: boolean; // 현행 여부(PRD: 법령은 현행 여부를 반드시 표시)
   effectiveDate: string; // 시행일 YYYY-MM-DD(PRD: 법령은 시행일을 반드시 표시)
+  notYetEffective: boolean; // 시행일이 오늘(한국 시간)보다 뒤면 true = 아직 시행 전(시행 예정)
   sourceUrl: string; // 인증키 없이 열리는 법제처 공개 화면 주소
   article?: string; // 특정 조문을 가리킬 때(예: 제72조) — 현행 본문에서 확인된 조문만
   articleTitle?: string; // 조문 제목(예: 변상금의 징수)

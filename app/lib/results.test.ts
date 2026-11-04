@@ -12,6 +12,7 @@ const law = (id: string, extra: Partial<LawItem> = {}): LawItem => ({
   lawType: "법률",
   authority: "",
   isCurrent: true,
+  notYetEffective: false,
   effectiveDate: "2026-01-01",
   sourceUrl: "",
   ...extra,

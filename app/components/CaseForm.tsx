@@ -3,7 +3,7 @@
 // Design Ref: §3.3 ① — 입력 칸 4개(사안 내용·쟁점·관련 분야·관련 지자체(선택)), 개인정보 안내, 근거 찾기 버튼,
 //                     개인정보가 가려졌으면 "일부를 가렸습니다"를 알려준다.
 // 개인정보는 보내기 전에 이 화면에서 먼저 가린다. 원래 글은 이 브라우저 밖으로 나가지 않는다.
-import { useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import {
   CASE_LABELS,
   CASE_LIMITS,
@@ -16,16 +16,9 @@ import {
 import { describeFindings, maskPii, PII_NOTICE } from "../lib/pii";
 import { mergeVerified, type SearchResults } from "../lib/results";
 import type { SearchResponse } from "../lib/search";
-import type { ClueVerification } from "../lib/verify";
-import type { ReferenceLink } from "../lib/web-clues";
+import type { CluesData, CluesState, EvidenceState, SearchState } from "./evidence-types";
 
 // PLAN 작업 12: 웹 단서 확인 결과(/api/clues). 법제처 직접 검색 결과를 먼저 보여주고, 이것이 오면 합친다.
-type CluesData = ClueVerification & { references: ReferenceLink[]; notices: string[] };
-type CluesState =
-  | { status: "idle" }
-  | { status: "loading" }
-  | { status: "done"; data: CluesData }
-  | { status: "error"; message: string };
 
 /** 서버 주소에 JSON을 보내고, 성공이면 data를, 실패면 사용자에게 보여줄 안내를 돌려준다 */
 async function postJson<T>(url: string, body: unknown): Promise<{ ok: true; data: T } | { ok: false; message: string }> {
@@ -60,12 +53,6 @@ const RESULT_LABELS: Record<keyof SearchResults, string> = {
   tribunals: "행정심판례",
 };
 
-type SearchState =
-  | { status: "idle" }
-  | { status: "loading"; piiNotice: string }
-  | { status: "done"; piiNotice: string; data: SearchResponse }
-  | { status: "error"; message: string };
-
 // 칸별 안내 문구와 예시
 const FIELD_INFO: Record<CaseField, { placeholder: string; hint?: string; required: boolean; rows?: number }> = {
   facts: {
@@ -90,12 +77,22 @@ const FIELD_INFO: Record<CaseField, { placeholder: string; hint?: string; requir
 
 const FIELDS: CaseField[] = ["facts", "issue", "field", "localGov"];
 
-export default function CaseForm() {
+interface CaseFormProps {
+  /** 검색 상태가 바뀔 때마다 알려준다(② 자료 목록이 받아서 보여준다) */
+  onStateChange?: (state: EvidenceState) => void;
+}
+
+export default function CaseForm({ onStateChange }: CaseFormProps) {
   const idPrefix = useId();
   const [values, setValues] = useState<CaseInput>(EMPTY);
   const [errors, setErrors] = useState<CaseInputErrors>({});
   const [search, setSearch] = useState<SearchState>({ status: "idle" });
   const [clues, setClues] = useState<CluesState>({ status: "idle" });
+
+  // 상태가 바뀌면 ② 자료 목록에 알린다.
+  useEffect(() => {
+    onStateChange?.({ search, clues });
+  }, [search, clues, onStateChange]);
 
   // 칸마다 지금 적힌 글에서 가려질 개인정보 안내(적는 동안 바로 보여준다)
   const liveNotices = useMemo(() => {
@@ -304,7 +301,7 @@ export default function CaseForm() {
               )}
             </div>
             <p className="mt-3 text-xs text-zinc-500">
-              목록에 오르는 자료는 모두 법제처에서 확인된 것입니다. 자료 목록 화면은 PLAN 작업 13번에서 만듭니다.
+              목록에 오르는 자료는 모두 법제처에서 확인된 것입니다. 아래 ② 확인된 자료 목록에서 하나씩 확인하세요.
             </p>
           </section>
           );

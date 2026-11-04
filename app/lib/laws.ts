@@ -172,7 +172,7 @@ function searchParams(mode: LawSearchMode): { search?: number } {
 }
 
 /** 법제처 법령 검색 결과 한 건 → LawItem. 필수 정보가 빠졌으면 null(화면에 올리지 않음). */
-export function toStatuteItem(raw: LawRawItem): LawItem | null {
+export function toStatuteItem(raw: LawRawItem, today = todayInKorea()): LawItem | null {
   const id = raw["법령일련번호"]?.trim();
   const title = raw["법령명한글"]?.trim();
   const effectiveDate = formatLawDate(raw["시행일자"]);
@@ -186,6 +186,7 @@ export function toStatuteItem(raw: LawRawItem): LawItem | null {
     lawType: raw["법령구분명"]?.trim() || "법령",
     authority: raw["소관부처명"]?.trim() || "",
     isCurrent: status === "현행",
+    notYetEffective: effectiveDate > today, // 현행 목록에 있어도 시행일이 오늘 뒤면 시행 예정
     effectiveDate,
     sourceUrl: publicLink("law", id),
   };
@@ -195,7 +196,7 @@ export function toStatuteItem(raw: LawRawItem): LawItem | null {
  * 법제처 자치법규 검색 결과 한 건 → LawItem.
  * 법제처 자치법규 목록은 현행 자치법규 목록이다. 제개정 구분이 "폐지"이면 현행이 아닌 것으로 본다.
  */
-export function toOrdinanceItem(raw: LawRawItem): LawItem | null {
+export function toOrdinanceItem(raw: LawRawItem, today = todayInKorea()): LawItem | null {
   const id = raw["자치법규일련번호"]?.trim();
   const title = raw["자치법규명"]?.trim();
   const effectiveDate = formatLawDate(raw["시행일자"]);
@@ -208,6 +209,7 @@ export function toOrdinanceItem(raw: LawRawItem): LawItem | null {
     lawType: raw["자치법규종류"]?.trim() || "자치법규",
     authority: raw["지자체기관명"]?.trim() || "",
     isCurrent: !(raw["제개정구분명"] ?? "").includes("폐지"),
+    notYetEffective: effectiveDate > today, // 현행 목록에 있어도 시행일이 오늘 뒤면 시행 예정
     effectiveDate,
     sourceUrl: publicLink("ordin", id),
   };
@@ -224,7 +226,8 @@ async function searchAndMap(
   const result = await searchLaw(target, trimmed, { page, display, ...searchParams(mode) });
   if (!result.ok) return result;
 
-  const toItem = target === "law" ? toStatuteItem : toOrdinanceItem;
+  const today = todayInKorea();
+  const toItem = (raw: LawRawItem) => (target === "law" ? toStatuteItem(raw, today) : toOrdinanceItem(raw, today));
   const items = result.data.items.map(toItem).filter((item): item is LawItem => item !== null);
   return { ok: true, data: { totalCount: result.data.totalCount, items } };
 }

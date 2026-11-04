@@ -133,6 +133,7 @@ describe("검색 결과 정리 — 필수 정보가 빠지면 내보내지 않�
       lawType: "법률",
       authority: "재정경제부",
       isCurrent: true,
+      notYetEffective: false,
       effectiveDate: "2026-08-20",
       sourceUrl: "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349",
     });
@@ -168,6 +169,13 @@ describe("검색 결과 정리 — 필수 정보가 빠지면 내보내지 않�
 
   it("자치법규: 시행일이 없으면 null", () => {
     expect(toOrdinanceItem({ ...ordinance, 시행일자: "" })).toBeNull();
+  });
+
+  // 2026-11-05 화면 확인: 현행 목록에 있는 강릉시 조례의 시행일이 2027-01-01이었다.
+  it("시행일이 오늘보다 뒤면 시행 예정으로 표시한다", () => {
+    expect(toOrdinanceItem({ ...ordinance, 시행일자: "20270101" }, "2026-11-05")?.notYetEffective).toBe(true);
+    expect(toStatuteItem({ ...statute, 시행일자: "20270820" }, "2026-11-05")?.notYetEffective).toBe(true);
+    expect(toOrdinanceItem({ ...ordinance, 시행일자: "20261105" }, "2026-11-05")?.notYetEffective).toBe(false);
   });
 });
 
