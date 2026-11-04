@@ -1,12 +1,11 @@
 // PLAN 작업 1: 법제처 Open API 인증키(OC)가 승인되었는지, 호출 IP가 등록되었는지 확인하는 점검용 주소.
-// Design Ref: §10 보안 — 키는 서버 코드에서만 읽고, 응답·로그에 키 값을 절대 넣지 않는다.
-// Design Ref: §9 오류 처리 — 법제처는 오류도 HTTP 200으로 보내므로 응답 본문까지 확인한다.
+// PLAN 작업 3: 법제처 호출은 공통 도구(app/lib/law-api.ts)를 통해서만 한다.
+// Design Ref: §10 보안 — 응답·로그에 키 값을 절대 넣지 않는다(공통 도구가 키를 지운다).
 import { connection } from "next/server";
+import { searchLaw, type LawApiErrorCode } from "../../lib/law-api";
 
-// 법제처 법령 검색 주소. 점검에는 대표 업무 법령인 "국유재산법"으로 한 번만 검색해 본다.
-const LAW_SEARCH_URL = "https://www.law.go.kr/DRF/lawSearch.do";
+// 점검에는 대표 업무 법령인 "국유재산법"으로 한 번만 검색해 본다.
 const SAMPLE_QUERY = "국유재산법";
-const TIMEOUT_MS = 10_000;
 
 type CheckStatus =
   | "ok" // 정상: 법제처가 검색 결과를 돌려줌
@@ -23,17 +22,60 @@ interface CheckResult {
   sampleResultCount?: number; // 정상일 때 "국유재산법" 검색 결과 수
 }
 
+// 공통 도구의 오류 종류를 점검 화면의 안내로 바꾼다.
+const GUIDES: Record<LawApiErrorCode, { status: CheckStatus; httpStatus: number; message: string; nextSteps: string[] }> = {
+  MISSING_KEY: {
+    status: "missing-key",
+    httpStatus: 500,
+    message: ".env 파일에 LAW_API_OC 값이 없습니다.",
+    nextSteps: [
+      "open.law.go.kr 에서 회원가입 후 OPEN API 신청을 합니다.",
+      ".env 파일에 LAW_API_OC=가입한 이메일의 @ 앞부분 을 한 줄 추가합니다.",
+      "개발 서버를 껐다가 다시 켠 뒤(npm run dev) 이 주소를 새로고침합니다.",
+    ],
+  },
+  VERIFY_FAILED: {
+    status: "verify-failed",
+    httpStatus: 502,
+    message: "법제처가 인증키를 확인하지 못했습니다.",
+    nextSteps: [
+      "OPEN API 신청이 아직 승인 전인지 open.law.go.kr 에서 확인합니다.",
+      "LAW_API_OC 값이 가입한 이메일의 @ 앞부분과 정확히 같은지 확인합니다.",
+      "open.law.go.kr 의 OPEN API 관리 화면에 지금 컴퓨터의 IP 주소가 등록되어 있는지 확인합니다.",
+    ],
+  },
+  TIMEOUT: {
+    status: "network-error",
+    httpStatus: 504,
+    message: "법제처 응답이 너무 늦습니다.",
+    nextSteps: ["잠시 뒤 이 주소를 새로고침합니다."],
+  },
+  NETWORK: {
+    status: "network-error",
+    httpStatus: 504,
+    message: "법제처 서버에 접속하지 못했습니다.",
+    nextSteps: ["인터넷 연결을 확인합니다.", "잠시 뒤 이 주소를 새로고침합니다."],
+  },
+  HTTP_ERROR: {
+    status: "unexpected",
+    httpStatus: 502,
+    message: "법제처 서버가 오류로 답했습니다.",
+    nextSteps: ["잠시 뒤 다시 시도하고, 계속되면 알려 주세요."],
+  },
+  BAD_RESPONSE: {
+    status: "unexpected",
+    httpStatus: 502,
+    message: "법제처가 예상하지 못한 형식으로 답했습니다.",
+    nextSteps: ["잠시 뒤 다시 시도하고, 계속되면 알려 주세요."],
+  },
+};
+
 // 사람이 브라우저에서 읽기 쉽도록 들여쓰기한 JSON으로 돌려준다.
 function reply(result: CheckResult, httpStatus: number): Response {
   return new Response(JSON.stringify(result, null, 2), {
     status: httpStatus,
     headers: { "content-type": "application/json; charset=utf-8" },
   });
-}
-
-// 응답이 { key: ... } 모양의 객체인지 확인한다.
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
 }
 
 export async function GET(): Promise<Response> {
@@ -45,100 +87,27 @@ export async function GET(): Promise<Response> {
     return new Response("Not Found", { status: 404 });
   }
 
-  const oc = process.env.LAW_API_OC?.trim();
-  if (!oc) {
+  const result = await searchLaw("law", SAMPLE_QUERY, { display: 1 });
+
+  if (!result.ok) {
+    const guide = GUIDES[result.error.code];
     return reply(
       {
-        status: "missing-key",
-        message: ".env 파일에 LAW_API_OC 값이 없습니다.",
-        nextSteps: [
-          "open.law.go.kr 에서 회원가입 후 OPEN API 신청을 합니다.",
-          ".env 파일에 LAW_API_OC=가입한 이메일의 @ 앞부분 을 한 줄 추가합니다.",
-          "개발 서버를 껐다가 다시 켠 뒤(npm run dev) 이 주소를 새로고침합니다.",
-        ],
+        status: guide.status,
+        message: guide.message,
+        nextSteps: guide.nextSteps,
+        ...(result.error.lawApiMessage ? { lawApiMessage: result.error.lawApiMessage } : {}),
       },
-      500,
-    );
-  }
-
-  const url = new URL(LAW_SEARCH_URL);
-  url.searchParams.set("OC", oc);
-  url.searchParams.set("target", "law");
-  url.searchParams.set("type", "JSON");
-  url.searchParams.set("query", SAMPLE_QUERY);
-
-  let bodyText: string;
-  try {
-    const res = await fetch(url, {
-      cache: "no-store",
-      signal: AbortSignal.timeout(TIMEOUT_MS),
-    });
-    bodyText = await res.text();
-  } catch {
-    // 오류 내용에는 요청 주소(키 포함)가 섞일 수 있으므로 그대로 보여주지 않는다.
-    return reply(
-      {
-        status: "network-error",
-        message: "법제처 서버에 접속하지 못했습니다.",
-        nextSteps: [
-          "인터넷 연결을 확인합니다.",
-          "잠시 뒤 이 주소를 새로고침합니다.",
-        ],
-      },
-      504,
-    );
-  }
-
-  let body: unknown;
-  try {
-    body = JSON.parse(bodyText);
-  } catch {
-    return reply(
-      {
-        status: "unexpected",
-        message: "법제처가 예상하지 못한 형식으로 답했습니다.",
-        nextSteps: ["잠시 뒤 다시 시도하고, 계속되면 알려 주세요."],
-      },
-      502,
-    );
-  }
-
-  // 실패 응답 예: { "result": "사용자 정보 검증에 실패하였습니다.", "msg": "...IP주소 및 도메인주소를 등록해 주세요." }
-  if (isRecord(body) && typeof body.result === "string" && body.result.includes("검증")) {
-    return reply(
-      {
-        status: "verify-failed",
-        message: "법제처가 인증키를 확인하지 못했습니다.",
-        lawApiMessage: typeof body.msg === "string" ? body.msg : body.result,
-        nextSteps: [
-          "OPEN API 신청이 아직 승인 전인지 open.law.go.kr 에서 확인합니다.",
-          "LAW_API_OC 값이 가입한 이메일의 @ 앞부분과 정확히 같은지 확인합니다.",
-          "open.law.go.kr 의 OPEN API 관리 화면에 지금 컴퓨터의 IP 주소가 등록되어 있는지 확인합니다.",
-        ],
-      },
-      502,
-    );
-  }
-
-  // 정상 응답 예: { "LawSearch": { "totalCnt": "3", "law": [...] } }
-  if (isRecord(body) && isRecord(body.LawSearch)) {
-    const count = Number(body.LawSearch.totalCnt);
-    return reply(
-      {
-        status: "ok",
-        message: "법제처 인증키가 정상입니다. 법령 검색이 됩니다.",
-        sampleResultCount: Number.isFinite(count) ? count : undefined,
-      },
-      200,
+      guide.httpStatus,
     );
   }
 
   return reply(
     {
-      status: "unexpected",
-      message: "법제처 응답에서 검색 결과를 찾지 못했습니다.",
-      nextSteps: ["잠시 뒤 다시 시도하고, 계속되면 알려 주세요."],
+      status: "ok",
+      message: "법제처 인증키가 정상입니다. 법령 검색이 됩니다.",
+      sampleResultCount: result.data.totalCount,
     },
-    502,
+    200,
   );
 }
