@@ -28,5 +28,28 @@ export interface CaseItem {
   sourceUrl: string; // 인증키 없이 열리는 법제처 공개 화면 주소
 }
 
+/** 법제처에서 확인된 법령해석례 한 건 */
+export interface InterpretationItem {
+  kind: "interpretation";
+  id: string; // 법제처 일련번호
+  title: string; // 안건명
+  caseNumber: string; // 안건번호(예: 06-0007)
+  authority: string; // 회신(해석)기관
+  requester: string; // 질의기관
+  decisionDate: string; // 회신일 YYYY-MM-DD
+  sourceUrl: string;
+}
+
+/** 법제처에서 확인된 행정심판례 한 건 */
+export interface TribunalItem {
+  kind: "tribunal";
+  id: string; // 법제처 일련번호
+  title: string; // 사건명
+  caseNumber: string; // 사건번호(예: 2020경기행심2287)
+  authority: string; // 재결청(예: 경기도행정심판위원회)
+  decisionDate: string; // 재결(의결)일 YYYY-MM-DD
+  sourceUrl: string;
+}
+
 /** 화면에 올릴 수 있는 확인된 자료 */
-export type VerifiedItem = LawItem | CaseItem;
+export type VerifiedItem = LawItem | CaseItem | InterpretationItem | TribunalItem;
