@@ -24,7 +24,7 @@
 ## 기술 스택
 - Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4
 - 법제처 국가법령정보 Open API (법령·판례·해석례·행정심판례)
-- OpenAI API (요약·검색어는 가벼운 모델, 판단 후보·초안·웹 단서는 큰 모델)
+- OpenAI API (요약·검색어는 가벼운 모델, 판례 관련성 판단·판단 후보·초안·웹 단서는 큰 모델)
 - Zod(입력 검사), Vitest(자동 시험)
 
 ## 직접 실행해 보기
