@@ -53,9 +53,10 @@ interface ResultListProps {
   state: EvidenceState;
   selected: Set<string>;
   onToggle: (key: string) => void;
+  onOpen: (item: VerifiedItem) => void; // ③ 원문 확인에서 열기
 }
 
-export default function ResultList({ state, selected, onToggle }: ResultListProps) {
+export default function ResultList({ state, selected, onToggle, onOpen }: ResultListProps) {
   const { search, clues } = state;
 
   if (search.status === "idle") {
@@ -147,6 +148,16 @@ export default function ResultList({ state, selected, onToggle }: ResultListProp
                               웹 사례 단서 → 법제처 확인
                             </span>
                           )}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              onOpen(item);
+                              document.getElementById("document-view")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                            }}
+                            className="rounded border border-blue-600 px-1.5 py-0.5 font-medium text-blue-700 dark:border-blue-400 dark:text-blue-300"
+                          >
+                            원문 확인
+                          </button>
                           {link ? (
                             <a href={link} target="_blank" rel="noopener noreferrer" className="text-blue-700 underline dark:text-blue-300">
                               법제처 원문 보기 ↗

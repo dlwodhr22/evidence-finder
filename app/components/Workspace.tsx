@@ -3,7 +3,10 @@
 // 입력 양식이 찾은 결과를 목록이 받아 보여주고, 근거로 고른 자료(선택)를 여기서 기억한다
 // (작업 17번 판단 후보에서 이 선택을 쓴다). 고른 자료는 저장하지 않고 이 화면에만 둔다.
 import { useCallback, useState } from "react";
+import { resultKey } from "../lib/results";
+import type { VerifiedItem } from "../lib/types";
 import CaseForm from "./CaseForm";
+import DocumentViewer from "./DocumentViewer";
 import type { EvidenceState } from "./evidence-types";
 import ResultList from "./ResultList";
 
@@ -12,10 +15,14 @@ const CARD = "rounded-lg border border-black/10 p-4 dark:border-white/15";
 export default function Workspace() {
   const [state, setState] = useState<EvidenceState>({ search: { status: "idle" }, clues: { status: "idle" } });
   const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [opened, setOpened] = useState<VerifiedItem | null>(null); // ③에서 보고 있는 자료
 
   const handleStateChange = useCallback((next: EvidenceState) => {
-    // 새로 찾는 중에는 이전에 고른 자료를 비운다(목록이 바뀌므로).
-    if (next.search.status === "loading") setSelected(new Set());
+    // 새로 찾는 중에는 이전에 고른 자료와 열어 본 원문을 비운다(목록이 바뀌므로).
+    if (next.search.status === "loading") {
+      setSelected(new Set());
+      setOpened(null);
+    }
     setState(next);
   }, []);
 
@@ -43,7 +50,21 @@ export default function Workspace() {
         <p className="mt-1 mb-4 text-sm text-zinc-700 dark:text-zinc-300">
           법제처에서 확인된 법령·판례·해석례·행정심판례만 보여줍니다. 판단 근거로 쓸 자료에 체크해 두세요.
         </p>
-        <ResultList state={state} selected={selected} onToggle={toggle} />
+        <ResultList state={state} selected={selected} onToggle={toggle} onOpen={setOpened} />
+      </li>
+
+      <li className={CARD} id="document-view">
+        <h2 className="text-lg font-semibold">③ 원문 확인</h2>
+        {opened ? (
+          <div className="mt-3">
+            {/* 항목이 바뀌면 화면을 새로 시작하도록 key를 준다 */}
+            <DocumentViewer key={resultKey(opened)} item={opened} onClose={() => setOpened(null)} />
+          </div>
+        ) : (
+          <p className="mt-1 text-sm text-zinc-700 dark:text-zinc-300">
+            ② 목록에서 [원문 확인]을 누르면 법제처 원문과, 원문과 구분된 AI 요약이 여기에 나옵니다.
+          </p>
+        )}
       </li>
     </>
   );
