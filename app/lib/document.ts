@@ -115,9 +115,28 @@ const summarySchema = z.object({
   sentences: z.array(groundedSentenceSchema).max(MAX_SUMMARY_SENTENCES),
 });
 
-/** AI에게 줄 원문 범위. 너무 길면 앞부분만 쓴다. */
+/**
+ * 판결문 본문에서 주문·청구취지·원고 주장 등을 건너뛰고 "이유"(법원의 판단) 부분부터 남긴다.
+ * 전문 칸(【판례내용】·【전문】)에 "이유" 제목이 있을 때만 자른다. 없으면 그대로 둔다.
+ */
+function skipToReasons(fullText: string): string {
+  // "【이 유】"(괄호 제목) 또는 줄 전체가 "이 유"인 제목
+  const reasonHeading = /【\s*이\s*유\s*】|\n[ \t]*이[ \t]*유[ \t]*\n/;
+  const bodyStart = fullText.search(/【(판례내용|전문)】/);
+  if (bodyStart < 0) return fullText;
+  const body = fullText.slice(bodyStart);
+  const m = reasonHeading.exec(body);
+  if (!m) return fullText;
+  // 판시사항·판결요지 등 앞 칸은 그대로 두고, 전문 칸은 제목과 "이유" 이후만 남긴다.
+  const heading = body.slice(0, body.indexOf("\n") + 1);
+  const from = body[m.index] === "\n" ? m.index + 1 : m.index;
+  return fullText.slice(0, bodyStart) + heading + body.slice(from);
+}
+
+/** AI에게 줄 원문 범위. 판결문은 이유(판단) 부분부터 쓰고, 너무 길면 앞부분만 쓴다. */
 export function summarySourceText(fullText: string): string {
-  return fullText.length > MAX_SUMMARY_CHARS ? fullText.slice(0, MAX_SUMMARY_CHARS) : fullText;
+  const text = skipToReasons(fullText);
+  return text.length > MAX_SUMMARY_CHARS ? text.slice(0, MAX_SUMMARY_CHARS) : text;
 }
 
 /**
@@ -145,6 +164,8 @@ export async function summarizeDocument(fullText: string): Promise<AiResult<Summ
   const result = await askAiJson({
     instructions: [
       `아래 [원문]만 근거로 핵심을 ${MAX_SUMMARY_SENTENCES}문장 이하로 요약한다.`,
+      "판결문·결정문이면 법원(재판부)의 판단을 요약한다. 판시사항, 판결요지, 이유 중 법원이 어떤 기준으로 어떻게 판단했고 결론이 무엇인지를 담는다.",
+      "청구취지, 주문, 원고·피고의 주장, 사건의 경위는 요약하지 않는다. 판단을 이해하는 데 꼭 필요한 최소한의 사실만 짧게 덧붙일 수 있다.",
       "각 문장마다 근거가 되는 원문 구절(quote)을 원문에서 글자 그대로 복사해 함께 낸다. 고쳐 쓰거나 줄이지 않는다.",
       `sourceId는 항상 "${SUMMARY_SOURCE_ID}"로 쓴다.`,
       "원문에 없는 내용, 다른 법령·판례, 결론이나 의견을 쓰지 않는다.",

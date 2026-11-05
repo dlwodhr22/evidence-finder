@@ -82,6 +82,25 @@ describe("요약에 쓰는 원문 범위", () => {
     expect(summarySourceText("짧은 글")).toBe("짧은 글");
   });
 
+  it("판결문은 청구취지·주문을 건너뛰고 이유부터 쓴다(판시사항은 유지)", () => {
+    const text = "【판시사항】\n판시 내용\n\n【판례내용】\n【원고】 갑\n【청구취지】 변상금 부과처분을 취소한다\n\n이 유\n\n1. 법원의 판단 내용";
+    const src = summarySourceText(text);
+    expect(src).toContain("판시 내용");
+    expect(src).toContain("법원의 판단 내용");
+    expect(src).not.toContain("청구취지");
+  });
+
+  it("【이 유】 괄호 제목도 인식한다", () => {
+    const src = summarySourceText("【판례내용】\n【주 문】 상고를 기각한다 【이 유】 상고이유를 판단한다");
+    expect(src).toContain("상고이유를 판단한다");
+    expect(src).not.toContain("상고를 기각한다");
+  });
+
+  it("이유 제목이 없으면 원문을 그대로 쓴다", () => {
+    const text = "【판례내용】\n【청구취지】 내용";
+    expect(summarySourceText(text)).toBe(text);
+  });
+
   it("범위 밖(잘린 뒷부분)에서 가져온 구절은 확인되지 않는다", () => {
     const long = "가".repeat(MAX_SUMMARY_CHARS) + "뒷부분에만 있는 구절입니다";
     const result = groundSummary([{ text: "뒷부분 요약", quote: "뒷부분에만 있는 구절입니다" }], summarySourceText(long));
