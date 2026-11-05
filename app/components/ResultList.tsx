@@ -4,11 +4,13 @@
 //   근거로 쓸 자료 선택 칸, 결과가 없으면 "찾지 못했다" 안내, 접어 둔 "검증 실패 항목",
 //   따로 표시하는 "참고, 검증 안 됨" 질의회신(제목·링크만).
 // PRD 5번 A — 목록에는 법제처에서 확인된 자료만 오른다(서버가 이미 걸렀다). 웹 문장은 보여주지 않는다.
+import type { FeedbackResult } from "../lib/feedback";
 import { isGovernmentLink, isLawGoKrUrl, siteName } from "../lib/links";
 import { mergeVerified, resultKey, type SearchResults } from "../lib/results";
 import type { VerifiedItem } from "../lib/types";
 import type { FailedClue } from "../lib/verify";
 import type { EvidenceState } from "./evidence-types";
+import FeedbackDialog from "./FeedbackDialog";
 
 const GROUPS: { kind: keyof SearchResults; label: string }[] = [
   { kind: "statutes", label: "법령" },
@@ -54,9 +56,14 @@ interface ResultListProps {
   selected: Set<string>;
   onToggle: (key: string) => void;
   onOpen: (item: VerifiedItem) => void; // ③ 원문 확인에서 열기
+  /** 신고 후 다시 대조한 결과: 고쳐진 항목, 또는 확인되지 않아 뺀 항목 */
+  overrides: Record<string, Override>;
+  onReport: (item: VerifiedItem, result: FeedbackResult) => void;
 }
 
-export default function ResultList({ state, selected, onToggle, onOpen }: ResultListProps) {
+export type Override = { type: "corrected"; item: VerifiedItem } | { type: "removed"; item: VerifiedItem };
+
+export default function ResultList({ state, selected, onToggle, onOpen, overrides, onReport }: ResultListProps) {
   const { search, clues } = state;
 
   if (search.status === "idle") {
@@ -71,7 +78,19 @@ export default function ResultList({ state, selected, onToggle, onOpen }: Result
 
   const verified = clues.status === "done" ? clues.data.verified : [];
   const webKeys = new Set(verified.map(resultKey));
-  const merged = mergeVerified(search.data.results, verified);
+  const mergedRaw = mergeVerified(search.data.results, verified);
+  // 신고 후 다시 대조한 결과를 반영한다: 고친 항목은 바꾸고, 확인되지 않은 항목은 목록에서 뺀다.
+  const merged = Object.fromEntries(
+    (Object.keys(mergedRaw) as (keyof SearchResults)[]).map((kind) => [
+      kind,
+      (mergedRaw[kind] as VerifiedItem[]).flatMap((item) => {
+        const o = overrides[resultKey(item)];
+        if (!o) return [item];
+        return o.type === "removed" ? [] : [o.item];
+      }),
+    ]),
+  ) as unknown as SearchResults;
+  const removedByReport = Object.values(overrides).filter((o) => o.type === "removed").map((o) => o.item);
   const total = GROUPS.reduce((n, g) => n + merged[g.kind].length, 0);
   const failed = clues.status === "done" ? clues.data.failed : [];
   const references = clues.status === "done" ? clues.data.references.filter((r) => isGovernmentLink(r.url)) : [];
@@ -165,6 +184,7 @@ export default function ResultList({ state, selected, onToggle, onOpen }: Result
                           ) : (
                             <span className="text-red-700">출처 링크를 확인할 수 없습니다</span>
                           )}
+                          <FeedbackDialog item={item} onResult={(r) => onReport(item, r)} />
                         </div>
                       </div>
                     </div>
@@ -203,11 +223,20 @@ export default function ResultList({ state, selected, onToggle, onOpen }: Result
       )}
 
       {/* 검증 실패 항목 — 접어 둔다 */}
-      {failed.length > 0 && (
+      {failed.length + removedByReport.length > 0 && (
         <details className="rounded-md border border-black/10 p-3 text-sm dark:border-white/15">
           <summary className="cursor-pointer font-medium">
-            검증 실패 항목 {failed.length}건 (근거로 쓰지 않음)
+            검증 실패 항목 {failed.length + removedByReport.length}건 (근거로 쓰지 않음)
           </summary>
+          {removedByReport.length > 0 && (
+            <ul className="mt-2 flex flex-col gap-1">
+              {removedByReport.map((item) => (
+                <li key={resultKey(item)} className="text-zinc-700 dark:text-zinc-300">
+                  <span className="text-zinc-500">[신고]</span> {item.title} — 신고 후 법제처에서 다시 확인하지 못했습니다.
+                </li>
+              ))}
+            </ul>
+          )}
           <p className="mt-2 text-xs text-zinc-600 dark:text-zinc-400">
             웹에서 찾았지만 법제처에서 확인되지 않은 단서입니다. 실제로 없거나, 번호·날짜가 다르게 알려진 것일 수 있습니다.
           </p>

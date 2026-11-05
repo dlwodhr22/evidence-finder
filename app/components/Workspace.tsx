@@ -8,7 +8,8 @@ import type { VerifiedItem } from "../lib/types";
 import CaseForm from "./CaseForm";
 import DocumentViewer from "./DocumentViewer";
 import type { EvidenceState } from "./evidence-types";
-import ResultList from "./ResultList";
+import type { FeedbackResult } from "../lib/feedback";
+import ResultList, { type Override } from "./ResultList";
 
 const CARD = "rounded-lg border border-black/10 p-4 dark:border-white/15";
 
@@ -17,13 +18,34 @@ export default function Workspace() {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [opened, setOpened] = useState<VerifiedItem | null>(null); // ③에서 보고 있는 자료
 
+  const [overrides, setOverrides] = useState<Record<string, Override>>({}); // 신고 후 다시 대조한 결과
+
   const handleStateChange = useCallback((next: EvidenceState) => {
-    // 새로 찾는 중에는 이전에 고른 자료와 열어 본 원문을 비운다(목록이 바뀌므로).
+    // 새로 찾는 중에는 이전에 고른 자료·열어 본 원문·신고 결과를 비운다(목록이 바뀌므로).
     if (next.search.status === "loading") {
       setSelected(new Set());
       setOpened(null);
+      setOverrides({});
     }
     setState(next);
+  }, []);
+
+  // 신고 결과를 목록에 반영한다. 법제처에서 확인되지 않은 항목은 근거 선택과 원문 보기에서도 뺀다.
+  const handleReport = useCallback((item: VerifiedItem, result: FeedbackResult) => {
+    const key = resultKey(item);
+    if (result.outcome === "removed") {
+      setOverrides((prev) => ({ ...prev, [key]: { type: "removed", item } }));
+      setSelected((prev) => {
+        const next = new Set(prev);
+        next.delete(key);
+        return next;
+      });
+      // ③에서 보고 있던 자료는 닫지 않고, 신고 결과 창이 보이도록 둔다(화면에 "근거로 쓸 수 없음"을 표시한다).
+    } else if (result.outcome === "corrected" && result.item) {
+      const fixed = result.item;
+      setOverrides((prev) => ({ ...prev, [key]: { type: "corrected", item: fixed } }));
+      setOpened((cur) => (cur && resultKey(cur) === key ? fixed : cur));
+    }
   }, []);
 
   const toggle = useCallback((key: string) => {
@@ -50,7 +72,11 @@ export default function Workspace() {
         <p className="mt-1 mb-4 text-sm text-zinc-700 dark:text-zinc-300">
           법제처에서 확인된 법령·판례·해석례·행정심판례만 보여줍니다. 판단 근거로 쓸 자료에 체크해 두세요.
         </p>
-        <ResultList state={state} selected={selected} onToggle={toggle} onOpen={setOpened} />
+        <ResultList state={state} selected={selected} onToggle={toggle}
+          onOpen={setOpened}
+          overrides={overrides}
+          onReport={handleReport}
+        />
       </li>
 
       <li className={CARD} id="document-view">
@@ -58,7 +84,13 @@ export default function Workspace() {
         {opened ? (
           <div className="mt-3">
             {/* 항목이 바뀌면 화면을 새로 시작하도록 key를 준다 */}
-            <DocumentViewer key={resultKey(opened)} item={opened} onClose={() => setOpened(null)} />
+            <DocumentViewer
+              key={resultKey(opened)}
+              item={opened}
+              removed={overrides[resultKey(opened)]?.type === "removed"}
+              onClose={() => setOpened(null)}
+              onReport={(result) => handleReport(opened, result)}
+            />
           </div>
         ) : (
           <p className="mt-1 text-sm text-zinc-700 dark:text-zinc-300">

@@ -6,6 +6,8 @@
 // 부모가 key를 항목마다 다르게 주어, 항목을 바꾸면 이 화면이 새로 시작된다.
 import { useEffect, useState } from "react";
 import { buildSourceAndOriginalText, buildSourceText } from "../lib/copy-text";
+import type { FeedbackResult } from "../lib/feedback";
+import FeedbackDialog from "./FeedbackDialog";
 import { refOf, type DocumentView, type SummaryView } from "../lib/document-types";
 import { isLawGoKrUrl } from "../lib/links";
 import type { VerifiedItem } from "../lib/types";
@@ -31,7 +33,18 @@ async function getJson<T>(url: string): Promise<Loaded<T>["result"]> {
   }
 }
 
-export default function DocumentViewer({ item, onClose }: { item: VerifiedItem; onClose: () => void }) {
+export default function DocumentViewer({
+  item,
+  onClose,
+  onReport,
+  removed,
+}: {
+  item: VerifiedItem;
+  /** 신고 후 다시 대조했지만 법제처에서 확인되지 않은 자료 */
+  removed: boolean;
+  onClose: () => void;
+  onReport: (result: FeedbackResult) => void;
+}) {
   const base = refOf(item);
   const [article, setArticle] = useState(base.article ?? "");
 
@@ -114,7 +127,19 @@ export default function DocumentViewer({ item, onClose }: { item: VerifiedItem; 
         ) : (
           <p className="text-sm text-red-700">출처 링크를 확인할 수 없습니다</p>
         )}
-        {docReady && link && (
+        {docReady && (
+          <FeedbackDialog
+            item={item}
+            article={article || undefined}
+            allowSummary={hasText && summaryState !== null}
+            onResult={(r) => {
+              // 요약 신고: 이전 요약을 지우고 다시 대조해 만든 요약으로 바꾼다
+              if (r.outcome === "summary" && r.summary) setSummary({ key: query, result: { ok: true, data: r.summary } });
+              onReport(r);
+            }}
+          />
+        )}
+        {docReady && link && !removed && (
           <>
             <button type="button" onClick={() => copy("source", buildSourceText(item.title, docReady))} className={COPY_BUTTON}>
               {copied === "source" ? "복사됨 ✓" : "출처 복사"}
@@ -131,6 +156,11 @@ export default function DocumentViewer({ item, onClose }: { item: VerifiedItem; 
           </>
         )}
       </div>
+      {removed && (
+        <p role="alert" className="rounded-md border border-red-300 bg-red-50 p-3 text-sm text-red-800 dark:border-red-700 dark:bg-red-950 dark:text-red-200">
+          신고 후 법제처에서 이 자료를 다시 확인하지 못했습니다. 근거로 쓰지 마세요. 복사 버튼은 사용할 수 없습니다.
+        </p>
+      )}
       {copyError && (
         <p role="alert" className="text-sm text-red-700">
           복사하지 못했습니다. 원문을 직접 선택해서 복사해 주세요.
