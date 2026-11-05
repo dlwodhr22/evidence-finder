@@ -149,6 +149,7 @@ export async function buildDraft(req: DraftRequest, picks: DocumentRef[]): Promi
       .join("\n\n"),
     schema: aiDraftSchema,
     schemaName: "reply_draft",
+    tier: "strong", // 법적 판단에 가까운 일은 큰 모델로
   });
   if (!ai.ok) return { ok: false, code: "AI_FAILED", message: ai.error.message };
 

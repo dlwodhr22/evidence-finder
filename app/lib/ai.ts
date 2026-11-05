@@ -13,6 +13,16 @@ import { z } from "zod";
 
 // 기본 모델. .env에 OPENAI_MODEL을 넣으면 그 모델을 쓴다.
 const DEFAULT_MODEL = "gpt-4o-mini";
+// 판단 후보·회신 초안처럼 법적 판단에 가까운 일은 더 큰 모델로 한다. .env에 OPENAI_MODEL_STRONG을 넣으면 그 모델을 쓴다.
+const DEFAULT_STRONG_MODEL = "gpt-4.1";
+
+/** 어떤 모델을 쓸지: light = 요약·검색어·웹 단서(비용 절약), strong = 판단 후보·회신 초안(정확도) */
+export type ModelTier = "light" | "strong";
+
+function pickModel(tier: ModelTier | undefined): string {
+  if (tier === "strong") return process.env.OPENAI_MODEL_STRONG?.trim() || DEFAULT_STRONG_MODEL;
+  return process.env.OPENAI_MODEL?.trim() || DEFAULT_MODEL;
+}
 const TIMEOUT_MS = 60_000;
 const WEB_SEARCH_TIMEOUT_MS = 90_000; // 웹검색은 여러 페이지를 열어 보느라 더 오래 걸린다
 
@@ -68,6 +78,8 @@ export interface AskJsonRequest<T> {
   schema: z.ZodType<T>;
   /** 답 모양의 이름(영문·숫자·밑줄) */
   schemaName: string;
+  /** 모델 등급. 비우면 light(가벼운 모델) */
+  tier?: ModelTier;
 }
 
 /**
@@ -82,7 +94,7 @@ export async function askAiJson<T>(req: AskJsonRequest<T>): Promise<AiResult<T>>
 
   const apiKey = process.env.OPENAI_API_KEY?.trim();
   if (!apiKey) return fail("MISSING_KEY");
-  const model = process.env.OPENAI_MODEL?.trim() || DEFAULT_MODEL;
+  const model = pickModel(req.tier);
 
   try {
     const response = await getClient(apiKey).responses.parse({
@@ -170,7 +182,7 @@ export async function askAiJsonWithWebSearch<T>(
 
   const apiKey = process.env.OPENAI_API_KEY?.trim();
   if (!apiKey) return fail("MISSING_KEY");
-  const model = process.env.OPENAI_MODEL?.trim() || DEFAULT_MODEL;
+  const model = pickModel(req.tier);
 
   try {
     const response = await getClient(apiKey).responses.parse({

@@ -155,6 +155,7 @@ export async function buildCandidates(rawInput: CaseInput, picks: DocumentRef[])
       .join("\n\n"),
     schema: aiOutputSchema,
     schemaName: "judgment_candidates",
+    tier: "strong", // 법적 판단에 가까운 일은 큰 모델로
   });
   if (!ai.ok) return { ok: false, code: "AI_FAILED", message: ai.error.message };
 
