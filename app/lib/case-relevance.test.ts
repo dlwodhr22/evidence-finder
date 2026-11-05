@@ -15,8 +15,21 @@ describe("후보 판례의 발췌문", () => {
     expect(text).not.toContain("청구취지");
   });
 
-  it("뽑을 칸이 없으면 빈 글(판단할 수 없는 후보)", () => {
-    expect(candidateExcerpt({ sections: [{ heading: "판례내용", text: "내용" }] })).toBe("");
+  it("판시사항이 없는 판결(하급심 등)은 본문에서 쟁점 표현이 나오는 부분을 쓴다", () => {
+    const body = "【주 문】 청구를 기각한다.\n【이 유】\n1. 사실관계 ...\n2. 판단\n건물 등의 부지는 건물 등의 소유자가 이를 점용하고 있다고 보아야 한다.";
+    const text = candidateExcerpt({ sections: [{ heading: "판례내용", text: body }] }, ["건물 등의 부지"]);
+    expect(text).toContain("【본문 일부】");
+    expect(text).toContain("건물 등의 부지는 건물 등의 소유자가");
+  });
+
+  it("쟁점 표현이 본문에 없고 판시사항도 없으면 이유 첫 부분을 쓴다(주문은 건너뜀)", () => {
+    const text = candidateExcerpt({ sections: [{ heading: "판례내용", text: "【주 문】 상고를 기각한다. 【이 유】 상고이유를 판단한다." }] }, ["없는 표현"]);
+    expect(text).toContain("상고이유를 판단한다");
+    expect(text).not.toContain("상고를 기각한다");
+  });
+
+  it("판단할 글이 하나도 없으면 빈 글", () => {
+    expect(candidateExcerpt({ sections: [{ heading: "참조조문", text: "국유재산법" }] })).toBe("");
   });
 
   it("법원 판례와 헌재 결정은 번호가 같아도 구분한다", () => {

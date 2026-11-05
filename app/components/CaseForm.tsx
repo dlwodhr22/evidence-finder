@@ -250,7 +250,7 @@ export default function CaseForm({ onStateChange }: CaseFormProps) {
 
             <p className="mt-2">
               <span className="text-zinc-500">찾은 검색어{search.data.terms.source === "fallback" ? "(입력 내용에서)" : "(AI가 뽑음)"}: </span>
-              {[...search.data.terms.lawNames, ...search.data.terms.keywords].join(", ") || "없음"}
+              {[...search.data.terms.lawNames, ...search.data.terms.keywords, ...(search.data.terms.casePhrases ?? [])].join(", ") || "없음"}
             </p>
 
             {foundNothing && clues.status !== "loading" ? (

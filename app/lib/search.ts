@@ -26,12 +26,14 @@ export const MAX_PER_KIND = 5;
 const CASE_CANDIDATES_PER_QUERY = 10;
 const MAX_LAW_NAMES = 3;
 const MAX_KEYWORDS = 4;
+const MAX_CASE_PHRASES = 3;
 const MAX_TERM_LENGTH = 30;
 
 /** AI가 사안에서 뽑은 검색 재료 */
 export interface SearchTerms {
   lawNames: string[]; // 관련 법령의 정식 이름 후보(예: 국유재산법)
   keywords: string[]; // 본문 검색어(예: 무단점유, 변상금)
+  casePhrases: string[]; // 판결문에 실제로 쓰이는 쟁점 표현(예: 건물의 부지). 판례 후보를 모을 때 쓴다.
   source: "ai" | "fallback"; // AI가 뽑았는지, AI 실패로 입력 내용에서 대신 만들었는지
 }
 
@@ -79,7 +81,7 @@ export function fallbackTerms(input: CaseInput): SearchTerms {
     .split(/[\s,·/]+/)
     .map((w) => w.replace(/(이|가|을|를|은|는|의|에|에서|으로|로|와|과|도|만|지|인지|한지|할|수|있는지)$/, ""))
     .filter((w) => w.length >= 2);
-  return { lawNames: [], keywords: cleanTerms(words, MAX_KEYWORDS), source: "fallback" };
+  return { lawNames: [], keywords: cleanTerms(words, MAX_KEYWORDS), casePhrases: [], source: "fallback" };
 }
 
 /** 같은 자료가 여러 검색에서 나오면 하나만 남긴다(처음 나온 순서 유지) */
@@ -106,12 +108,14 @@ export function wantsOrdinances(input: Pick<CaseInput, "facts" | "issue">): bool
 const termsSchema = z.object({
   lawNames: z.array(z.string()).describe("관련 법령의 정식 이름. 확실한 것만. 없으면 빈 목록"),
   keywords: z.array(z.string()).describe("법령·판례 본문 검색에 쓸 짧은 법률 용어"),
+  casePhrases: z.array(z.string()).describe("판결문에 실제로 쓰이는 쟁점 표현. 없으면 빈 목록"),
 });
 
 const TERMS_INSTRUCTIONS = [
   "사안을 읽고 법제처 검색에 쓸 재료를 뽑는다.",
   `lawNames: 이 사안에 적용될 법령의 정식 이름(예: "국유재산법", "공유재산 및 물품 관리법")을 최대 ${MAX_LAW_NAMES}개. 확실하지 않으면 넣지 않는다. 조문 번호는 넣지 않는다.`,
   `keywords: 법령·판례 본문에서 찾을 짧은 법률 용어(예: "무단점유", "변상금", "시효")를 2~${MAX_KEYWORDS}개. 각 1~3단어. 일상어보다 법령에 쓰이는 말로 바꾼다.`,
+  `casePhrases: [판단해야 할 쟁점]을 판결문이 실제로 쓰는 표현으로 바꾼 말을 1~${MAX_CASE_PHRASES}개(예: 쟁점 "건물부지 판단여부" → "건물의 부지", "부지의 범위"). 각 2~4단어. 붙여 쓴 말은 판결문처럼 띄어 쓰거나 조사를 넣는다.`,
   "사람 이름, 주소, 전화번호 같은 개인정보는 넣지 않는다.",
 ].join("\n");
 
@@ -133,6 +137,7 @@ async function extractTerms(input: CaseInput): Promise<{ terms: SearchTerms; not
     const terms: SearchTerms = {
       lawNames: cleanTerms(result.data.lawNames, MAX_LAW_NAMES),
       keywords: cleanTerms(result.data.keywords, MAX_KEYWORDS),
+      casePhrases: cleanTerms(result.data.casePhrases, MAX_CASE_PHRASES),
       source: "ai",
     };
     if (terms.keywords.length > 0 || terms.lawNames.length > 0) return { terms };
@@ -217,10 +222,13 @@ export async function searchEvidence(input: CaseInput): Promise<SearchResponse> 
     // 조례·규칙은 사용자가 요청했을 때만 찾는다(기본은 찾지 않음).
     collect<LawItem>(ordinancesRequested && keywordQuery ? [searchOrdinances(keywordQuery, textOpts), ...terms.keywords.slice(0, 2).map((k) => searchOrdinances(k, opts))] : []),
     // 판례는 제목이 아니라 내용으로 관련성을 가리므로(selectRelevantCases) 후보를 넉넉히 가져온다.
+    // 쟁점 표현(판결문 말투)으로 찾은 것을 앞에 둔다: 사건명, 본문(쟁점 표현만), 본문(첫 검색어 + 쟁점 표현).
     collect<CaseItem>([
-      ...nameKeywords.map((k) => searchPrecedents(k, caseCandidates)),
+      ...terms.casePhrases.map((p) => searchPrecedents(p, caseCandidates)),
+      ...terms.casePhrases.map((p) => searchPrecedents(terms.keywords[0] ? `${terms.keywords[0]} ${p}` : p, caseCandidatesText)),
+      ...terms.casePhrases.map((p) => searchPrecedents(p, caseCandidatesText)),
       ...(keywordQuery ? [searchPrecedents(keywordQuery, caseCandidatesText)] : []),
-      ...nameKeywords.map((k) => searchPrecedents(k, caseCandidatesText)),
+      ...nameKeywords.map((k) => searchPrecedents(k, caseCandidates)),
     ]),
     collect<CaseItem>([
       ...nameKeywords.map((k) => searchConstitutionalDecisions(k, nameNewest)),
@@ -252,7 +260,8 @@ export async function searchEvidence(input: CaseInput): Promise<SearchResponse> 
   // 판례: 법원 판례와 헌재 결정은 일련번호 체계가 달라 합칠 때 번호로 중복을 지우지 않는다.
   // 후보(법원 판례 위주, 헌재 결정은 일부)의 판시사항·판결요지를 읽고 쟁점과 관련 있는 것만 남긴다.
   const caseCandidateList = [...precedents.items.slice(0, MAX_CANDIDATES - 6), ...constitutional.items.slice(0, 6)];
-  const picked = await selectRelevantCases(caseCandidateList, masked, MAX_PER_KIND);
+  const hints = [...terms.casePhrases, ...terms.keywords];
+  const picked = await selectRelevantCases(caseCandidateList, masked, hints, MAX_PER_KIND);
   let cases: CaseItem[];
   if (picked.ok) {
     cases = picked.data;
