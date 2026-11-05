@@ -183,6 +183,7 @@ export async function findWebClues(maskedInput: CaseInput, keywords: string[]): 
       .join("\n"),
     schema: answerSchema,
     schemaName: "web_clues",
+    tier: "strong", // 사건번호를 정확히 찾아내려면 큰 모델이 필요하다(시험 세트: mini는 단서를 거의 못 찾음)
   });
 
   if (!result.ok) {
