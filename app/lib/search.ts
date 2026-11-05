@@ -48,7 +48,11 @@ export interface SearchResponse {
 // 검색어 정리 (자동 시험 대상)
 // ─────────────────────────────────────────────────────────────
 
-/** 검색어를 정리한다: 앞뒤 빈칸·따옴표·괄호 제거, 너무 긴 말 제외, 중복 제거, 개수 제한 */
+// 어느 사안에나 나오는 일반 행정 용어. 검색어로 쓰면 제목에 "민원"만 들어간 엉뚱한 자료가 모두 걸린다
+// (시험 세트 2026-11-05: 근거 없는 사안에서 AI가 "민원"을 뽑아 판례·해석례 15건이 나옴).
+const GENERIC_TERMS = new Set(["민원", "민원인", "민원처리", "사안", "문의", "회신", "담당자", "처분", "신청", "이의", "행정", "공무원", "법령", "판례"]);
+
+/** 검색어를 정리한다: 앞뒤 빈칸·따옴표·괄호 제거, 너무 긴 말·일반 행정 용어 제외, 중복 제거, 개수 제한 */
 export function cleanTerms(terms: string[], max: number): string[] {
   const seen = new Set<string>();
   const out: string[] = [];
@@ -57,7 +61,7 @@ export function cleanTerms(terms: string[], max: number): string[] {
       .replace(/[「」『』"'“”‘’()[\]{}<>]/g, " ")
       .replace(/\s+/g, " ")
       .trim();
-    if (!term || term.length > MAX_TERM_LENGTH || seen.has(term)) continue;
+    if (!term || term.length > MAX_TERM_LENGTH || seen.has(term) || GENERIC_TERMS.has(term.replace(/\s+/g, ""))) continue;
     seen.add(term);
     out.push(term);
     if (out.length >= max) break;

@@ -10,13 +10,14 @@
     "keywords": [
       "무단점유",
       "변상금",
-      "감면"
+      "감면",
+      "허가없이 사용"
     ],
     "source": "ai"
   },
   "foundNothing": false,
   "notices": [],
-  "failedClues": 2,
+  "failedClues": 3,
   "references": 0,
   "items": [
     {
@@ -37,24 +38,9 @@
     {
       "group": "법령",
       "web": true,
-      "key": "law:law:288163:제68조",
+      "key": "law:law:288163:제63조",
       "title": "공유재산 및 물품 관리법 시행령",
-      "citation": "대통령령 · 행정안전부 · 제68조 · 시행 2026-07-21",
-      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=288163",
-      "hasSource": true,
-      "proxyRelevant": true,
-      "currentLabel": "현행",
-      "recheck": "confirmed",
-      "recheckChanges": [],
-      "currentRecheck": "confirmed",
-      "currentMismatch": false
-    },
-    {
-      "group": "법령",
-      "web": true,
-      "key": "law:law:288163:제69조",
-      "title": "공유재산 및 물품 관리법 시행령",
-      "citation": "대통령령 · 행정안전부 · 제69조 · 시행 2026-07-21",
+      "citation": "대통령령 · 행정안전부 · 제63조 · 시행 2026-07-21",
       "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=288163",
       "hasSource": true,
       "proxyRelevant": true,
@@ -320,7 +306,7 @@
       }
     ],
     "excluded": [],
-    "droppedCount": 5
+    "droppedCount": 4
   },
   "summaries": [
     {

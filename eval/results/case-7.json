@@ -9,8 +9,8 @@
       "공유재산 및 물품 관리법"
     ],
     "keywords": [
-      "변상금",
       "무단점유",
+      "변상금",
       "소멸시효"
     ],
     "source": "ai"
@@ -23,10 +23,25 @@
     {
       "group": "법령",
       "web": true,
-      "key": "law:law:283349:제79조",
+      "key": "law:law:283349:제78조",
       "title": "국유재산법",
-      "citation": "법률 · 재정경제부 · 제79조 · 시행 2026-08-20",
+      "citation": "법률 · 재정경제부 · 제78조 · 시행 2026-08-20",
       "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349",
+      "hasSource": true,
+      "proxyRelevant": false,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "법령",
+      "web": true,
+      "key": "law:law:288713:제61조",
+      "title": "국유재산법 시행령",
+      "citation": "대통령령 · 재정경제부 · 제61조 · 시행 2026-08-20",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=288713",
       "hasSource": true,
       "proxyRelevant": false,
       "currentLabel": "현행",
@@ -113,6 +128,30 @@
     {
       "group": "판례",
       "web": false,
+      "key": "case:prec:419838",
+      "title": "경계를 침범하여 해당 토지의 일부를 무단 점유한 경우 재산을 사실상 소유하고 있는 자에 해당하는지 여부",
+      "citation": "대법원 2010-02-23 2010두467",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=419838",
+      "hasSource": true,
+      "proxyRelevant": false,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:229737",
+      "title": "국유재산무단점유변상금부과처분취소",
+      "citation": "대법원 2000-03-24 98두7732",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=229737",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
       "key": "case:prec:242107",
       "title": "변상금부과처분취소",
       "citation": "대법원 2024-06-27 2024두31284",
@@ -147,24 +186,36 @@
       "recheckChanges": []
     },
     {
-      "group": "판례",
+      "group": "법령해석례",
       "web": false,
-      "key": "case:prec:210805",
-      "title": "도로변상금부과처분취소",
-      "citation": "대법원 2019-11-28 2017두56339",
-      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=210805",
+      "key": "interpretation:326791",
+      "title": "산림청 - 무단점유 국유림이 산림유전자원보호구역에 해당하는 경우 산림청장이 임시특례에 따른 산지전용허가 등을 하려면 산림유전자원보호구역의 지정해제 여부를 검토해야 하는지(구 「국유림의 경영 및 관리에 관한 법률」 부칙 제2조제2항 등 관련)",
+      "citation": "법제처 2019-05-20 18-0819",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=326791",
       "hasSource": true,
-      "proxyRelevant": true,
+      "proxyRelevant": false,
       "recheck": "confirmed",
       "recheckChanges": []
     },
     {
-      "group": "판례",
+      "group": "법령해석례",
       "web": false,
-      "key": "case:prec:209607",
-      "title": "시유재산변상금부과처분취소청구",
-      "citation": "대법원 2019-09-09 2018두48298",
-      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=209607",
+      "key": "interpretation:330549",
+      "title": "산림청 - 무단점유 국유림의 지목이 변경된 경우 이를 「국유재산법」에 따라 매각 또는 교환할 수 있는지 여부(2015. 3. 27. 법률 제13252호로 일부개정되어 2015. 9. 28. 시행된 「국유림의 경영 및 관리에 관한 법률」 부칙 제2조제5항 등 관련)",
+      "citation": "법제처 2016-10-10 16-0361",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=330549",
+      "hasSource": true,
+      "proxyRelevant": false,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:313815",
+      "title": "기획재정부 - 국유재산의 무단점유자에 대한 변상금 징수시 해당 국유재산 사용용도가 주거용과 비주거용으로 구분되는 경우 대부료 계산법(「국유재산법」 제32조 등 관련)",
+      "citation": "법제처 2011-09-29 11-0503",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=313815",
       "hasSource": true,
       "proxyRelevant": true,
       "recheck": "confirmed",
@@ -195,36 +246,12 @@
       "recheckChanges": []
     },
     {
-      "group": "법령해석례",
+      "group": "행정심판례",
       "web": false,
-      "key": "interpretation:324401",
-      "title": "안전행정부 - 변상금의 산정기준(「공유재산 및 물품 관리법」 제81조 등 관련)",
-      "citation": "법제처 2013-11-04 13-0265",
-      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=324401",
-      "hasSource": true,
-      "proxyRelevant": true,
-      "recheck": "confirmed",
-      "recheckChanges": []
-    },
-    {
-      "group": "법령해석례",
-      "web": false,
-      "key": "interpretation:314799",
-      "title": "민원인 - “「국토의 계획 및 이용에 관한 법률」에 따른 도시ㆍ군계획사업으로 설치된 도로”의 경우에 「도로법」 제94조 본문에 따른 변상금의 징수시기(「도로법 시행령」 제8조 등 관련)",
-      "citation": "법제처 2013-10-10 13-0331",
-      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=314799",
-      "hasSource": true,
-      "proxyRelevant": true,
-      "recheck": "confirmed",
-      "recheckChanges": []
-    },
-    {
-      "group": "법령해석례",
-      "web": false,
-      "key": "interpretation:313815",
-      "title": "기획재정부 - 국유재산의 무단점유자에 대한 변상금 징수시 해당 국유재산 사용용도가 주거용과 비주거용으로 구분되는 경우 대부료 계산법(「국유재산법」 제32조 등 관련)",
-      "citation": "법제처 2011-09-29 11-0503",
-      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=313815",
+      "key": "tribunal:258401",
+      "title": "공유재산 무단점유 변상금 부과처분 취소청구",
+      "citation": "경기도행정심판위원회 2023-09-04 2023경기행심1079",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=258401",
       "hasSource": true,
       "proxyRelevant": true,
       "recheck": "confirmed",
@@ -233,10 +260,10 @@
     {
       "group": "행정심판례",
       "web": false,
-      "key": "tribunal:272275",
-      "title": "국유재산 변상금 부과처분 취소청구 등",
-      "citation": "국민권익위원회 2025-08-12 2025-05783",
-      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=272275",
+      "key": "tribunal:257989",
+      "title": "공유재산 무단점유 변상금 부과처분 등 취소청구",
+      "citation": "경기도행정심판위원회 2023-07-10 2023경기행심512",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=257989",
       "hasSource": true,
       "proxyRelevant": true,
       "recheck": "confirmed",
@@ -245,10 +272,10 @@
     {
       "group": "행정심판례",
       "web": false,
-      "key": "tribunal:252897",
-      "title": "국유재산 변상금 부과처분 취소청구",
-      "citation": "국민권익위원회 2024-11-29 2024-15547",
-      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=252897",
+      "key": "tribunal:257401",
+      "title": "공유재산 무단점유 변상금 부과처분 취소청구",
+      "citation": "경기도행정심판위원회 2023-05-15 2023경기행심304",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=257401",
       "hasSource": true,
       "proxyRelevant": true,
       "recheck": "confirmed",
@@ -257,10 +284,10 @@
     {
       "group": "행정심판례",
       "web": false,
-      "key": "tribunal:251909",
-      "title": "국유재산 변상금 부과처분 취소청구",
-      "citation": "국민권익위원회 2024-05-28 2024-03460",
-      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=251909",
+      "key": "tribunal:257475",
+      "title": "공유재산 무단점유 변상금 부과처분 취소청구",
+      "citation": "경기도행정심판위원회 2023-04-17 2023경기행심165",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=257475",
       "hasSource": true,
       "proxyRelevant": true,
       "recheck": "confirmed",
@@ -269,24 +296,12 @@
     {
       "group": "행정심판례",
       "web": false,
-      "key": "tribunal:256877",
-      "title": "도로변상금 부과처분 취소청구",
-      "citation": "서울특별시행정심판위원회 2024-03-11 2023-01421",
-      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=256877",
+      "key": "tribunal:257275",
+      "title": "사유지 무단점유에 따른 부당이득반환 등 의무이행청구",
+      "citation": "경기도행정심판위원회 2023-01-16 2022경기행심1491",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=257275",
       "hasSource": true,
-      "proxyRelevant": true,
-      "recheck": "confirmed",
-      "recheckChanges": []
-    },
-    {
-      "group": "행정심판례",
-      "web": false,
-      "key": "tribunal:250479",
-      "title": "변상금 부과처분 무효확인청구",
-      "citation": "국민권익위원회 2023-12-05 2023-11079",
-      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=250479",
-      "hasSource": true,
-      "proxyRelevant": true,
+      "proxyRelevant": false,
       "recheck": "confirmed",
       "recheckChanges": []
     }
@@ -294,16 +309,16 @@
   "picks": [
     "국유재산법 제73조의3",
     "국유재산법 제72조",
-    "변상금부과처분취소"
+    "국유재산무단점유변상금부과처분취소"
   ],
   "candidates": {
     "candidates": [
       {
-        "title": "변상금 징수권 소멸시효가 완성된 것으로 볼 여지가 있음",
+        "title": "변상금 징수권의 소멸시효가 완성된 것으로 볼 여지가 있음",
         "reasons": [
           {
-            "text": "국유재산법 제73조의3 제1항에 따라 금전의 급부를 목적으로 하는 국가의 권리는 5년간 행사하지 아니하면 시효의 완성으로 소멸한다고 규정되어 있으므로, 부과일로부터 5년 이상 권리를 행사하지 않았다면 소멸시효가 완성된 것으로 볼 수 있다.",
-            "quote": "이 법에 따라 금전의 급부를 목적으로 하는 국가의 권리는 5년간 행사하지 아니하면 시효의 완성으로 소멸한다.",
+            "text": "국유재산법 제73조의3 제1항에 따라 금전의 급부를 목적으로 하는 국가의 권리는 5년간 행사하지 아니하면 시효의 완성으로 소멸한다.",
+            "quote": "제73조의3(소멸시효) ① 이 법에 따라 금전의 급부를 목적으로 하는 국가의 권리는 5년간 행사하지 아니하면 시효의 완성으로 소멸한다.",
             "source": {
               "id": "s1",
               "title": "국유재산법",
@@ -312,28 +327,7 @@
             }
           }
         ],
-        "counterpoints": [
-          {
-            "text": "다만, 시효중단 사유(납부고지, 독촉 등)가 있었다면 시효가 완성되었다고 단정하기 어려움.",
-            "quote": "제73조제2항의 권리의 소멸시효는 다음 각 호의 사유로 인하여 중단된다. 1. 납부고지 2. 독촉 3. 교부청구 4. 압류",
-            "source": {
-              "id": "s1",
-              "title": "국유재산법",
-              "citation": "법률 · 재정경제부 · 제73조의3(소멸시효)",
-              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
-            }
-          },
-          {
-            "text": "시효가 정지되는 기간(분납, 징수유예 등)이 있었다면 그 기간만큼 시효가 진행되지 아니하는 점을 감안해야 함.",
-            "quote": "제1항에 따른 소멸시효는 다음 각 호의 어느 하나에 해당하는 기간에는 진행되지 아니한다.",
-            "source": {
-              "id": "s1",
-              "title": "국유재산법",
-              "citation": "법률 · 재정경제부 · 제73조의3(소멸시효)",
-              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
-            }
-          }
-        ]
+        "counterpoints": []
       }
     ],
     "sources": [
@@ -351,18 +345,80 @@
       },
       {
         "id": "s3",
-        "title": "변상금부과처분취소",
-        "citation": "대법원 2024-06-27 선고 2024두31284",
-        "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=242107"
+        "title": "국유재산무단점유변상금부과처분취소",
+        "citation": "대법원 2000-03-24 선고 98두7732",
+        "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=229737"
       }
     ],
     "excluded": [],
-    "droppedCount": 3
+    "droppedCount": 4
   },
   "candidateRecheckDropped": 0,
   "draft": {
-    "error": "원문으로 뒷받침되는 회신 초안을 만들지 못했습니다. 근거로 쓸 자료를 더 고르거나 바꿔 다시 시도해 주세요."
+    "title": "국유재산 무단점유 변상금 부과에 대한 시효 완성 주장 회신",
+    "background": [
+      {
+        "text": "민원인은 6년 전의 무단점유 기간에 대해 이제서야 변상금을 부과한 것에 대해 시효가 지났다며 이의를 제기하였습니다.",
+        "quote": "6년 전의 무단점유 기간에 대해 이제서야 변상금을 부과했습니다. 민원인은 오래된 부과라 시효가 지났다며 이의를 제기했습니다.",
+        "source": {
+          "id": "case",
+          "title": "입력한 사안",
+          "citation": "담당자가 입력한 사안",
+          "sourceUrl": ""
+        }
+      }
+    ],
+    "review": [
+      {
+        "text": "국유재산법 제73조의3 제1항에 따라 금전의 급부를 목적으로 하는 국가의 권리는 5년간 행사하지 아니하면 시효의 완성으로 소멸함을 확인할 수 있습니다.",
+        "quote": "제73조의3(소멸시효) ① 이 법에 따라 금전의 급부를 목적으로 하는 국가의 권리는 5년간 행사하지 아니하면 시효의 완성으로 소멸한다.",
+        "source": {
+          "id": "s1",
+          "title": "국유재산법",
+          "citation": "법률 · 재정경제부 · 제73조의3(소멸시효)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+        }
+      },
+      {
+        "text": "국유재산법에 따르면 변상금도 국가의 금전청구권에 해당할 수 있으므로, 시효규정이 적용될 여지가 있습니다.",
+        "quote": "① 중앙관서의 장등은 무단점유자에 대하여 대통령령으로 정하는 바에 따라 그 재산에 대한 사용료나 대부료의 100분의 120에 상당하는 변상금을 징수한다.",
+        "source": {
+          "id": "s2",
+          "title": "국유재산법",
+          "citation": "법률 · 재정경제부 · 제72조(변상금의 징수)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+        }
+      }
+    ],
+    "reply": [
+      {
+        "text": "국유재산의 무단점유에 따라 부과되는 변상금의 징수권은 국유재산법 제73조의3 제1항에 따라 5년간 행사하지 아니하면 소멸시효가 완성되는 것으로 판단됩니다. 다만, 시효의 진행 중단 또는 정지 사유의 존재 여부 등 구체적인 사실관계를 추가로 검토할 필요가 있습니다.",
+        "quote": "제73조의3(소멸시효) ① 이 법에 따라 금전의 급부를 목적으로 하는 국가의 권리는 5년간 행사하지 아니하면 시효의 완성으로 소멸한다.",
+        "source": {
+          "id": "s1",
+          "title": "국유재산법",
+          "citation": "법률 · 재정경제부 · 제73조의3(소멸시효)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+        }
+      }
+    ],
+    "sources": [
+      {
+        "id": "s1",
+        "title": "국유재산법",
+        "citation": "법률 · 재정경제부 · 제73조의3(소멸시효)",
+        "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+      },
+      {
+        "id": "s2",
+        "title": "국유재산법",
+        "citation": "법률 · 재정경제부 · 제72조(변상금의 징수)",
+        "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+      }
+    ],
+    "droppedCount": 0
   },
+  "draftRecheckDropped": 0,
   "summaries": [
     {
       "title": "국유재산법",
@@ -371,9 +427,9 @@
     },
     {
       "title": "국유재산법",
-      "sentences": 3,
-      "dropped": 1
+      "sentences": 4,
+      "dropped": 0
     }
   ],
-  "seconds": 29
+  "seconds": 31
 }

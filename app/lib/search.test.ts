@@ -89,3 +89,9 @@ describe("관련성 거름망(matchesTerms)", () => {
     expect(matchesTerms("가평군 건축 조례", { lawNames: [], keywords: ["가"] })).toBe(false);
   });
 });
+
+describe("일반 행정 용어 제외(cleanTerms)", () => {
+  it("민원·사안 같은 어느 사안에나 나오는 말은 검색어로 쓰지 않는다", () => {
+    expect(cleanTerms(["민원", "변상금", "민원인", "사안", "무단점유", "민원 처리"], 4)).toEqual(["변상금", "무단점유"]);
+  });
+});
