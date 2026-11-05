@@ -7,16 +7,33 @@
     "lawNames": [],
     "keywords": [
       "풍선 색깔",
-      "취향 제한"
+      "취향",
+      "공공시설 이용"
     ],
     "source": "ai"
   },
-  "foundNothing": true,
+  "foundNothing": false,
   "notices": [],
-  "failedClues": 2,
+  "failedClues": 4,
   "references": 0,
-  "items": [],
+  "items": [
+    {
+      "group": "법령",
+      "web": true,
+      "key": "law:law:290129:제3조",
+      "title": "집회 및 시위에 관한 법률",
+      "citation": "법률 · 경찰청 · 제3조 · 시행 2026-10-02",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=290129",
+      "hasSource": true,
+      "proxyRelevant": null,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    }
+  ],
   "picks": [],
   "summaries": [],
-  "seconds": 1
+  "seconds": 3
 }

@@ -6,9 +6,11 @@
   "terms": {
     "lawNames": [
       "국유재산법",
-      "국유재산 대부계약에 관한 규정"
+      "국유재산의 관리 및 운영에 관한 법률",
+      "민법"
     ],
     "keywords": [
+      "대부료",
       "연체료",
       "계약 해제",
       "분할 납부"
@@ -38,9 +40,9 @@
     {
       "group": "법령",
       "web": true,
-      "key": "law:law:288713:제29조",
+      "key": "law:law:288713:제34조",
       "title": "국유재산법 시행령",
-      "citation": "대통령령 · 재정경제부 · 제29조 · 시행 2026-08-20",
+      "citation": "대통령령 · 재정경제부 · 제34조 · 시행 2026-08-20",
       "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=288713",
       "hasSource": true,
       "proxyRelevant": true,
@@ -111,6 +113,57 @@
       "currentMismatch": false
     },
     {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:188376:",
+      "title": "난민법",
+      "citation": "법률 · 법무부 · 시행 2016-12-20",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=188376",
+      "hasSource": true,
+      "proxyRelevant": false,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:216947",
+      "title": "대부료반환",
+      "citation": "대법원 2021-07-15 2019다269385",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=216947",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:217521",
+      "title": "대부료반환",
+      "citation": "수원지방법원 2019-08-22 2018나63716",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=217521",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:200808",
+      "title": "국유임야대부료부과처분취소",
+      "citation": "대법원 1993-12-07 91누11612",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=200808",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
       "group": "판례",
       "web": false,
       "key": "case:prec:239521",
@@ -137,36 +190,12 @@
       "recheckChanges": []
     },
     {
-      "group": "판례",
+      "group": "법령해석례",
       "web": false,
-      "key": "case:prec:173790",
-      "title": "변상금연체료부과처분취소",
-      "citation": "서울고등법원 2012-06-21 2011누39297",
-      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=173790",
-      "hasSource": true,
-      "proxyRelevant": true,
-      "recheck": "confirmed",
-      "recheckChanges": []
-    },
-    {
-      "group": "판례",
-      "web": false,
-      "key": "case:prec:218597",
-      "title": "변상금연체료부과처분취소",
-      "citation": "서울행정법원 2011-10-05 2011구단5677",
-      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=218597",
-      "hasSource": true,
-      "proxyRelevant": true,
-      "recheck": "confirmed",
-      "recheckChanges": []
-    },
-    {
-      "group": "판례",
-      "web": false,
-      "key": "case:prec:422438",
-      "title": "집합건물의 전(前) 구분소유자의 특정승계인에게 승계되는 공용부분 관리비의 범위 및 공용부분 관리비에 대한 연체료가 특별승계인에게 승계되는 공용부분 관리비에 포함되는지 여부",
-      "citation": "대법원 2006-06-29 2004다3598",
-      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=422438",
+      "key": "interpretation:338969",
+      "title": "민원인 - 「공유재산 및 물품 관리법」 제33조제1항 및 같은 법 시행령 제34조에서 규정하고 있는 “전년도의 연간 대부료”의 의미(「공유재산 및 물품 관리법」 제33조 등 관련)",
+      "citation": "법제처 2024-07-02 24-0123",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=338969",
       "hasSource": true,
       "proxyRelevant": true,
       "recheck": "confirmed",
@@ -175,10 +204,82 @@
     {
       "group": "법령해석례",
       "web": false,
-      "key": "interpretation:312362",
-      "title": "서울특별시 -「도시공원 및 녹지 등에 관한 법률」제40조제1항(공원시설 사용료 및 연체료의 징수)",
-      "citation": "법제처 2007-03-09 07-0001",
-      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=312362",
+      "key": "interpretation:338889",
+      "title": "경기도 고양시 - 법률에서 사용료를 면제 또는 경감할 수 있다고 규정하면서 위임 조례에서 그 감면 기준을 정하고 있는 경우가 「공유재산 및 물품관리법」 제16조제2항제5호에 따른 “그 밖에 다른 법률에 따라 사용료 또는 대부료를 감면하는 경우”에 해당되는지 등(「공유재산 및 물품관리법」 제16조제2항제5호 등 관련)",
+      "citation": "법제처 2024-06-19 24-0411",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=338889",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:338871",
+      "title": "경기도 고양시 - 법률에서 사용료를 면제 또는 경감할 수 있다고 규정하면서 위임 조례에서 그 감면 기준을 정하고 있는 경우가 「공유재산 및 물품관리법」 제16조제2항제5호에 따른 “그 밖에 다른 법률에 따라 사용료 또는 대부료를 감면하는 경우”에 해당되는지 등(「공유재산 및 물품관리법」 제16조제2항제5호 등 관련)",
+      "citation": "법제처 2024-06-19 24-0134",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=338871",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:328275",
+      "title": "산림청 - 국유림 공중부분에 대한 대부료 등을 징수하는 경우 「국유재산법 시행령」 제29조제4항을 적용할 수 있는지 여부(「국유림의 경영 및 관리에 관한 법률」 제23조 등 관련)",
+      "citation": "법제처 2020-04-27 19-0746",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=328275",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:313815",
+      "title": "기획재정부 - 국유재산의 무단점유자에 대한 변상금 징수시 해당 국유재산 사용용도가 주거용과 비주거용으로 구분되는 경우 대부료 계산법(「국유재산법」 제32조 등 관련)",
+      "citation": "법제처 2011-09-29 11-0503",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=313815",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:258421",
+      "title": "대부료 체납 압류처분 취소청구",
+      "citation": "경기도행정심판위원회 2023-09-04 2023경기행심1028",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=258421",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:257591",
+      "title": "공유재산 대부료 부과처분 취소청구",
+      "citation": "경기도행정심판위원회 2023-03-06 2023경기행심5",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=257591",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:165566",
+      "title": "국유재산 대부료 부과처분 취소청구",
+      "citation": "국민권익위원회 2013-02-19 중앙행심2013-00820",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=165566",
       "hasSource": true,
       "proxyRelevant": true,
       "recheck": "confirmed",
@@ -195,63 +296,32 @@
       "proxyRelevant": true,
       "recheck": "confirmed",
       "recheckChanges": []
-    },
-    {
-      "group": "행정심판례",
-      "web": false,
-      "key": "tribunal:234599",
-      "title": "계약해제통보 등 취소청구",
-      "citation": "국민권익위원회 2021-03-23 2021-00562",
-      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=234599",
-      "hasSource": true,
-      "proxyRelevant": false,
-      "recheck": "confirmed",
-      "recheckChanges": []
-    },
-    {
-      "group": "행정심판례",
-      "web": false,
-      "key": "tribunal:14876",
-      "title": "분양계약해제통고처분취소청구",
-      "citation": "국민권익위원회 1997-08-29 1997-04789",
-      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=14876",
-      "hasSource": true,
-      "proxyRelevant": false,
-      "recheck": "confirmed",
-      "recheckChanges": []
-    },
-    {
-      "group": "행정심판례",
-      "web": false,
-      "key": "tribunal:14875",
-      "title": "분양계약해제통고처분취소청구",
-      "citation": "국민권익위원회 1997-08-29 1997-04788",
-      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=14875",
-      "hasSource": true,
-      "proxyRelevant": false,
-      "recheck": "confirmed",
-      "recheckChanges": []
-    },
-    {
-      "group": "행정심판례",
-      "web": false,
-      "key": "tribunal:14879",
-      "title": "분양계약해제통고처분취소청구",
-      "citation": "국민권익위원회 1997-08-29 1997-04792",
-      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=14879",
-      "hasSource": true,
-      "proxyRelevant": false,
-      "recheck": "confirmed",
-      "recheckChanges": []
     }
   ],
   "picks": [
     "국유재산법 제73조",
     "국유재산법 제47조",
-    "임차보증금반환·차임연체료및손해배상금"
+    "대부료반환"
   ],
   "candidates": {
-    "candidates": [],
+    "candidates": [
+      {
+        "title": "분할 납부 허용은 명문 규정이 확인되지 않아 신중히 검토할 여지가 있음",
+        "reasons": [
+          {
+            "text": "연체료에 대하여서는 ‘징수를 미루거나 나누어 내는 경우 이자는 제외한다’라는 취지가 있으나, 이 자체가 분할납부 허용의 근거로 해석되기는 어려움.",
+            "quote": "(징수를 미루거나 나누어 내는 경우 이자는 제외한다)",
+            "source": {
+              "id": "s1",
+              "title": "국유재산법",
+              "citation": "법률 · 재정경제부 · 제73조(연체료 등의 징수)",
+              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+            }
+          }
+        ],
+        "counterpoints": []
+      }
+    ],
     "sources": [
       {
         "id": "s1",
@@ -267,14 +337,84 @@
       },
       {
         "id": "s3",
-        "title": "임차보증금반환·차임연체료및손해배상금",
-        "citation": "대법원 2023-09-14 선고 2023다236566,236573",
-        "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=239521"
+        "title": "대부료반환",
+        "citation": "대법원 2021-07-15 선고 2019다269385",
+        "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=216947"
       }
     ],
     "excluded": [],
-    "droppedCount": 5
+    "droppedCount": 6
   },
+  "candidateRecheckDropped": 0,
+  "draft": {
+    "title": "국유재산 대부계약 연체 및 분할납부 요청 관련 회신",
+    "background": [
+      {
+        "text": "민원인은 국유재산 대부계약을 체결하였으나, 대부료를 6개월간 납부하지 않아 연체료가 부과되고, 계약 해제가 예고되었습니다. 이에 민원인은 경제 사정의 어려움을 이유로 분할 납부를 요청하였습니다.",
+        "quote": "국유재산 대부계약을 맺은 민원인이 대부료를 6개월 동안 내지 않아 연체료를 부과하고 계약 해제를 예고했습니다. 민원인은 경제 사정이 어려워 분할 납부를 요청했습니다.",
+        "source": {
+          "id": "case",
+          "title": "입력한 사안",
+          "citation": "담당자가 입력한 사안",
+          "sourceUrl": ""
+        }
+      }
+    ],
+    "review": [
+      {
+        "text": "국유재산법에 따르면 대부료가 납부기한까지 납부되지 않았을 경우 연체료를 징수할 수 있도록 하고 있습니다. 또한, 계약의 해제 등에 관한 절차 역시 법령에 따라 진행될 수 있음을 확인할 수 있습니다.",
+        "quote": "제73조(연체료 등의 징수) ① 중앙관서의 장등은 국유재산의 사용료, 관리소홀에 따른 가산금, 대부료, 매각대금, 교환자금 및 변상금(징수를 미루거나 나누어 내는 경우 이자는 제외한다)이 납부기한까지 납부되지 아니한 경우 대통령령으로 정하는 바에 따라 연체료를 징수할 수 있다.",
+        "source": {
+          "id": "s1",
+          "title": "국유재산법",
+          "citation": "법률 · 재정경제부 · 제73조(연체료 등의 징수)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+        }
+      },
+      {
+        "text": "대부료에 대하여 분할납부를 허용하는 명확한 법령상 규정은 확인되지 않았으며, '징수를 미루거나 나누어 내는 경우 이자는 제외한다'는 문구가 있으나, 이를 근거로 분할납부 자체가 허용된다고 해석하기는 곤란하다는 점이 확인됩니다.",
+        "quote": "징수를 미루거나 나누어 내는 경우 이자는 제외한다",
+        "source": {
+          "id": "s1",
+          "title": "국유재산법",
+          "citation": "법률 · 재정경제부 · 제73조(연체료 등의 징수)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+        }
+      }
+    ],
+    "reply": [
+      {
+        "text": "민원인의 대부료 연체에 따라 연체료가 부과되고 계약 해제가 예고된 것은 국유재산법 및 관련 규정에 근거한 것으로 판단됩니다.",
+        "quote": "제73조(연체료 등의 징수) ① 중앙관서의 장등은 국유재산의 사용료, 관리소홀에 따른 가산금, 대부료, 매각대금, 교환자금 및 변상금(징수를 미루거나 나누어 내는 경우 이자는 제외한다)이 납부기한까지 납부되지 아니한 경우 대통령령으로 정하는 바에 따라 연체료를 징수할 수 있다.",
+        "source": {
+          "id": "s1",
+          "title": "국유재산법",
+          "citation": "법률 · 재정경제부 · 제73조(연체료 등의 징수)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+        }
+      },
+      {
+        "text": "분할납부 요청의 경우, 법령상 명확한 허용 규정이 존재하지 않아 신중한 검토가 필요한 상황임을 안내드립니다.",
+        "quote": "징수를 미루거나 나누어 내는 경우 이자는 제외한다",
+        "source": {
+          "id": "s1",
+          "title": "국유재산법",
+          "citation": "법률 · 재정경제부 · 제73조(연체료 등의 징수)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+        }
+      }
+    ],
+    "sources": [
+      {
+        "id": "s1",
+        "title": "국유재산법",
+        "citation": "법률 · 재정경제부 · 제73조(연체료 등의 징수)",
+        "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+      }
+    ],
+    "droppedCount": 2
+  },
+  "draftRecheckDropped": 0,
   "summaries": [
     {
       "title": "국유재산법",
@@ -287,5 +427,5 @@
       "dropped": 0
     }
   ],
-  "seconds": 24
+  "seconds": 35
 }

@@ -5,27 +5,44 @@
   "errors": [],
   "terms": {
     "lawNames": [
-      "국유재산법"
+      "국유재산법",
+      "국토계획법",
+      "행정소송법"
     ],
     "keywords": [
       "무단설치",
-      "철거요구",
+      "철거명령",
       "원상회복"
     ],
     "source": "ai"
   },
   "foundNothing": false,
   "notices": [],
-  "failedClues": 2,
+  "failedClues": 1,
   "references": 0,
   "items": [
     {
       "group": "법령",
       "web": true,
-      "key": "law:law:283349:제32조",
+      "key": "law:law:283349:제37조",
       "title": "국유재산법",
-      "citation": "법률 · 재정경제부 · 제32조 · 시행 2026-08-20",
+      "citation": "법률 · 재정경제부 · 제37조 · 시행 2026-08-20",
       "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "법령",
+      "web": true,
+      "key": "law:law:170996:제2조",
+      "title": "행정대집행법",
+      "citation": "법률 · 행정안전부 · 제2조 · 시행 2015-11-19",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=170996",
       "hasSource": true,
       "proxyRelevant": true,
       "currentLabel": "현행",
@@ -95,12 +112,63 @@
       "currentMismatch": false
     },
     {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:285913:",
+      "title": "행정소송법",
+      "citation": "법률 · 법무부 · 시행 2026-05-12",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=285913",
+      "hasSource": true,
+      "proxyRelevant": false,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
       "group": "판례",
       "web": false,
-      "key": "case:detc:13134",
-      "title": "국유재산법 제51조 등 위헌소원",
-      "citation": "헌법재판소 2010-03-25 2008헌바148",
-      "sourceUrl": "https://www.law.go.kr/detcInfoP.do?detcSeq=13134",
+      "key": "case:prec:69034",
+      "title": "어장시설물등철거명령취소",
+      "citation": "대법원 2007-10-26 2005두7853",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=69034",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:194970",
+      "title": "불법건축물자진철거명령처분취소",
+      "citation": "대법원 1999-05-25 99두2475",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=194970",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:270607",
+      "title": "무허가 전신주 이설 등 철거명령처분을 취소 청구",
+      "citation": "서울특별시행정심판위원회 2016-05-30 2016-96",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=270607",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:270593",
+      "title": "건축물 철거명령 취소청구",
+      "citation": "서울특별시행정심판위원회 2016-04-04 2016-145",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=270593",
       "hasSource": true,
       "proxyRelevant": true,
       "recheck": "confirmed",
@@ -110,15 +178,15 @@
   "picks": [
     "국유재산법 제74조",
     "국유재산법 제38조",
-    "국유재산법 제51조 등 위헌소원"
+    "어장시설물등철거명령취소"
   ],
   "candidates": {
     "candidates": [
       {
-        "title": "철거 및 원상회복 요구가 가능할 여지가 있음",
+        "title": "철거 및 원상회복 요구가 가능한 것으로 볼 여지가 있음",
         "reasons": [
           {
-            "text": "국유지에 정당한 사유 없이 시설물을 설치한 경우 중앙관서의 장등은 행정대집행법을 준용하여 철거 등 필요한 조치를 할 수 있음에 따라 철거 및 원상회복 요구가 가능할 여지가 있음.",
+            "text": "정당한 사유 없이 국유재산에 시설물을 설치한 경우 중앙관서의 장등은 행정대집행법을 준용하여 철거 또는 필요한 조치를 할 수 있다.",
             "quote": "정당한 사유 없이 국유재산을 점유하거나 이에 시설물을 설치한 경우에는 중앙관서의 장등은 「행정대집행법」을 준용하여 철거하거나 그 밖에 필요한 조치를 할 수 있다.",
             "source": {
               "id": "s1",
@@ -126,26 +194,9 @@
               "citation": "법률 · 재정경제부 · 제74조(불법시설물의 철거)",
               "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
             }
-          }
-        ],
-        "counterpoints": [
+          },
           {
-            "text": "사용허가를 받은 자의 경우에는 허가기간이 끝나거나 취소 시에만 원상회복 의무가 명시됨.",
-            "quote": "사용허가를 받은 자는 허가기간이 끝나거나 제36조에 따라 사용허가가 취소 또는 철회된 경우에는 그 재산을 원래 상태대로 반환하여야 한다.",
-            "source": {
-              "id": "s2",
-              "title": "국유재산법",
-              "citation": "법률 · 재정경제부 · 제38조(원상회복)",
-              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
-            }
-          }
-        ]
-      },
-      {
-        "title": "철거 및 원상회복 요구에 신중할 여지가 있음",
-        "reasons": [
-          {
-            "text": "자료상 원상회복 의무 규정은 '사용허가를 받은 자'에 대한 규정이므로, 무허가(무단 점유자)에 대하여는 직접적인 원상회복 의무 규정이 명확하지 않을 수 있음.",
+            "text": "사용허가가 없는 경우 원상회복 의무를 부과할 수 있다.",
             "quote": "사용허가를 받은 자는 허가기간이 끝나거나 제36조에 따라 사용허가가 취소 또는 철회된 경우에는 그 재산을 원래 상태대로 반환하여야 한다.",
             "source": {
               "id": "s2",
@@ -157,13 +208,13 @@
         ],
         "counterpoints": [
           {
-            "text": "불법시설물 철거에 대해 행정대집행법을 준용할 수 있음을 분명히 하고 있으므로, 철거 등 조치의 요구 자체가 불가능하다고 보기는 어려움.",
-            "quote": "정당한 사유 없이 국유재산을 점유하거나 이에 시설물을 설치한 경우에는 중앙관서의 장등은 「행정대집행법」을 준용하여 철거하거나 그 밖에 필요한 조치를 할 수 있다.",
+            "text": "대법원은 관계 법령에 근거하여 허가기간 종료 등 요건이 충족된 후 철거명령의 적법성을 인정했으나, 각 사안별로 사실관계나 권리관계에 따라 판단이 달라질 수 있음을 시사한다.",
+            "quote": "위 원고 등의 이 사건 어업권이 각 면허기간만료로 소멸되었으므로 피고가구 수산업법 제58조에 근거하여 한 이 사건 철거명령처분은 적법하다고 판단하였다.",
             "source": {
-              "id": "s1",
-              "title": "국유재산법",
-              "citation": "법률 · 재정경제부 · 제74조(불법시설물의 철거)",
-              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+              "id": "s3",
+              "title": "어장시설물등철거명령취소",
+              "citation": "대법원 2007-10-26 선고 2005두7853",
+              "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=69034"
             }
           }
         ]
@@ -184,20 +235,20 @@
       },
       {
         "id": "s3",
-        "title": "국유재산법 제51조 등 위헌소원",
-        "citation": "헌법재판소 2010-03-25 선고 2008헌바148",
-        "sourceUrl": "https://www.law.go.kr/detcInfoP.do?detcSeq=13134"
+        "title": "어장시설물등철거명령취소",
+        "citation": "대법원 2007-10-26 선고 2005두7853",
+        "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=69034"
       }
     ],
     "excluded": [],
-    "droppedCount": 1
+    "droppedCount": 2
   },
   "candidateRecheckDropped": 0,
   "draft": {
-    "title": "국유지 무단 설치 시설물 철거 및 원상회복 요구에 관한 회신",
+    "title": "국유지 무단 설치 시설물에 대한 철거 및 원상회복 요구 관련 회신",
     "background": [
       {
-        "text": "민원인이 국유지에 허가 없이 컨테이너와 울타리를 설치하였고, 이에 대하여 철거와 원상회복을 요구하였으나, 민원인은 철거 비용의 과다를 이유로 유예를 요청하였습니다.",
+        "text": "민원인이 국유지에 허가 없이 컨테이너와 울타리를 설치하여, 행정청에서 해당 시설물의 철거 및 원상회복을 요구하였으며, 이에 민원인이 철거 비용이 과다하다는 사유로 유예를 요청한 사안입니다.",
         "quote": "국유지에 허가 없이 컨테이너와 울타리를 설치한 민원인에게 철거와 원상회복을 요구했습니다. 민원인은 철거 비용이 과하다며 유예를 요청했습니다.",
         "source": {
           "id": "case",
@@ -209,7 +260,7 @@
     ],
     "review": [
       {
-        "text": "국유지에 정당한 사유 없이 시설물을 설치한 경우에는 관계 중앙관서의 장 등이 「행정대집행법」을 준용하여 철거 등 필요한 조치를 할 수 있으므로, 철거 및 원상회복 요구가 가능할 여지가 있습니다.",
+        "text": "정당한 사유 없이 국유재산을 점유하거나 이에 시설물을 설치한 경우에는 중앙관서의 장 등은 「행정대집행법」을 준용하여 철거하거나 그 밖에 필요한 조치를 할 수 있어, 무단 설치 시설물에 대한 철거 요구가 가능하다고 판단됩니다.",
         "quote": "정당한 사유 없이 국유재산을 점유하거나 이에 시설물을 설치한 경우에는 중앙관서의 장등은 「행정대집행법」을 준용하여 철거하거나 그 밖에 필요한 조치를 할 수 있다.",
         "source": {
           "id": "s1",
@@ -219,7 +270,7 @@
         }
       },
       {
-        "text": "다만, 사용허가를 받은 자의 경우에는 허가기간 만료 또는 허가 취소/철회가 있어야 원상회복 의무가 명확히 규정되어 있습니다.",
+        "text": "사용허가를 받지 않은 경우에는 국유재산법에 따라 원상회복 의무가 발생할 수 있으며, 이에 따라 해당 시설물을 원래 상태로 반환하도록 요구할 수 있습니다.",
         "quote": "사용허가를 받은 자는 허가기간이 끝나거나 제36조에 따라 사용허가가 취소 또는 철회된 경우에는 그 재산을 원래 상태대로 반환하여야 한다.",
         "source": {
           "id": "s2",
@@ -229,25 +280,35 @@
         }
       },
       {
-        "text": "헌법재판소는 무단점유자에 대한 불법시설물 철거 및 변상금 부과 규정이 헌법상 평등원칙이나 재산권을 침해하지 않는 것으로 판시하였으므로, 무단점유 시설물에 대해 행정대집행 절차에 따라 철거 명령 및 원상회복 요구가 이루어질 수 있는 제도적 근거가 있음이 확인됩니다.",
-        "quote": "공유의 잡종재산의 효율적인 보존·관리라는 합리적인 이유가 있다고 할 것이므로 헌법상평등원칙에 반하지 아니하고, 입법목적의 정당성과 그 목적달성을 위한 방법의 적정성, 피해의 최소성, 그리고 그 입법에 의해 보호하려는 공공의 필요와 침해되는 기본권 사이의 균형성을 모두 갖추고 있으므로, 청구인들의 재산권을 침해하지도 아니한다.",
+        "text": "다만, 대법원 판례에서는 관계 법령에 근거한 철거명령의 적법성을 인정하면서도, 각 사안별 사실관계 및 권리관계에 따라 판단이 달라질 수 있음을 시사하고 있습니다.",
+        "quote": "위 원고 등의 이 사건 어업권이 각 면허기간만료로 소멸되었으므로 피고가구 수산업법 제58조에 근거하여 한 이 사건 철거명령처분은 적법하다고 판단하였다.",
         "source": {
           "id": "s3",
-          "title": "국유재산법 제51조 등 위헌소원",
-          "citation": "헌법재판소 2010-03-25 선고 2008헌바148",
-          "sourceUrl": "https://www.law.go.kr/detcInfoP.do?detcSeq=13134"
+          "title": "어장시설물등철거명령취소",
+          "citation": "대법원 2007-10-26 선고 2005두7853",
+          "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=69034"
         }
       }
     ],
     "reply": [
       {
-        "text": "귀하께서 국유지에 허가 없이 설치하신 컨테이너 및 울타리의 철거 및 원상회복 요구에 관하여 국유재산법 제74조에 따라, 정당한 사유 없이 국유재산에 시설물을 설치한 경우에는 행정대집행법을 준용하여 철거 등 필요한 조치를 할 수 있을 여지가 있음을 알려드립니다.",
+        "text": "정당한 사유 없이 국유재산에 무단으로 설치된 시설물에 대해서는 국유재산법 제74조에 따라 철거 및 필요한 조치를 요구할 수 있으며, 이 경우 행정대집행법 절차에 의거하여 집행이 가능합니다. 원상회복 역시 원칙적으로 요청할 수 있음을 안내드립니다. 다만, 개별 사실관계나 실제 권리관계 등에 따라 구체적 처리방향이 달라질 수 있음을 감안할 필요가 있습니다.",
         "quote": "정당한 사유 없이 국유재산을 점유하거나 이에 시설물을 설치한 경우에는 중앙관서의 장등은 「행정대집행법」을 준용하여 철거하거나 그 밖에 필요한 조치를 할 수 있다.",
         "source": {
           "id": "s1",
           "title": "국유재산법",
           "citation": "법률 · 재정경제부 · 제74조(불법시설물의 철거)",
           "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+        }
+      },
+      {
+        "text": "시설물이 허가 없이 설치되어 행정청이 원상회복을 요구하는 경우, 관련 법령 및 개별 사안의 특수성에 따라 유예기간 부여 및 집행 여부가 결정될 수 있습니다. 이와 관련해 추가 사실관계가 확인될 경우, 법령 및 판례에 따라 처리될 수 있음을 알려드립니다.",
+        "quote": "위 원고 등의 이 사건 어업권이 각 면허기간만료로 소멸되었으므로 피고가구 수산업법 제58조에 근거하여 한 이 사건 철거명령처분은 적법하다고 판단하였다.",
+        "source": {
+          "id": "s3",
+          "title": "어장시설물등철거명령취소",
+          "citation": "대법원 2007-10-26 선고 2005두7853",
+          "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=69034"
         }
       }
     ],
@@ -266,12 +327,12 @@
       },
       {
         "id": "s3",
-        "title": "국유재산법 제51조 등 위헌소원",
-        "citation": "헌법재판소 2010-03-25 선고 2008헌바148",
-        "sourceUrl": "https://www.law.go.kr/detcInfoP.do?detcSeq=13134"
+        "title": "어장시설물등철거명령취소",
+        "citation": "대법원 2007-10-26 선고 2005두7853",
+        "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=69034"
       }
     ],
-    "droppedCount": 1
+    "droppedCount": 0
   },
   "draftRecheckDropped": 0,
   "summaries": [
@@ -286,5 +347,5 @@
       "dropped": 0
     }
   ],
-  "seconds": 24
+  "seconds": 26
 }
