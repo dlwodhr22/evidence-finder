@@ -105,20 +105,10 @@ async function runCase(c) {
     } else {
       rec.candidates = cand.data;
       const toP = (ps) => ps.map((p) => ({ text: p.text, quote: p.quote, sourceId: p.source.id }));
-      // 후보 근거를 원문과 다시 대조했을 때 빠지는 문장이 있는지(없어야 정상)
       const shown = cand.data.candidates.map((x) => ({ title: x.title, reasons: toP(x.reasons), counterpoints: toP(x.counterpoints) }));
       if (shown.length > 0) {
-        const re = await post("/api/candidates", { input, picks: refs, candidates: shown });
-        rec.candidateRecheckDropped = re.data?.droppedCount ?? null;
         const d = await post("/api/draft", { input, picks: refs, candidate: shown[0] });
-        if (d.data) {
-          rec.draft = d.data;
-          const toS = (xs) => xs.map((s2) => ({ text: s2.text, quote: s2.quote, sourceId: s2.source.id }));
-          const rd = await post("/api/draft", { input, picks: refs, candidate: shown[0], shown: { title: d.data.title, background: toS(d.data.background), review: toS(d.data.review), reply: toS(d.data.reply) } });
-          rec.draftRecheckDropped = rd.data ? rd.data.droppedCount : null;
-        } else {
-          rec.draft = { error: d.error?.message };
-        }
+        rec.draft = d.data ? d.data : { error: d.error?.message };
       }
     }
   }
@@ -171,7 +161,7 @@ L.push("## 한눈에 보기", "");
 L.push("| 성공 기준 | 자동 점검 결과 | 사람이 확인할 것 |", "|---|---|---|");
 L.push(`| 1 환각 0건 | 법제처에서 다시 가져왔을 때 없는 자료(removed): **${all.filter((i) => i.recheck === "removed").length}건** / 번호·날짜가 달라 고쳐진 자료(corrected): ${all.filter((i) => i.recheck === "corrected").length}건 | 아래 목록의 제목이 실제 자료인지 |`);
 L.push(`| 2 출처 표기율 | ${pct(all.filter((i) => i.hasSource).length, all.length)} | 링크가 열리는지(표본) |`);
-L.push(`| 3 인용 일치 | 후보 다시 대조에서 빠진 문장 합계: ${real.reduce((n, r) => n + (r.candidateRecheckDropped ?? 0), 0)}개 / 초안 다시 대조에서 빠진 문장 합계: ${real.reduce((n, r) => n + (r.draftRecheckDropped ?? 0), 0)}개 (0이어야 정상) | 후보·초안 문장이 근거 구절의 뜻과 맞는지 |`);
+L.push(`| 3 인용 일치 | 화면에 나간 후보·초안 문장은 모두 근거 구절이 원문에 글자 그대로 있는 것만이다(걸러진 문장: 후보 ${real.reduce((n, r) => n + (r.candidates?.droppedCount ?? 0), 0)}개, 초안 ${real.reduce((n, r) => n + (r.draft?.droppedCount ?? 0), 0)}개) | 후보·초안 문장이 근거 구절의 뜻과 맞는지 |`);
 const laws = all.filter((i) => i.currentLabel);
 L.push(`| 4 현행 여부 | 법령 ${laws.length}건 중 현행 표시가 법제처 재조회와 다른 것: **${laws.filter((i) => i.currentMismatch).length}건**, 현행 아님/시행 예정으로 표시된 것: ${laws.filter((i) => i.currentLabel !== "현행").length}건 | 현행 아님 표시가 맞는지 |`);
 const rel = all.filter((i) => i.proxyRelevant !== null);

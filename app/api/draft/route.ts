@@ -1,5 +1,4 @@
 // PLAN 작업 18: POST /api/draft — 선택한 판단 후보로 공문 형식 회신 초안을 만든다.
-// `shown`(화면에 있던 초안)을 함께 보내면 "근거 없는 내용 신고"로 보고 문장마다 원문과 다시 대조한다.
 // 사안과 초안은 저장하지 않고 기록(로그)에도 남기지 않는다(CLAUDE.md §5).
 import { parsePicks } from "../../lib/candidates";
 import { buildDraft, draftRequestSchema } from "../../lib/draft";
@@ -26,7 +25,7 @@ export async function POST(request: Request): Promise<Response> {
   try {
     const result = await buildDraft(checked.data, picks);
     if (!result.ok) return errorReply(result.code === "NO_GROUNDED_DRAFT" ? 422 : 502, result.code, result.message);
-    return Response.json({ data: result.data, regenerated: result.regenerated === true });
+    return Response.json({ data: result.data });
   } catch {
     return errorReply(500, "DRAFT_FAILED", "회신 초안을 만드는 중 문제가 생겼습니다. 잠시 뒤 다시 시도해 주세요.");
   }

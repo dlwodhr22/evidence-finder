@@ -7,7 +7,7 @@ import type { CaseInput } from "../lib/case-input";
 import type { CandidatePoint, CandidatesView } from "../lib/candidate-types";
 import { MAX_PICKS } from "../lib/candidate-types";
 import { refOf, type DocumentRef } from "../lib/document-types";
-import type { DraftSentence, DraftView } from "../lib/draft-types";
+import type { DraftView } from "../lib/draft-types";
 import DraftPanel from "./DraftPanel";
 import { isLawGoKrUrl } from "../lib/links";
 import type { VerifiedItem } from "../lib/types";
@@ -51,10 +51,8 @@ export default function CandidatePanel({
   const [state, setState] = useState<State>({ status: "idle" });
   // 후보를 만들 때 쓴 자료. 자료 번호(s1…)가 이 순서에 묶여 있어서, 초안·다시 대조도 이 목록으로 보낸다.
   const [usedRefs, setUsedRefs] = useState<DocumentRef[]>([]);
-  const [note, setNote] = useState(""); // 후보 다시 대조 결과 안내
-  const [rechecking, setRechecking] = useState(false);
   // 회신 초안: 어느 후보로 만들었는지와 상태
-  const [draft, setDraft] = useState<{ index: number; status: "loading" } | { index: number; status: "error"; message: string } | { index: number; status: "done"; data: DraftView; note: string; busy: boolean } | null>(null);
+  const [draft, setDraft] = useState<{ index: number; status: "loading" } | { index: number; status: "error"; message: string } | { index: number; status: "done"; data: DraftView } | null>(null);
 
   async function post<T>(url: string, body: unknown): Promise<{ ok: true; data: T; regenerated: boolean } | { ok: false; message: string }> {
     try {
@@ -74,7 +72,6 @@ export default function CandidatePanel({
   async function make() {
     if (!input || picks.length === 0) return;
     setState({ status: "loading" });
-    setNote("");
     setDraft(null);
     const refs = picks.map(refOf);
     const r = await post<CandidatesView>("/api/candidates", { input, picks: refs });
@@ -86,36 +83,8 @@ export default function CandidatePanel({
     }
   }
 
-  // 근거 없는 내용 신고(판단 후보): 문장마다 법제처 원문과 다시 대조해 뒷받침 안 되는 문장을 뺀다
-  async function recheckCandidates() {
-    if (state.status !== "done" || !input) return;
-    setRechecking(true);
-    const shown = state.data.candidates.map((c) => ({
-      title: c.title,
-      reasons: c.reasons.map((p) => ({ text: p.text, quote: p.quote, sourceId: p.source.id })),
-      counterpoints: c.counterpoints.map((p) => ({ text: p.text, quote: p.quote, sourceId: p.source.id })),
-    }));
-    const r = await post<CandidatesView>("/api/candidates", { input, picks: usedRefs, candidates: shown });
-    setRechecking(false);
-    if (!r.ok) {
-      setNote(`다시 대조하지 못했습니다. ${r.message} 지금 화면은 그대로 둡니다.`);
-      return;
-    }
-    const before = state.data.candidates.reduce((n, c) => n + c.reasons.length + c.counterpoints.length, 0);
-    const after = r.data.candidates.reduce((n, c) => n + c.reasons.length + c.counterpoints.length, 0);
-    setNote(
-      r.regenerated
-        ? "법제처 원문과 다시 대조했더니 남는 근거가 없어 판단 후보를 처음부터 다시 만들었습니다."
-        : before === after
-          ? "법제처 원문과 문장마다 다시 대조했습니다. 근거가 확인되지 않은 문장은 없었습니다."
-          : `법제처 원문과 문장마다 다시 대조해 근거가 확인되지 않은 문장 ${before - after}개를 뺐습니다.`,
-    );
-    setState({ status: "done", data: r.data });
-    if (r.regenerated || before !== after) setDraft(null); // 후보가 바뀌었을 때만 이전 초안을 치운다
-  }
-
-  // 회신 초안 만들기 / 근거 없는 내용 신고(shown을 함께 보내면 문장마다 다시 대조)
-  async function makeDraft(index: number, shown?: DraftView) {
+  // 회신 초안 만들기: 고른 후보와 후보를 만들 때 쓴 자료로 만든다
+  async function makeDraft(index: number) {
     if (state.status !== "done" || !input) return;
     const c = state.data.candidates[index];
     const candidate = {
@@ -123,32 +92,13 @@ export default function CandidatePanel({
       reasons: c.reasons.map((p) => ({ text: p.text, quote: p.quote, sourceId: p.source.id })),
       counterpoints: c.counterpoints.map((p) => ({ text: p.text, quote: p.quote, sourceId: p.source.id })),
     };
-    const toSentence = (s: DraftSentence) => ({ text: s.text, quote: s.quote, sourceId: s.source.id });
-    if (shown) setDraft((d) => (d && d.status === "done" ? { ...d, busy: true } : d));
-    else setDraft({ index, status: "loading" });
-    const r = await post<DraftView>("/api/draft", {
-      input,
-      picks: usedRefs,
-      candidate,
-      ...(shown
-        ? { shown: { title: shown.title, background: shown.background.map(toSentence), review: shown.review.map(toSentence), reply: shown.reply.map(toSentence) } }
-        : {}),
-    });
+    setDraft({ index, status: "loading" });
+    const r = await post<DraftView>("/api/draft", { input, picks: usedRefs, candidate });
     if (!r.ok) {
-      if (shown) setDraft((d) => (d && d.status === "done" ? { ...d, busy: false, note: `다시 대조하지 못했습니다. ${r.message} 지금 초안은 그대로 둡니다.` } : d));
-      else setDraft({ index, status: "error", message: r.message });
+      setDraft({ index, status: "error", message: r.message });
       return;
     }
-    let message = "";
-    if (shown) {
-      const count = (d: DraftView) => d.background.length + d.review.length + d.reply.length;
-      message = r.regenerated
-        ? "법제처 원문과 다시 대조했더니 초안으로 남는 내용이 부족해 처음부터 다시 만들었습니다."
-        : count(shown) === count(r.data)
-          ? "법제처 원문과 문장마다 다시 대조했습니다. 근거가 확인되지 않은 문장은 없었습니다."
-          : `법제처 원문과 문장마다 다시 대조해 근거가 확인되지 않은 문장 ${count(shown) - count(r.data)}개를 뺐습니다.`;
-    }
-    setDraft({ index, status: "done", data: r.data, note: message, busy: false });
+    setDraft({ index, status: "done", data: r.data });
   }
 
   if (!input) {
@@ -252,7 +202,7 @@ export default function CandidatePanel({
                     </p>
                   )}
                   {draft?.index === i && draft.status === "done" && (
-                    <DraftPanel draft={draft.data} busy={draft.busy} note={draft.note} onReport={() => makeDraft(i, draft.data)} />
+                    <DraftPanel draft={draft.data} />
                   )}
                 </li>
               ))}
@@ -267,23 +217,6 @@ export default function CandidatePanel({
           <p className="text-xs text-zinc-600 dark:text-zinc-400">
             후보 제목은 AI가 아래 근거를 묶어 쓴 표현입니다. 판단 전에 근거 원문과 법제처 원문을 직접 확인해 주세요.
           </p>
-          {state.data.candidates.length > 0 && (
-            <div className="flex flex-col gap-2">
-              <button
-                type="button"
-                onClick={recheckCandidates}
-                disabled={rechecking}
-                className="self-start rounded-md border border-red-400 px-3 py-1.5 text-sm font-medium text-red-700 disabled:opacity-50 dark:border-red-500 dark:text-red-300"
-              >
-                {rechecking ? "법제처 원문과 다시 대조하는 중…" : "근거 없는 내용 신고 (판단 후보)"}
-              </button>
-              {note && (
-                <p role="status" className="rounded-md bg-zinc-100 p-2 text-sm dark:bg-zinc-800">
-                  {note}
-                </p>
-              )}
-            </div>
-          )}
         </div>
       )}
     </div>

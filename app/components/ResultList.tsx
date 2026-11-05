@@ -137,7 +137,7 @@ export default function ResultList({ state, selected, onToggle, onOpen, override
                         checked={selected.has(key)}
                         onChange={() => onToggle(item)}
                         // 법령은 근거로 쓸 조문을 정해야 한다. 조문은 [원문 확인]에서 골라 선택한다.
-                        disabled={item.kind === "law" && !item.article}
+                        disabled={item.kind === "law" && (!item.article || !item.isCurrent)}
                         className="mt-1 h-4 w-4 shrink-0"
                         aria-describedby={`${checkboxId}-meta`}
                       />
@@ -148,7 +148,10 @@ export default function ResultList({ state, selected, onToggle, onOpen, override
                         <p id={`${checkboxId}-meta`} className="mt-0.5 text-sm text-zinc-600 break-words dark:text-zinc-400">
                           {citationOf(item)}
                         </p>
-                        {item.kind === "law" && !item.article && (
+                        {item.kind === "law" && !item.isCurrent && (
+                          <p className="mt-0.5 text-xs text-red-700">현행이 아니라서 근거로 선택할 수 없습니다.</p>
+                        )}
+                        {item.kind === "law" && item.isCurrent && !item.article && (
                           <p className="mt-0.5 text-xs text-zinc-500">
                             법령은 [원문 확인]에서 조문을 고른 뒤 &quot;이 조문을 근거로 선택&quot;을 눌러 주세요.
                           </p>

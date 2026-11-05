@@ -174,7 +174,7 @@ export default function DocumentViewer({
         )}
       </div>
       {/* 근거로 선택: 법령은 지금 보고 있는 조문을 근거로 고른다 */}
-      {docReady && !removed && !docReady.notYetEffective && (item.kind !== "law" || docReady.currentArticle) && (
+      {docReady && !removed && !docReady.notYetEffective && (item.kind !== "law" || item.isCurrent) && (item.kind !== "law" || docReady.currentArticle) && (
         <div>
           <button
             type="button"
@@ -194,6 +194,9 @@ export default function DocumentViewer({
                 : "이 자료를 근거로 선택"}
           </button>
         </div>
+      )}
+      {item.kind === "law" && !item.isCurrent && (
+        <p className="text-sm text-red-700">현행이 아닌 법령(폐지·개정 전)은 근거로 선택할 수 없습니다.</p>
       )}
       {docReady?.notYetEffective && (
         <p className="text-sm text-amber-800 dark:text-amber-200">아직 시행 전인 조문은 근거로 선택할 수 없습니다.</p>

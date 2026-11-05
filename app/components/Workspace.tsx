@@ -20,6 +20,7 @@ export default function Workspace() {
   const [opened, setOpened] = useState<VerifiedItem | null>(null); // ③에서 보고 있는 자료
 
   const [overrides, setOverrides] = useState<Record<string, Override>>({}); // 신고 후 다시 대조한 결과
+  const [searchRun, setSearchRun] = useState(0); // 새로 찾을 때마다 올라간다 → ④ 판단 후보·초안 칸을 새로 시작한다
 
   const handleStateChange = useCallback((next: EvidenceState) => {
     // 새로 찾는 중에는 이전에 고른 자료·열어 본 원문·신고 결과를 비운다(목록이 바뀌므로).
@@ -27,6 +28,7 @@ export default function Workspace() {
       setSelected(new Map());
       setOpened(null);
       setOverrides({});
+      setSearchRun((n) => n + 1);
     }
     setState(next);
   }, []);
@@ -50,6 +52,16 @@ export default function Workspace() {
   }, []);
 
   const toggle = useCallback((item: VerifiedItem) => {
+    // 현행이 아닌 법령·폐지된 조례는 근거로 선택할 수 없다(해제는 항상 가능).
+    if (item.kind === "law" && !item.isCurrent) {
+      setSelected((prev) => {
+        if (!prev.has(resultKey(item))) return prev;
+        const next = new Map(prev);
+        next.delete(resultKey(item));
+        return next;
+      });
+      return;
+    }
     const key = resultKey(item);
     setSelected((prev) => {
       const next = new Map(prev);
@@ -116,6 +128,7 @@ export default function Workspace() {
           고른 자료만 근거로 판단 후보를 보여줍니다. 결론이 아니라 검토할 방향이며, 최종 판단은 담당자가 합니다.
         </p>
         <CandidatePanel
+          key={searchRun}
           input={state.search.status === "done" ? state.search.data.maskedInput : null}
           picks={picks}
           onRemove={toggle}

@@ -63,7 +63,7 @@ function lawView(doc: LawDocument, articleLabelWanted: string | undefined): LawA
     data: {
       view: {
         ...base,
-        citation: [doc.lawType, doc.authority, `${article.label}${article.title ? `(${article.title})` : ""}`].filter(Boolean).join(" · "),
+        citation: [doc.lawType, doc.authority, `${article.label}${article.title ? `(${article.title})` : ""}`, `시행 ${article.effectiveDate || doc.effectiveDate}`].filter(Boolean).join(" · "),
         sections: [{ heading: article.label, text: article.text }],
         currentArticle: article.label,
         warnings,

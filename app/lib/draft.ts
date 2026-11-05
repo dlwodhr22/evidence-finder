@@ -23,22 +23,12 @@ const candidateSchema = z.object({
   reasons: z.array(pointSchema).max(10),
   counterpoints: z.array(pointSchema).max(10),
 });
-const sentenceInputSchema = pointSchema;
 
 export const draftRequestSchema = z.object({
   input: caseInputSchema,
   picks: candidatesRequestSchema.shape.picks,
   /** 사용자가 고른 판단 후보(출처 정보는 믿지 않고 서버가 원문에서 다시 확인한다) */
   candidate: candidateSchema,
-  /** 근거 없는 내용 신고일 때 화면에 있던 초안. 있으면 문장마다 다시 대조한다. */
-  shown: z
-    .object({
-      title: z.string().max(300),
-      background: z.array(sentenceInputSchema).max(10),
-      review: z.array(sentenceInputSchema).max(10),
-      reply: z.array(sentenceInputSchema).max(10),
-    })
-    .optional(),
 });
 export type DraftRequest = z.infer<typeof draftRequestSchema>;
 
@@ -92,7 +82,7 @@ export function groundDraft(
 
 // ── 초안 만들기 ───────────────────────────────────────────
 
-type DraftResult = { ok: true; data: DraftView; regenerated?: boolean } | { ok: false; code: "SOURCE_UNAVAILABLE" | "AI_FAILED" | "NO_GROUNDED_DRAFT"; message: string };
+type DraftResult = { ok: true; data: DraftView } | { ok: false; code: "SOURCE_UNAVAILABLE" | "AI_FAILED" | "NO_GROUNDED_DRAFT"; message: string };
 
 export async function buildDraft(req: DraftRequest, picks: DocumentRef[]): Promise<DraftResult> {
   const { masked } = maskCaseInput(req.input as CaseInput);
@@ -105,14 +95,6 @@ export async function buildDraft(req: DraftRequest, picks: DocumentRef[]): Promi
   };
   const caseText = `${masked.facts}\n${masked.issue}`;
   const texts: Record<string, string> = { ...loaded.texts, [CASE_SOURCE_ID]: caseText };
-
-  // 근거 없는 내용 신고: 화면에 있던 초안을 문장마다 다시 대조한다. 필수 부분이 남으면 그대로 돌려준다.
-  if (req.shown) {
-    const toG = (xs: z.infer<typeof sentenceInputSchema>[]): GroundedSentence[] => xs.map((x) => ({ text: x.text, quote: x.quote, sourceId: x.sourceId }));
-    const rechecked = groundDraft({ title: req.shown.title, background: toG(req.shown.background), review: toG(req.shown.review), reply: toG(req.shown.reply) }, texts, sources);
-    if (rechecked) return { ok: true, data: rechecked };
-    // 남은 것이 부족하면 아래에서 처음부터 다시 만든다.
-  }
 
   // 판단 후보의 근거도 원문과 다시 대조한다(화면 값을 믿지 않는다). 하나도 남지 않으면 만들지 않는다.
   const toG = (xs: z.infer<typeof pointSchema>[]): GroundedSentence[] => xs.map((x) => ({ text: x.text, quote: x.quote, sourceId: x.sourceId }));
@@ -157,5 +139,5 @@ export async function buildDraft(req: DraftRequest, picks: DocumentRef[]): Promi
   if (!draft) {
     return { ok: false, code: "NO_GROUNDED_DRAFT", message: "원문으로 뒷받침되는 회신 초안을 만들지 못했습니다. 근거로 쓸 자료를 더 고르거나 바꿔 다시 시도해 주세요." };
   }
-  return { ok: true, data: draft, ...(req.shown ? { regenerated: true } : {}) };
+  return { ok: true, data: draft };
 }

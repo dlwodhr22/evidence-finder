@@ -1,6 +1,6 @@
 "use client";
 // PLAN 작업 18: 회신 초안 표시. 공문 형식(제목, 경위, 검토 결과, 회신 내용)으로 보여주고,
-// 복사 버튼과 "근거 없는 내용 신고" 버튼을 둔다. 초안임을 늘 표시한다(CLAUDE.md §4-8).
+// 복사 버튼을 둔다. 초안임을 늘 표시한다(CLAUDE.md §4-8).
 import { useState } from "react";
 import { buildDraftText } from "../lib/copy-text";
 import { CASE_SOURCE_ID, DRAFT_NOTICE, type DraftSentence, type DraftView } from "../lib/draft-types";
@@ -41,19 +41,7 @@ function Block({ heading, items }: { heading: string; items: DraftSentence[] }) 
   );
 }
 
-export default function DraftPanel({
-  draft,
-  busy,
-  note,
-  onReport,
-}: {
-  draft: DraftView;
-  /** 다시 대조하는 중 */
-  busy: boolean;
-  /** 신고 후 바뀐 점 안내 */
-  note: string;
-  onReport: () => void;
-}) {
+export default function DraftPanel({ draft }: { draft: DraftView }) {
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false);
 
@@ -95,11 +83,6 @@ export default function DraftPanel({
       {draft.droppedCount > 0 && (
         <p className="text-xs text-zinc-600 dark:text-zinc-400">원문에서 근거를 확인하지 못한 문장 {draft.droppedCount}개는 뺐습니다.</p>
       )}
-      {note && (
-        <p role="status" className="rounded-md bg-zinc-100 p-2 text-sm dark:bg-zinc-800">
-          {note}
-        </p>
-      )}
       {copyError && (
         <p role="alert" className="text-sm text-red-700">
           복사하지 못했습니다. 글을 직접 선택해서 복사해 주세요.
@@ -109,14 +92,6 @@ export default function DraftPanel({
       <div className="flex flex-wrap gap-2">
         <button type="button" onClick={copy} className="rounded-md border border-black/15 px-3 py-1.5 text-sm dark:border-white/20">
           {copied ? "복사됨 ✓" : "초안 복사"}
-        </button>
-        <button
-          type="button"
-          onClick={onReport}
-          disabled={busy}
-          className="rounded-md border border-red-400 px-3 py-1.5 text-sm font-medium text-red-700 disabled:opacity-50 dark:border-red-500 dark:text-red-300"
-        >
-          {busy ? "법제처 원문과 다시 대조하는 중…" : "근거 없는 내용 신고"}
         </button>
       </div>
     </div>
