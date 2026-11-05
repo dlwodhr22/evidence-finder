@@ -11,6 +11,7 @@
 import { z } from "zod";
 import { askAiJson } from "./ai";
 import { maskCaseInput, type CaseInput } from "./case-input";
+import { MAX_CANDIDATES, selectRelevantCases } from "./case-relevance";
 import { searchConstitutionalDecisions, searchPrecedents } from "./cases";
 import type { LawApiResult } from "./law-api";
 import { searchOrdinances, searchStatutes } from "./laws";
@@ -21,6 +22,8 @@ import type { CaseItem, InterpretationItem, LawItem, TribunalItem } from "./type
 
 /** 자료 종류별로 화면에 보여줄 최대 건수 */
 export const MAX_PER_KIND = 5;
+/** 판례 후보를 모을 때 검색 한 번당 가져오는 건수(내용으로 가리기 전의 후보) */
+const CASE_CANDIDATES_PER_QUERY = 10;
 const MAX_LAW_NAMES = 3;
 const MAX_KEYWORDS = 4;
 const MAX_TERM_LENGTH = 30;
@@ -202,6 +205,8 @@ export async function searchEvidence(input: CaseInput): Promise<SearchResponse> 
   const nameNewest = { display: MAX_PER_KIND, newestFirst: true };
   const textNewest = { ...textOpts, newestFirst: true };
   const nameKeywords = terms.keywords.slice(0, 2);
+  const caseCandidates = { display: CASE_CANDIDATES_PER_QUERY, newestFirst: true };
+  const caseCandidatesText = { ...caseCandidates, mode: "fulltext" as const };
 
   // 3) 법제처에서 종류별로 찾는다(함께 돌림).
   const [statutes, ordinances, precedents, constitutional, interpretations, tribunals] = await Promise.all([
@@ -211,9 +216,11 @@ export async function searchEvidence(input: CaseInput): Promise<SearchResponse> 
     ]),
     // 조례·규칙은 사용자가 요청했을 때만 찾는다(기본은 찾지 않음).
     collect<LawItem>(ordinancesRequested && keywordQuery ? [searchOrdinances(keywordQuery, textOpts), ...terms.keywords.slice(0, 2).map((k) => searchOrdinances(k, opts))] : []),
+    // 판례는 제목이 아니라 내용으로 관련성을 가리므로(selectRelevantCases) 후보를 넉넉히 가져온다.
     collect<CaseItem>([
-      ...nameKeywords.map((k) => searchPrecedents(k, nameNewest)),
-      ...(keywordQuery ? [searchPrecedents(keywordQuery, textNewest)] : []),
+      ...nameKeywords.map((k) => searchPrecedents(k, caseCandidates)),
+      ...(keywordQuery ? [searchPrecedents(keywordQuery, caseCandidatesText)] : []),
+      ...nameKeywords.map((k) => searchPrecedents(k, caseCandidatesText)),
     ]),
     collect<CaseItem>([
       ...nameKeywords.map((k) => searchConstitutionalDecisions(k, nameNewest)),
@@ -241,11 +248,24 @@ export async function searchEvidence(input: CaseInput): Promise<SearchResponse> 
   }
 
   const relevant = <T extends { title: string }>(items: T[]): T[] => items.filter((i) => matchesTerms(i.title, terms));
+
+  // 판례: 법원 판례와 헌재 결정은 일련번호 체계가 달라 합칠 때 번호로 중복을 지우지 않는다.
+  // 후보(법원 판례 위주, 헌재 결정은 일부)의 판시사항·판결요지를 읽고 쟁점과 관련 있는 것만 남긴다.
+  const caseCandidateList = [...precedents.items.slice(0, MAX_CANDIDATES - 6), ...constitutional.items.slice(0, 6)];
+  const picked = await selectRelevantCases(caseCandidateList, masked, MAX_PER_KIND);
+  let cases: CaseItem[];
+  if (picked.ok) {
+    cases = picked.data;
+  } else {
+    // AI 판단에 실패하면 예전 방식(사건명에 검색어가 들어 있는 것)으로 대신하고 알린다.
+    cases = relevant([...precedents.items, ...constitutional.items]).slice(0, MAX_PER_KIND);
+    notices.push(`${picked.error.message} 판례는 사건명에 검색어가 들어 있는 것만 보여드립니다(내용으로 가리지 못했습니다).`);
+  }
+
   const results: SearchResults = {
     statutes: relevant(statutes.items).slice(0, MAX_PER_KIND),
     ordinances: relevant(ordinances.items).slice(0, MAX_PER_KIND),
-    // 법원 판례와 헌재 결정은 일련번호 체계가 달라 합칠 때 번호로 중복을 지우지 않는다.
-    cases: relevant([...precedents.items, ...constitutional.items]).slice(0, MAX_PER_KIND),
+    cases,
     interpretations: relevant(interpretations.items).slice(0, MAX_PER_KIND),
     tribunals: relevant(tribunals.items).slice(0, MAX_PER_KIND),
   };
