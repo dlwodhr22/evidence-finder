@@ -67,6 +67,7 @@ function lawView(doc: LawDocument, articleLabelWanted: string | undefined): LawA
         sections: [{ heading: article.label, text: article.text }],
         currentArticle: article.label,
         warnings,
+        notYetEffective: article.notYetEffective,
       },
       fullText: article.text,
     },

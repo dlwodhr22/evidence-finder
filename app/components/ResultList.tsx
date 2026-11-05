@@ -53,8 +53,8 @@ function clueText(f: FailedClue): string {
 
 interface ResultListProps {
   state: EvidenceState;
-  selected: Set<string>;
-  onToggle: (key: string) => void;
+  selected: Map<string, VerifiedItem>;
+  onToggle: (item: VerifiedItem) => void;
   onOpen: (item: VerifiedItem) => void; // ③ 원문 확인에서 열기
   /** 신고 후 다시 대조한 결과: 고쳐진 항목, 또는 확인되지 않아 뺀 항목 */
   overrides: Record<string, Override>;
@@ -129,7 +129,9 @@ export default function ResultList({ state, selected, onToggle, onOpen, override
                         id={checkboxId}
                         type="checkbox"
                         checked={selected.has(key)}
-                        onChange={() => onToggle(key)}
+                        onChange={() => onToggle(item)}
+                        // 법령은 근거로 쓸 조문을 정해야 한다. 조문은 [원문 확인]에서 골라 선택한다.
+                        disabled={item.kind === "law" && !item.article}
                         className="mt-1 h-4 w-4 shrink-0"
                         aria-describedby={`${checkboxId}-meta`}
                       />
@@ -140,6 +142,11 @@ export default function ResultList({ state, selected, onToggle, onOpen, override
                         <p id={`${checkboxId}-meta`} className="mt-0.5 text-sm text-zinc-600 break-words dark:text-zinc-400">
                           {citationOf(item)}
                         </p>
+                        {item.kind === "law" && !item.article && (
+                          <p className="mt-0.5 text-xs text-zinc-500">
+                            법령은 [원문 확인]에서 조문을 고른 뒤 &quot;이 조문을 근거로 선택&quot;을 눌러 주세요.
+                          </p>
+                        )}
                         <div className="mt-1.5 flex flex-wrap items-center gap-2 text-xs">
                           {item.kind === "law" && (
                             <>

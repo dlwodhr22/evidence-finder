@@ -1,10 +1,11 @@
 "use client";
 // PLAN 작업 13: ① 사안 입력과 ② 확인된 자료 목록을 한곳에서 묶는다.
 // 입력 양식이 찾은 결과를 목록이 받아 보여주고, 근거로 고른 자료(선택)를 여기서 기억한다
-// (작업 17번 판단 후보에서 이 선택을 쓴다). 고른 자료는 저장하지 않고 이 화면에만 둔다.
+// ④ 판단 후보(작업 17번)에서 이 선택을 쓴다. 고른 자료는 저장하지 않고 이 화면에만 둔다.
 import { useCallback, useState } from "react";
 import { resultKey } from "../lib/results";
 import type { VerifiedItem } from "../lib/types";
+import CandidatePanel from "./CandidatePanel";
 import CaseForm from "./CaseForm";
 import DocumentViewer from "./DocumentViewer";
 import type { EvidenceState } from "./evidence-types";
@@ -15,7 +16,7 @@ const CARD = "rounded-lg border border-black/10 p-4 dark:border-white/15";
 
 export default function Workspace() {
   const [state, setState] = useState<EvidenceState>({ search: { status: "idle" }, clues: { status: "idle" } });
-  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [selected, setSelected] = useState<Map<string, VerifiedItem>>(new Map());
   const [opened, setOpened] = useState<VerifiedItem | null>(null); // ③에서 보고 있는 자료
 
   const [overrides, setOverrides] = useState<Record<string, Override>>({}); // 신고 후 다시 대조한 결과
@@ -23,7 +24,7 @@ export default function Workspace() {
   const handleStateChange = useCallback((next: EvidenceState) => {
     // 새로 찾는 중에는 이전에 고른 자료·열어 본 원문·신고 결과를 비운다(목록이 바뀌므로).
     if (next.search.status === "loading") {
-      setSelected(new Set());
+      setSelected(new Map());
       setOpened(null);
       setOverrides({});
     }
@@ -36,7 +37,7 @@ export default function Workspace() {
     if (result.outcome === "removed") {
       setOverrides((prev) => ({ ...prev, [key]: { type: "removed", item } }));
       setSelected((prev) => {
-        const next = new Set(prev);
+        const next = new Map(prev);
         next.delete(key);
         return next;
       });
@@ -48,14 +49,22 @@ export default function Workspace() {
     }
   }, []);
 
-  const toggle = useCallback((key: string) => {
+  const toggle = useCallback((item: VerifiedItem) => {
+    const key = resultKey(item);
     setSelected((prev) => {
-      const next = new Set(prev);
+      const next = new Map(prev);
       if (next.has(key)) next.delete(key);
-      else next.add(key);
+      else next.set(key, item);
       return next;
     });
   }, []);
+
+  // ④에서 근거로 쓸 자료: 신고 후 고쳐진 값이 있으면 그 값을 쓰고, 확인되지 않은 자료는 뺀다.
+  const picks = [...selected.entries()].flatMap(([key, item]) => {
+    const o = overrides[key];
+    if (o?.type === "removed") return [];
+    return [o?.item ?? item];
+  });
 
   return (
     <>
@@ -90,6 +99,8 @@ export default function Workspace() {
               removed={overrides[resultKey(opened)]?.type === "removed"}
               onClose={() => setOpened(null)}
               onReport={(result) => handleReport(opened, result)}
+              pickedKeys={new Set(selected.keys())}
+              onPick={toggle}
             />
           </div>
         ) : (
@@ -97,6 +108,18 @@ export default function Workspace() {
             ② 목록에서 [원문 확인]을 누르면 법제처 원문과, 원문과 구분된 AI 요약이 여기에 나옵니다.
           </p>
         )}
+      </li>
+
+      <li className={CARD}>
+        <h2 className="text-lg font-semibold">④ 판단 후보</h2>
+        <p className="mt-1 mb-4 text-sm text-zinc-700 dark:text-zinc-300">
+          고른 자료만 근거로 판단 후보를 보여줍니다. 결론이 아니라 검토할 방향이며, 최종 판단은 담당자가 합니다.
+        </p>
+        <CandidatePanel
+          input={state.search.status === "done" ? state.search.data.maskedInput : null}
+          picks={picks}
+          onRemove={toggle}
+        />
       </li>
     </>
   );

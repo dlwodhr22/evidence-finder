@@ -10,6 +10,7 @@ import type { FeedbackResult } from "../lib/feedback";
 import FeedbackDialog from "./FeedbackDialog";
 import { refOf, type DocumentView, type SummaryView } from "../lib/document-types";
 import { isLawGoKrUrl } from "../lib/links";
+import { resultKey } from "../lib/results";
 import type { VerifiedItem } from "../lib/types";
 
 const COPY_BUTTON = "rounded-md border border-black/15 px-2 py-1 text-sm dark:border-white/20";
@@ -38,8 +39,14 @@ export default function DocumentViewer({
   onClose,
   onReport,
   removed,
+  pickedKeys,
+  onPick,
 }: {
   item: VerifiedItem;
+  /** 근거로 선택된 자료의 열쇠 */
+  pickedKeys: Set<string>;
+  /** 근거로 선택하거나 선택을 푼다 */
+  onPick: (item: VerifiedItem) => void;
   /** 신고 후 다시 대조했지만 법제처에서 확인되지 않은 자료 */
   removed: boolean;
   onClose: () => void;
@@ -99,6 +106,16 @@ export default function DocumentViewer({
     }
   }
 
+  // 근거로 선택할 대상: 법령은 지금 보는 조문을 붙인 항목, 그 밖의 자료는 항목 그대로
+  const pickTarget: VerifiedItem =
+    item.kind === "law" && docReady?.currentArticle
+      ? {
+          ...item,
+          article: docReady.currentArticle,
+          articleTitle: docReady.articles?.find((a) => a.label === docReady.currentArticle)?.title || undefined,
+        }
+      : item;
+
   const docState = doc?.key === query ? doc.result : null;
   const summaryState = summary?.key === query ? summary.result : null;
   const link = isLawGoKrUrl(docReady?.sourceUrl ?? item.sourceUrl) ? (docReady?.sourceUrl ?? item.sourceUrl) : "";
@@ -156,6 +173,31 @@ export default function DocumentViewer({
           </>
         )}
       </div>
+      {/* 근거로 선택: 법령은 지금 보고 있는 조문을 근거로 고른다 */}
+      {docReady && !removed && !docReady.notYetEffective && (item.kind !== "law" || docReady.currentArticle) && (
+        <div>
+          <button
+            type="button"
+            onClick={() => onPick(pickTarget)}
+            aria-pressed={pickedKeys.has(resultKey(pickTarget))}
+            className={
+              "rounded-md border px-3 py-1.5 text-sm font-medium " +
+              (pickedKeys.has(resultKey(pickTarget))
+                ? "border-blue-700 bg-blue-700 text-white"
+                : "border-blue-600 text-blue-700 dark:border-blue-400 dark:text-blue-300")
+            }
+          >
+            {pickedKeys.has(resultKey(pickTarget))
+              ? `근거로 선택됨 ✓ (누르면 해제)`
+              : item.kind === "law"
+                ? `이 조문(${docReady.currentArticle})을 근거로 선택`
+                : "이 자료를 근거로 선택"}
+          </button>
+        </div>
+      )}
+      {docReady?.notYetEffective && (
+        <p className="text-sm text-amber-800 dark:text-amber-200">아직 시행 전인 조문은 근거로 선택할 수 없습니다.</p>
+      )}
       {removed && (
         <p role="alert" className="rounded-md border border-red-300 bg-red-50 p-3 text-sm text-red-800 dark:border-red-700 dark:bg-red-950 dark:text-red-200">
           신고 후 법제처에서 이 자료를 다시 확인하지 못했습니다. 근거로 쓰지 마세요. 복사 버튼은 사용할 수 없습니다.

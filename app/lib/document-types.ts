@@ -37,6 +37,7 @@ export interface DocumentView {
   articles?: ArticleChoice[]; // 법령일 때 고를 수 있는 조문 목록
   currentArticle?: string; // 지금 보여 주는 조문
   warnings: string[]; // 시행 예정 등 주의 문구
+  notYetEffective?: boolean; // 보여 주는 조문이 아직 시행 전이면 true (근거로 쓸 수 없다)
 }
 
 /** AI 요약 문장 한 개와 그 근거가 된 원문 구절 */
