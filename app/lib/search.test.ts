@@ -1,8 +1,7 @@
 // 검색 흐름(search.ts)의 정리 규칙 자동 시험. 실행: npm test
 // AI·법제처를 실제로 부르지 않는 부분만 시험한다(실제 호출은 따로 확인).
 import { describe, expect, it } from "vitest";
-import { cleanTerms, dedupeById, fallbackTerms, matchesTerms, preferLocalGov } from "./search";
-import type { LawItem } from "./types";
+import { cleanTerms, dedupeById, fallbackTerms, matchesTerms, wantsOrdinances } from "./search";
 
 describe("검색어 정리", () => {
   it("따옴표·괄호를 없애고 중복을 지운다", () => {
@@ -28,7 +27,6 @@ describe("AI를 쓸 수 없을 때 대신 쓰는 검색어", () => {
       facts: "사안",
       issue: "변상금 부과가 정당한지",
       field: "국유재산 관리",
-      localGov: "",
     });
     expect(terms.source).toBe("fallback");
     expect(terms.lawNames).toEqual([]);
@@ -45,31 +43,17 @@ describe("중복 지우기", () => {
   });
 });
 
-describe("관련 지자체 조례를 앞으로", () => {
-  const make = (id: string, title: string, authority: string): LawItem => ({
-    kind: "law",
-    source: "ordin",
-    id,
-    title,
-    lawType: "조례",
-    authority,
-    isCurrent: true,
-    notYetEffective: false,
-    effectiveDate: "2026-01-01",
-    sourceUrl: "",
+describe("조례 검색 요청 판별(wantsOrdinances)", () => {
+  const base = { facts: "국유지를 10년 넘게 써 온 민원인에게 변상금을 부과했습니다.", issue: "변상금 부과가 정당한지" };
+  it("요청이 없으면 조례는 찾지 않는다(기본)", () => {
+    expect(wantsOrdinances(base)).toBe(false);
+    expect(wantsOrdinances({ ...base, facts: base.facts + " 시 조례에 따라 부과했습니다." })).toBe(false);
   });
-  const items = [
-    make("1", "가평군 공유재산 관리 조례", "경기도 가평군"),
-    make("2", "순천시 공유재산 관리 조례", "전남광주통합특별시 순천시"),
-    make("3", "강릉시 공유재산 관리 조례", "강원특별자치도 강릉시"),
-  ];
-
-  it("적은 지자체가 앞에 온다(나머지 순서는 유지)", () => {
-    expect(preferLocalGov(items, "순천시").map((i) => i.id)).toEqual(["2", "1", "3"]);
-  });
-
-  it("비워 두면 그대로", () => {
-    expect(preferLocalGov(items, "").map((i) => i.id)).toEqual(["1", "2", "3"]);
+  it("조례(자치법규)를 찾아 달라는 요청이 있으면 찾는다", () => {
+    expect(wantsOrdinances({ ...base, issue: base.issue + " 조례까지 검색해줘" })).toBe(true);
+    expect(wantsOrdinances({ ...base, issue: "조례도 찾아줘" })).toBe(true);
+    expect(wantsOrdinances({ ...base, facts: base.facts + "\n자치법규 포함해서 확인해 주세요." })).toBe(true);
+    expect(wantsOrdinances({ ...base, issue: "관련 조례를 검색해 주세요" })).toBe(true);
   });
 });
 

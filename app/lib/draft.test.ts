@@ -80,7 +80,7 @@ describe("복사 글", () => {
 
 describe("초안 요청 검사", () => {
   it("판단 후보가 없으면 거절한다", () => {
-    const input = { facts: "가".repeat(30), issue: "나".repeat(10), field: "", localGov: "" };
+    const input = { facts: "가".repeat(30), issue: "나".repeat(10), field: "" };
     const picks = [{ kind: "case", source: "prec", id: "1" }];
     expect(draftRequestSchema.safeParse({ input, picks }).success).toBe(false);
     expect(draftRequestSchema.safeParse({ input, picks, candidate: { title: "후보", reasons: [], counterpoints: [] } }).success).toBe(true);

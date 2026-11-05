@@ -42,6 +42,7 @@ export interface SearchResponse {
   results: SearchResults;
   notices: string[]; // 사용자에게 알릴 안내(AI 실패, 일부 자료 조회 실패 등)
   foundNothing: boolean; // 모든 종류에서 0건이면 true → 화면에 "찾지 못했다" 안내
+  ordinancesRequested: boolean; // 조례·규칙을 찾아 달라는 요청이 있었는지(없으면 조례는 찾지 않는다)
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -50,7 +51,7 @@ export interface SearchResponse {
 
 // 어느 사안에나 나오는 일반 행정 용어. 검색어로 쓰면 제목에 "민원"만 들어간 엉뚱한 자료가 모두 걸린다
 // (시험 세트 2026-11-05: 근거 없는 사안에서 AI가 "민원"을 뽑아 판례·해석례 15건이 나옴).
-const GENERIC_TERMS = new Set(["민원", "민원인", "민원처리", "사안", "문의", "회신", "담당자", "처분", "신청", "이의", "행정", "공무원", "법령", "판례"]);
+const GENERIC_TERMS = new Set(["민원", "민원인", "민원처리", "사안", "문의", "회신", "담당자", "처분", "신청", "이의", "행정", "공무원", "법령", "판례", "조례", "자치법규", "검색", "조회"]);
 
 /** 검색어를 정리한다: 앞뒤 빈칸·따옴표·괄호 제거, 너무 긴 말·일반 행정 용어 제외, 중복 제거, 개수 제한 */
 export function cleanTerms(terms: string[], max: number): string[] {
@@ -84,13 +85,15 @@ export function dedupeById<T extends { id: string }>(items: T[]): T[] {
   return items.filter((item) => (seen.has(item.id) ? false : (seen.add(item.id), true)));
 }
 
-/** 관련 지자체를 적었으면 그 지자체 조례를 앞으로, 나머지를 뒤로 보낸다 */
-export function preferLocalGov(items: LawItem[], localGov: string): LawItem[] {
-  const name = localGov.replace(/\s+/g, "");
-  if (!name) return items;
-  const isLocal = (item: LawItem) =>
-    item.authority.replace(/\s+/g, "").includes(name) || item.title.replace(/\s+/g, "").includes(name);
-  return [...items.filter(isLocal), ...items.filter((item) => !isLocal(item))];
+/**
+ * 사용자가 조례·규칙(자치법규)까지 찾아 달라고 요청했는지.
+ * 기본은 조례를 찾지 않는다. 사안 내용이나 쟁점에 "조례까지 검색해줘", "조례도 찾아줘", "자치법규 포함"처럼
+ * 조례(또는 자치법규)와 찾기 요청이 함께 적혀 있을 때만 찾는다.
+ */
+export function wantsOrdinances(input: Pick<CaseInput, "facts" | "issue">): boolean {
+  const text = `${input.facts}\n${input.issue}`;
+  const asks = "(검색|찾아|찾기|찾고|포함|확인|조회|알아|살펴|보여|봐\\s*줘|봐\\s*주)";
+  return new RegExp(`(조례|자치법규)[^\\n.!?]{0,20}${asks}|${asks}[^\\n.!?]{0,10}(조례|자치법규)`).test(text);
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -190,6 +193,7 @@ export async function searchEvidence(input: CaseInput): Promise<SearchResponse> 
   const { terms, notice } = await extractTerms(masked);
   if (notice) notices.push(notice);
 
+  const ordinancesRequested = wantsOrdinances(masked);
   const keywordQuery = terms.keywords.slice(0, 2).join(" ");
   const opts = { display: MAX_PER_KIND };
   const textOpts = { display: MAX_PER_KIND, mode: "fulltext" as const };
@@ -205,17 +209,8 @@ export async function searchEvidence(input: CaseInput): Promise<SearchResponse> 
       ...terms.lawNames.map((name) => searchStatutes(name, opts)),
       ...(keywordQuery ? [searchStatutes(keywordQuery, textOpts)] : []),
     ]),
-    collect<LawItem>(
-      masked.localGov
-        ? // 관련 지자체를 적었으면 "지자체 이름 + 검색어"로 먼저 찾고, 본문 검색도 함께 한다.
-          [
-            ...terms.keywords.slice(0, 2).map((k) => searchOrdinances(`${masked.localGov} ${k}`, opts)),
-            ...(keywordQuery ? [searchOrdinances(keywordQuery, { display: 20, mode: "fulltext" })] : []),
-          ]
-        : keywordQuery
-          ? [searchOrdinances(keywordQuery, textOpts)]
-          : [],
-    ),
+    // 조례·규칙은 사용자가 요청했을 때만 찾는다(기본은 찾지 않음).
+    collect<LawItem>(ordinancesRequested && keywordQuery ? [searchOrdinances(keywordQuery, textOpts), ...terms.keywords.slice(0, 2).map((k) => searchOrdinances(k, opts))] : []),
     collect<CaseItem>([
       ...nameKeywords.map((k) => searchPrecedents(k, nameNewest)),
       ...(keywordQuery ? [searchPrecedents(keywordQuery, textNewest)] : []),
@@ -248,7 +243,7 @@ export async function searchEvidence(input: CaseInput): Promise<SearchResponse> 
   const relevant = <T extends { title: string }>(items: T[]): T[] => items.filter((i) => matchesTerms(i.title, terms));
   const results: SearchResults = {
     statutes: relevant(statutes.items).slice(0, MAX_PER_KIND),
-    ordinances: preferLocalGov(relevant(ordinances.items), masked.localGov).slice(0, MAX_PER_KIND),
+    ordinances: relevant(ordinances.items).slice(0, MAX_PER_KIND),
     // 법원 판례와 헌재 결정은 일련번호 체계가 달라 합칠 때 번호로 중복을 지우지 않는다.
     cases: relevant([...precedents.items, ...constitutional.items]).slice(0, MAX_PER_KIND),
     interpretations: relevant(interpretations.items).slice(0, MAX_PER_KIND),
@@ -256,5 +251,5 @@ export async function searchEvidence(input: CaseInput): Promise<SearchResponse> 
   };
 
   const foundNothing = Object.values(results).every((list) => list.length === 0);
-  return { maskedInput: masked, piiFindings: findings, terms, results, notices, foundNothing };
+  return { maskedInput: masked, piiFindings: findings, terms, results, notices, foundNothing, ordinancesRequested };
 }

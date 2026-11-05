@@ -103,6 +103,12 @@ export default function ResultList({ state, selected, onToggle, onOpen, override
         {selected.size > 0 && ` · 근거로 선택 ${selected.size}건`}
       </p>
 
+      {!search.data.ordinancesRequested && (
+        <p className="text-xs text-zinc-600 dark:text-zinc-400">
+          조례·규칙은 찾지 않았습니다. 필요하면 사안이나 쟁점에 &quot;조례까지 검색해줘&quot;라고 적고 다시 찾아 주세요.
+        </p>
+      )}
+
       {total === 0 && clues.status !== "loading" && (
         <p className="rounded-md border border-black/10 bg-zinc-50 p-3 text-sm font-medium dark:border-white/15 dark:bg-zinc-900">
           법제처에서 확인된 자료를 찾지 못했습니다. 사안을 더 구체적으로 적거나 쟁점을 바꿔 다시 찾아 보세요.

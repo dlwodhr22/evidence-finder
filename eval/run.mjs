@@ -46,7 +46,7 @@ const refOf = (i) => (i.kind === "law" ? { kind: "law", source: i.source, id: i.
 
 async function runCase(c) {
   const t0 = Date.now();
-  const input = { facts: c.facts, issue: c.issue, field: c.field, localGov: c.localGov };
+  const input = { facts: c.facts, issue: c.issue, field: c.field };
   const rec = { id: c.id, title: c.title, negative: !!c.negative, errors: [] };
 
   // ① 검색과 웹 단서 확인(화면과 똑같이 동시에 요청)

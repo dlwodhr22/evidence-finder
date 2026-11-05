@@ -1,6 +1,6 @@
 "use client";
 // PLAN 작업 9: ① 사안 입력 화면.
-// Design Ref: §3.3 ① — 입력 칸 4개(사안 내용·쟁점·관련 분야·관련 지자체(선택)), 개인정보 안내, 근거 찾기 버튼,
+// Design Ref: §3.3 ① — 입력 칸 3개(사안 내용·쟁점·관련 분야), 개인정보 안내, 근거 찾기 버튼,
 //                     개인정보가 가려졌으면 "일부를 가렸습니다"를 알려준다.
 // 개인정보는 보내기 전에 이 화면에서 먼저 가린다. 원래 글은 이 브라우저 밖으로 나가지 않는다.
 import { useEffect, useId, useMemo, useState } from "react";
@@ -42,7 +42,7 @@ async function postJson<T>(url: string, body: unknown): Promise<{ ok: true; data
   }
 }
 
-const EMPTY: CaseInput = { facts: "", issue: "", field: "", localGov: "" };
+const EMPTY: CaseInput = { facts: "", issue: "", field: "" };
 
 // 결과 요약에 쓸 자료 종류 이름
 const RESULT_LABELS: Record<keyof SearchResults, string> = {
@@ -64,18 +64,14 @@ const FIELD_INFO: Record<CaseField, { placeholder: string; hint?: string; requir
   },
   issue: {
     placeholder: "예: 오래 써 온 경우에도 변상금 부과가 정당한지, 감면할 수 있는지",
+    hint: "조례·규칙(자치법규)까지 찾으려면 사안이나 쟁점에 \"조례까지 검색해줘\"라고 적어 주세요. 적지 않으면 조례는 찾지 않습니다.",
     required: true,
     rows: 2,
   },
   field: { placeholder: "예: 국유재산 관리", required: false },
-  localGov: {
-    placeholder: "예: 순천시",
-    hint: "적으면 그 지역 조례를 먼저 찾습니다. 비워 두면 전국에서 찾습니다.",
-    required: false,
-  },
 };
 
-const FIELDS: CaseField[] = ["facts", "issue", "field", "localGov"];
+const FIELDS: CaseField[] = ["facts", "issue", "field"];
 
 interface CaseFormProps {
   /** 검색 상태가 바뀔 때마다 알려준다(② 자료 목록이 받아서 보여준다) */

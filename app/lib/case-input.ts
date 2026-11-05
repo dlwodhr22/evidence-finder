@@ -1,7 +1,7 @@
 // PLAN 작업 9: 사안 입력의 규칙(필수 항목·글자 수)과 개인정보 가림을 한곳에 모은다.
 // 화면(입력 양식)과 서버(작업 10번의 검색) 양쪽에서 같은 규칙을 쓴다.
 //
-// Design Ref: §3.3 ① 사안 입력 — 사안 내용, 판단해야 할 쟁점, 관련 분야(+ 관련 지자체(선택)).
+// Design Ref: §3.3 ① 사안 입력 — 사안 내용, 판단해야 할 쟁점, 관련 분야. (조례 검색은 입력 칸이 아니라 본문의 요청으로 정한다: search.ts)
 // Design Ref: §9 오류 처리 — 사안이 너무 짧으면 더 구체적으로 적도록 안내한다.
 // PRD 7번 — 개인정보로 보이는 부분은 자동으로 가린 뒤 진행한다.
 //
@@ -15,7 +15,6 @@ export const CASE_LIMITS = {
   facts: { min: 20, max: 2000 },
   issue: { min: 5, max: 300 },
   field: { max: 50 },
-  localGov: { max: 30 },
 } as const;
 
 /** 입력 칸 이름표(화면에 보일 이름) */
@@ -23,7 +22,6 @@ export const CASE_LABELS = {
   facts: "사안 내용",
   issue: "판단해야 할 쟁점",
   field: "관련 분야",
-  localGov: "관련 지자체",
 } as const;
 
 export type CaseField = keyof typeof CASE_LABELS;
@@ -44,10 +42,6 @@ export const caseInputSchema = z.object({
     .string()
     .trim()
     .max(CASE_LIMITS.field.max, `관련 분야는 ${CASE_LIMITS.field.max}자까지 적을 수 있습니다.`),
-  localGov: z
-    .string()
-    .trim()
-    .max(CASE_LIMITS.localGov.max, `관련 지자체는 ${CASE_LIMITS.localGov.max}자까지 적을 수 있습니다.`),
 });
 
 export type CaseInput = z.infer<typeof caseInputSchema>;
