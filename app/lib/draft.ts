@@ -133,14 +133,16 @@ export async function buildDraft(req: DraftRequest, picks: DocumentRef[]): Promi
       `background(경위)는 [사안]의 사실만 쓰고, 근거 구절(quote)은 [사안]에서 글자 그대로 복사하며 sourceId는 "${CASE_SOURCE_ID}"로 쓴다.`,
       "review(검토 결과)와 reply(회신 내용)는 [자료]의 내용에만 근거하고, quote는 [자료]에서 글자 그대로 복사하며 sourceId는 그 자료 번호(예: s1)로 쓴다.",
       "[선택한 판단 후보]의 방향을 따르되, [엇갈리는 근거]가 있으면 review에 함께 적는다. 숨기지 않는다.",
+      "중요: quote는 반드시 [자료] 또는 [사안]의 본문에서 복사한다. [선택한 판단 후보]·[엇갈리는 근거]의 문장은 quote로 쓰지 않는다. 대신 각 근거 문장 뒤에 적힌 '근거 원문' 구절은 quote로 그대로 써도 된다.",
+      "quote는 한 문장 이상을 한 글자도 바꾸지 말고 복사한다. 요약하거나 말을 바꾸면 그 문장은 버려진다.",
       "[자료]·[사안]에 없는 법령·판례·사실·날짜·금액은 쓰지 않는다. 이름·연락처 등 개인정보는 쓰지 않고 '민원인'으로 쓴다.",
       "최종 결론을 단정하지 않고 '~로 판단됩니다' 정도로 쓴다. 근거가 부족하면 문장을 줄인다.",
     ].join("\n"),
     input: [
       `[사안]\n${masked.facts}`,
       `[쟁점]\n${masked.issue}`,
-      `[선택한 판단 후보]\n${req.candidate.title}\n뒷받침 근거:\n${reasons.map((r) => `- ${r.text}`).join("\n")}`,
-      counter.length ? `[엇갈리는 근거]\n${counter.map((r) => `- ${r.text}`).join("\n")}` : "",
+      `[선택한 판단 후보]\n${req.candidate.title}\n뒷받침 근거:\n${reasons.map((r) => `- ${r.text}\n  근거 원문(${r.sourceId}): ${r.quote}`).join("\n")}`,
+      counter.length ? `[엇갈리는 근거]\n${counter.map((r) => `- ${r.text}\n  근거 원문(${r.sourceId}): ${r.quote}`).join("\n")}` : "",
       `[자료]\n${material}`,
     ]
       .filter(Boolean)
