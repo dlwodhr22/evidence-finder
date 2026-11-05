@@ -34,3 +34,6 @@ export async function POST(request: Request): Promise<Response> {
     return errorReply(500, "SEARCH_FAILED", "근거를 찾는 중 문제가 생겼습니다. 잠시 뒤 다시 시도해 주세요.");
   }
 }
+
+// Vercel에서 함수 실행 시간 한도(초). AI·법제처 호출이 기본 한도(10초)보다 오래 걸릴 수 있어 늘려 둔다.
+export const maxDuration = 60;

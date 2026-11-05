@@ -42,3 +42,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# bkit 작업 상태 폴더(커밋하지 않음)
+/.bkit/

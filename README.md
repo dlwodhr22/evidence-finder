@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 근거 찾기 도우미
 
-## Getting Started
+민원 사안을 입력하면 **법제처에서 실제로 확인된** 법령·판례·법령해석례·행정심판례를 찾아 근거로 보여주고, 직원이 고른 근거로 **판단 후보**와 **공문 형식 회신 초안**을 만들어 주는 웹 앱입니다. 국유재산 관리업무(예: 변상금 부과 이의 회신)를 대표 업무로 만들었습니다.
 
-First, run the development server:
+> 이 앱은 담당자의 판단을 돕는 **참고 도구**입니다. 결론을 확정하지 않으며, 만들어진 후보와 초안은 담당자가 근거 원문을 직접 확인하고 검토한 뒤 사용해야 합니다. 민원인에게 답변을 직접 보내는 기능은 없습니다.
 
+## 왜 만들었나
+대민업무 담당자는 사안마다 근거 법령과 판례를 찾아야 하지만, 법령명이나 판례를 미리 알아야 검색이 가능하고 여러 사이트를 오가야 합니다. 틀린 근거로 회신하면 문제가 커지므로, 이 앱은 **속도보다 정확성(환각 0건)** 을 목표로 합니다.
+
+## 쓰는 순서
+1. **사안 입력** — 사안 내용, 판단해야 할 쟁점, 관련 분야를 적습니다. (이름·주소·전화번호 등 개인정보는 넣지 않습니다. 패턴이 보이면 자동으로 가려서 보냅니다.)
+2. **확인된 자료 목록** — 법제처에서 확인된 자료만 나옵니다. 출처 링크, 법령은 현행 여부·시행일이 함께 표시됩니다. 확인되지 않은 단서는 접힌 "검증 실패 항목"으로 따로 둡니다.
+3. **원문 확인** — 법제처 원문을 그대로 보여주고, AI 요약은 원문과 구분해 따로 표시합니다. 출처·원문을 복사할 수 있고, 이상한 점은 "잘못된 결과 신고"로 법제처 원문과 다시 대조할 수 있습니다.
+4. **판단 후보와 회신 초안** — 직원이 근거로 고른 자료만 사용합니다. 후보마다 근거 원문 구절과 출처가 붙고, 엇갈리는 근거도 숨기지 않습니다. 공문 형식(제목·경위·검토 결과·회신 내용) 초안을 복사해 내부 문서로 옮깁니다.
+
+## 정확도를 지키는 방법
+- **법제처 조회 결과만 근거로 씁니다.** AI의 기억으로 떠올린 법령·판례는 화면에 올리지 않습니다.
+- **웹검색은 단서(사건번호·법원·선고일·법령명·조문) 찾기에만** 쓰고, 그 단서를 법제처에서 다시 조회해 번호·날짜가 모두 맞는 것만 올립니다. 웹 문장은 화면에 쓰지 않습니다.
+- **AI가 쓴 문장은 근거 구절이 원문에 글자 그대로 있어야** 화면에 나옵니다. 확인되지 않은 문장은 버립니다.
+- 근거를 찾지 못하면 지어내지 않고 "찾지 못했다"고 표시합니다.
+- 조례·규칙은 기본으로 찾지 않고, 사안이나 쟁점에 "조례까지 검색해줘"라고 적을 때만 찾습니다.
+- 사안과 신고 내용은 **저장하지 않습니다**(데이터베이스 없음).
+
+## 기술 스택
+- Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4
+- 법제처 국가법령정보 Open API (법령·판례·해석례·행정심판례)
+- OpenAI API (요약·검색어는 가벼운 모델, 판단 후보·초안·웹 단서는 큰 모델)
+- Zod(입력 검사), Vitest(자동 시험)
+
+## 직접 실행해 보기
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
+npm test           # 자동 시험
+npm run lint
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+환경 변수는 `.env`에 둡니다(저장소에 올라가지 않습니다).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| 이름 | 용도 |
+|---|---|
+| `LAW_API_OC` | 법제처 Open API 인증키(OC) |
+| `OPENAI_API_KEY` | OpenAI API 키 |
+| `APP_ACCESS_CODE` | 접근 코드. 설정하면 코드를 입력한 사람만 화면·API를 쓸 수 있고, **배포(운영) 환경에서 비어 있으면 앱이 전부 막힙니다** |
+| `OPENAI_MODEL`, `OPENAI_MODEL_STRONG` | (선택) 사용할 AI 모델 변경 |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 문서
+- [PRD.md](PRD.md) — 기획서 (문제·목표·기능·범위·보안)
+- [PLAN.md](PLAN.md) — 계획서 (성공 기준, 작업 순서 1~20번)
+- [DESIGN.md](DESIGN.md) — 설계서
+- [CHECK.md](CHECK.md) — 점검 결과와 남은 일
+- [eval/](eval/) — 국유재산 시험 세트(사례 10건 + 음성 시험 1건)와 결과
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 출처
+법령·판례 정보는 [국가법령정보센터(법제처)](https://www.law.go.kr)에서 가져옵니다. 이 앱은 법률 자문이 아니며, 최종 판단과 책임은 담당자에게 있습니다.

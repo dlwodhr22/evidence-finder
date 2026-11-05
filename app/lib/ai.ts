@@ -24,7 +24,7 @@ function pickModel(tier: ModelTier | undefined): string {
   return process.env.OPENAI_MODEL?.trim() || DEFAULT_MODEL;
 }
 const TIMEOUT_MS = 60_000;
-const WEB_SEARCH_TIMEOUT_MS = 90_000; // 웹검색은 여러 페이지를 열어 보느라 더 오래 걸린다
+const WEB_SEARCH_TIMEOUT_MS = 55_000; // 웹검색은 여러 페이지를 열어 보느라 오래 걸린다(Vercel 함수 한도 60초 안에서 끝내려고 55초로 둠)
 
 /** 오류 종류 */
 export type AiErrorCode =
