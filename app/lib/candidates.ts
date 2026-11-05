@@ -96,11 +96,13 @@ export function groundCandidates(
 
 type CandidateResult = { ok: true; data: CandidatesView } | { ok: false; code: "SOURCE_UNAVAILABLE" | "AI_FAILED"; message: string };
 
-export async function buildCandidates(rawInput: CaseInput, picks: DocumentRef[]): Promise<CandidateResult> {
-  // 서버에서도 개인정보를 한 번 더 가린다.
-  const { masked } = maskCaseInput(rawInput);
+/** 고른 자료의 법제처 원문을 가져와 번호(s1, s2…)를 붙인다. 후보·초안이 같은 방식으로 쓴다. */
+export type LoadedSources =
+  | { ok: true; sources: Record<string, CandidateSource>; texts: Record<string, string>; excluded: CandidatesView["excluded"] }
+  | { ok: false; message: string };
 
-  // 1) 고른 자료의 법제처 원문을 가져온다. 하나라도 못 가져오면 후보를 만들지 않는다.
+export async function loadSources(picks: DocumentRef[]): Promise<LoadedSources> {
+  // 하나라도 못 가져오면 만들지 않는다.
   const loaded = await Promise.all(picks.map((ref) => loadDocument(ref)));
   const sources: Record<string, CandidateSource> = {};
   const texts: Record<string, string> = {};
@@ -110,7 +112,7 @@ export async function buildCandidates(rawInput: CaseInput, picks: DocumentRef[])
   for (let i = 0; i < loaded.length; i++) {
     const result = loaded[i];
     if (!result.ok) {
-      return { ok: false, code: "SOURCE_UNAVAILABLE", message: "고른 자료의 법제처 원문을 가져오지 못해 판단 후보를 만들지 않았습니다. 잠시 뒤 다시 시도해 주세요." };
+      return { ok: false, message: "고른 자료의 법제처 원문을 가져오지 못해 만들지 않았습니다. 잠시 뒤 다시 시도해 주세요." };
     }
     const { view, fullText } = result.data;
     if (view.notYetEffective) {
@@ -122,10 +124,21 @@ export async function buildCandidates(rawInput: CaseInput, picks: DocumentRef[])
     texts[id] = fullText.slice(0, perSource); // AI에게 준 범위와 확인하는 범위를 같게 둔다
   }
 
-  const usable = Object.keys(sources);
-  if (usable.length === 0) {
-    return { ok: false, code: "SOURCE_UNAVAILABLE", message: "근거로 쓸 수 있는 자료가 없습니다(시행 전 조문만 고르셨을 수 있습니다)." };
+  if (Object.keys(sources).length === 0) {
+    return { ok: false, message: "근거로 쓸 수 있는 자료가 없습니다(시행 전 조문만 고르셨을 수 있습니다)." };
   }
+  return { ok: true, sources, texts, excluded };
+}
+
+export async function buildCandidates(rawInput: CaseInput, picks: DocumentRef[]): Promise<CandidateResult> {
+  // 서버에서도 개인정보를 한 번 더 가린다.
+  const { masked } = maskCaseInput(rawInput);
+
+  // 1) 고른 자료의 법제처 원문을 가져온다.
+  const loadedSources = await loadSources(picks);
+  if (!loadedSources.ok) return { ok: false, code: "SOURCE_UNAVAILABLE", message: loadedSources.message };
+  const { sources, texts, excluded } = loadedSources;
+  const usable = Object.keys(sources);
 
   // 2) AI가 후보를 쓴다. 근거는 반드시 위 자료 원문 구절이어야 한다.
   const material = usable.map((id) => `[자료 ${id}] ${sources[id].title} (${sources[id].citation})\n${texts[id]}`).join("\n\n---\n\n");
@@ -157,4 +170,42 @@ export async function buildCandidates(rawInput: CaseInput, picks: DocumentRef[])
       droppedCount: grounded.droppedCount,
     },
   };
+}
+
+// ── 근거 없는 내용 신고 → 문장마다 원문과 다시 대조 ──────────────────
+
+const pointInputSchema = z.object({ text: z.string().max(1000), quote: z.string().max(2000), sourceId: z.string().max(10) });
+export const candidatesRecheckSchema = z.object({
+  input: caseInputSchema,
+  picks: candidatesRequestSchema.shape.picks,
+  /** 화면에 보이던 후보. 출처 정보는 믿지 않고 서버가 원문에서 다시 채운다. */
+  candidates: z
+    .array(z.object({ title: z.string().max(500), reasons: z.array(pointInputSchema).max(10), counterpoints: z.array(pointInputSchema).max(10) }))
+    .max(MAX_CANDIDATES),
+});
+
+/**
+ * 화면에 있던 후보를 법제처 원문과 문장마다 다시 대조해, 뒷받침되지 않는 문장을 빼고 돌려준다.
+ * 하나도 남지 않으면 처음부터 다시 만든다.
+ */
+export async function recheckCandidates(
+  rawInput: CaseInput,
+  picks: DocumentRef[],
+  shown: z.infer<typeof candidatesRecheckSchema>["candidates"],
+): Promise<CandidateResult & { regenerated?: boolean }> {
+  const loadedSources = await loadSources(picks);
+  if (!loadedSources.ok) return { ok: false, code: "SOURCE_UNAVAILABLE", message: loadedSources.message };
+  const { sources, texts, excluded } = loadedSources;
+
+  const toGrounded = (points: z.infer<typeof pointInputSchema>[]): GroundedSentence[] => points.map((p) => ({ text: p.text, quote: p.quote, sourceId: p.sourceId }));
+  const { candidates, droppedCount } = groundCandidates(
+    shown.map((c) => ({ title: c.title, reasons: toGrounded(c.reasons), counterpoints: toGrounded(c.counterpoints) })),
+    texts,
+    sources,
+  );
+  if (candidates.length === 0) {
+    const fresh = await buildCandidates(rawInput, picks);
+    return fresh.ok ? { ...fresh, regenerated: true } : fresh;
+  }
+  return { ok: true, data: { candidates, sources: Object.values(sources), excluded, droppedCount } };
 }
