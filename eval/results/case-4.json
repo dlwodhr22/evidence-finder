@@ -1,0 +1,379 @@
+{
+  "id": 4,
+  "title": "대부료 연체와 연체료",
+  "negative": false,
+  "errors": [],
+  "terms": {
+    "lawNames": [
+      "국유재산법"
+    ],
+    "keywords": [
+      "연체료",
+      "계약 해제",
+      "분할 납부"
+    ],
+    "source": "ai"
+  },
+  "foundNothing": false,
+  "notices": [],
+  "failedClues": 0,
+  "references": 0,
+  "items": [
+    {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:283349:",
+      "title": "국유재산법",
+      "citation": "법률 · 재정경제부 · 시행 2026-08-20",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:288713:",
+      "title": "국유재산법 시행령",
+      "citation": "대통령령 · 재정경제부 · 시행 2026-08-20",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=288713",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:282621:",
+      "title": "국유재산법 시행규칙",
+      "citation": "재정경제부령 · 재정경제부 · 시행 2026-01-02",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=282621",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:95736:",
+      "title": "국유재산법 제80조에 따른 청산절차의 특례에 관한 규칙",
+      "citation": "기획재정부령 · 재정경제부 · 시행 2009-07-31",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=95736",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:239521",
+      "title": "임차보증금반환·차임연체료및손해배상금",
+      "citation": "대법원 2023-09-14 2023다236566",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=239521",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "corrected",
+      "recheckChanges": [
+        "사건번호: 2023다236566 → 2023다236566,236573"
+      ]
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:173320",
+      "title": "변상금연체료부과처분취소",
+      "citation": "대법원 2014-04-10 2012두16787",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=173320",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:173790",
+      "title": "변상금연체료부과처분취소",
+      "citation": "서울고등법원 2012-06-21 2011누39297",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=173790",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:218597",
+      "title": "변상금연체료부과처분취소",
+      "citation": "서울행정법원 2011-10-05 2011구단5677",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=218597",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:422438",
+      "title": "집합건물의 전(前) 구분소유자의 특정승계인에게 승계되는 공용부분 관리비의 범위 및 공용부분 관리비에 대한 연체료가 특별승계인에게 승계되는 공용부분 관리비에 포함되는지 여부",
+      "citation": "대법원 2006-06-29 2004다3598",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=422438",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:312362",
+      "title": "서울특별시 -「도시공원 및 녹지 등에 관한 법률」제40조제1항(공원시설 사용료 및 연체료의 징수)",
+      "citation": "법제처 2007-03-09 07-0001",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=312362",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:273043",
+      "title": "임대보증금 연체료 부과 취소청구",
+      "citation": "국민권익위원회 2025-02-11 2025-00689",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=273043",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:234599",
+      "title": "계약해제통보 등 취소청구",
+      "citation": "국민권익위원회 2021-03-23 2021-00562",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=234599",
+      "hasSource": true,
+      "proxyRelevant": false,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:14876",
+      "title": "분양계약해제통고처분취소청구",
+      "citation": "국민권익위원회 1997-08-29 1997-04789",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=14876",
+      "hasSource": true,
+      "proxyRelevant": false,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:14875",
+      "title": "분양계약해제통고처분취소청구",
+      "citation": "국민권익위원회 1997-08-29 1997-04788",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=14875",
+      "hasSource": true,
+      "proxyRelevant": false,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:14879",
+      "title": "분양계약해제통고처분취소청구",
+      "citation": "국민권익위원회 1997-08-29 1997-04792",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=14879",
+      "hasSource": true,
+      "proxyRelevant": false,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    }
+  ],
+  "picks": [
+    "국유재산법 제73조",
+    "국유재산법 제47조",
+    "임차보증금반환·차임연체료및손해배상금"
+  ],
+  "candidates": {
+    "candidates": [
+      {
+        "title": "연체료 부과 및 계약 해제 예고가 국유재산법에 따라 허용될 여지가 있음",
+        "reasons": [
+          {
+            "text": "국유재산의 대부료가 납부기한까지 납부되지 않은 경우, 대통령령으로 정하는 바에 따라 연체료를 징수할 수 있다.",
+            "quote": "중앙관서의 장등은 국유재산의 사용료, 관리소홀에 따른 가산금, 대부료, 매각대금, 교환자금 및 변상금(징수를 미루거나 나누어 내는 경우 이자는 제외한다)이 납부기한까지 납부되지 아니한 경우 대통령령으로 정하는 바에 따라 연체료를 징수할 수 있다.",
+            "source": {
+              "id": "s1",
+              "title": "국유재산법",
+              "citation": "법률 · 재정경제부 · 제73조(연체료 등의 징수)",
+              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+            }
+          },
+          {
+            "text": "대부료 및 대부계약의 해제 등은 다른 관련 조항을 준용한다고 규정되어 있다.",
+            "quote": "일반재산의 대부의 제한, 대부료, 대부료의 감면 및 대부계약의 해제나 해지 등에 관하여는 제30조제2항, 제31조제1항ㆍ제2항, 제32조, 제33조, 제34조제1항제2호ㆍ제3호, 같은 조 제2항ㆍ제3항, 제36조 및 제38조를 준용한다.",
+            "source": {
+              "id": "s2",
+              "title": "국유재산법",
+              "citation": "법률 · 재정경제부 · 제47조(대부료, 계약의 해제 등)",
+              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+            }
+          }
+        ],
+        "counterpoints": []
+      },
+      {
+        "title": "분할 납부 허용에 신중을 기할 여지가 있음",
+        "reasons": [
+          {
+            "text": "국유재산법 제73조에서 징수를 미루거나 나누어 내는 경우 이자는 제외한다라고만 명시돼 있고, 분할 납부 허용 관련 명시적 규정은 보이지 않는다.",
+            "quote": "징수를 미루거나 나누어 내는 경우 이자는 제외한다",
+            "source": {
+              "id": "s1",
+              "title": "국유재산법",
+              "citation": "법률 · 재정경제부 · 제73조(연체료 등의 징수)",
+              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+            }
+          }
+        ],
+        "counterpoints": []
+      }
+    ],
+    "sources": [
+      {
+        "id": "s1",
+        "title": "국유재산법",
+        "citation": "법률 · 재정경제부 · 제73조(연체료 등의 징수)",
+        "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+      },
+      {
+        "id": "s2",
+        "title": "국유재산법",
+        "citation": "법률 · 재정경제부 · 제47조(대부료, 계약의 해제 등)",
+        "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+      },
+      {
+        "id": "s3",
+        "title": "임차보증금반환·차임연체료및손해배상금",
+        "citation": "대법원 2023-09-14 선고 2023다236566,236573",
+        "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=239521"
+      }
+    ],
+    "excluded": [],
+    "droppedCount": 0
+  },
+  "candidateRecheckDropped": 0,
+  "draft": {
+    "title": "국유재산 대부료 연체료 부과 및 계약 해제 예고, 분할 납부 요청에 대한 회신",
+    "background": [
+      {
+        "text": "민원인은 국유재산 대부계약을 체결하였으나, 대부료를 6개월 동안 납부하지 않아 연체료가 부과되고 계약 해제가 예고되었습니다. 민원인은 경제 사정을 사유로 분할 납부를 요청하였습니다.",
+        "quote": "국유재산 대부계약을 맺은 민원인이 대부료를 6개월 동안 내지 않아 연체료를 부과하고 계약 해제를 예고했습니다. 민원인은 경제 사정이 어려워 분할 납부를 요청했습니다.",
+        "source": {
+          "id": "case",
+          "title": "입력한 사안",
+          "citation": "담당자가 입력한 사안",
+          "sourceUrl": ""
+        }
+      }
+    ],
+    "review": [
+      {
+        "text": "국유재산 대부료의 연체에 대해서는 대통령령으로 정하는 바에 따라 연체료를 징수할 수 있습니다.",
+        "quote": "중앙관서의 장등은 국유재산의 사용료, 관리소홀에 따른 가산금, 대부료, 매각대금, 교환자금 및 변상금(징수를 미루거나 나누어 내는 경우 이자는 제외한다)이 납부기한까지 납부되지 아니한 경우 대통령령으로 정하는 바에 따라 연체료를 징수할 수 있다.",
+        "source": {
+          "id": "s1",
+          "title": "국유재산법",
+          "citation": "법률 · 재정경제부 · 제73조(연체료 등의 징수)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+        }
+      },
+      {
+        "text": "대부료 미납 및 계약 해제에 관한 사항은 관련 조항을 준용하도록 규정되어 있습니다.",
+        "quote": "일반재산의 대부의 제한, 대부료, 대부료의 감면 및 대부계약의 해제나 해지 등에 관하여는 제30조제2항, 제31조제1항ㆍ제2항, 제32조, 제33조, 제34조제1항제2호ㆍ제3호, 같은 조 제2항ㆍ제3항, 제36조 및 제38조를 준용한다.",
+        "source": {
+          "id": "s2",
+          "title": "국유재산법",
+          "citation": "법률 · 재정경제부 · 제47조(대부료, 계약의 해제 등)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+        }
+      }
+    ],
+    "reply": [
+      {
+        "text": "귀하의 국유재산 대부료 연체에 대해 연체료 부과 및 계약 해제 예고는 관련 법령에 따라 허용될 수 있을 것으로 판단됩니다. 관련 법령에 따라 대부료 미납 시 연체료 징수 및 계약 해제 등 조치를 취할 수 있으나, 분할 납부 허용 여부는 추가적으로 관련 대통령령 등 세부 규정 및 관할기관의 판단에 따라 달라질 수 있습니다.",
+        "quote": "중앙관서의 장등은 국유재산의 사용료, 관리소홀에 따른 가산금, 대부료, 매각대금, 교환자금 및 변상금(징수를 미루거나 나누어 내는 경우 이자는 제외한다)이 납부기한까지 납부되지 아니한 경우 대통령령으로 정하는 바에 따라 연체료를 징수할 수 있다.",
+        "source": {
+          "id": "s1",
+          "title": "국유재산법",
+          "citation": "법률 · 재정경제부 · 제73조(연체료 등의 징수)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+        }
+      },
+      {
+        "text": "분할 납부 허용에 대하여는 구체적 사실관계와 규정에 따라 달라질 수 있으므로, 관련 규정 및 관할기관 심사를 받아야 할 것으로 판단됩니다.",
+        "quote": "일반재산의 대부의 제한, 대부료, 대부료의 감면 및 대부계약의 해제나 해지 등에 관하여는 제30조제2항, 제31조제1항ㆍ제2항, 제32조, 제33조, 제34조제1항제2호ㆍ제3호, 같은 조 제2항ㆍ제3항, 제36조 및 제38조를 준용한다.",
+        "source": {
+          "id": "s2",
+          "title": "국유재산법",
+          "citation": "법률 · 재정경제부 · 제47조(대부료, 계약의 해제 등)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+        }
+      }
+    ],
+    "sources": [
+      {
+        "id": "s1",
+        "title": "국유재산법",
+        "citation": "법률 · 재정경제부 · 제73조(연체료 등의 징수)",
+        "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+      },
+      {
+        "id": "s2",
+        "title": "국유재산법",
+        "citation": "법률 · 재정경제부 · 제47조(대부료, 계약의 해제 등)",
+        "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+      }
+    ],
+    "droppedCount": 0
+  },
+  "draftRecheckDropped": 0,
+  "summaries": [
+    {
+      "title": "국유재산법",
+      "sentences": 4,
+      "dropped": 1
+    },
+    {
+      "title": "국유재산법",
+      "sentences": 4,
+      "dropped": 0
+    }
+  ],
+  "seconds": 31
+}

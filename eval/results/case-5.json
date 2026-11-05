@@ -1,0 +1,457 @@
+{
+  "id": 5,
+  "title": "사용허가 기간 만료 후 계속 사용",
+  "negative": false,
+  "errors": [],
+  "terms": {
+    "lawNames": [
+      "국유재산법"
+    ],
+    "keywords": [
+      "변상금",
+      "사용허가",
+      "갱신 신청"
+    ],
+    "source": "ai"
+  },
+  "foundNothing": false,
+  "notices": [],
+  "failedClues": 0,
+  "references": 0,
+  "items": [
+    {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:283349:",
+      "title": "국유재산법",
+      "citation": "법률 · 재정경제부 · 시행 2026-08-20",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:288713:",
+      "title": "국유재산법 시행령",
+      "citation": "대통령령 · 재정경제부 · 시행 2026-08-20",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=288713",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:282621:",
+      "title": "국유재산법 시행규칙",
+      "citation": "재정경제부령 · 재정경제부 · 시행 2026-01-02",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=282621",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:95736:",
+      "title": "국유재산법 제80조에 따른 청산절차의 특례에 관한 규칙",
+      "citation": "기획재정부령 · 재정경제부 · 시행 2009-07-31",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=95736",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:242107",
+      "title": "변상금부과처분취소",
+      "citation": "대법원 2024-06-27 2024두31284",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=242107",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:240317",
+      "title": "변상금부과처분취소",
+      "citation": "대법원 2023-10-18 2023두42584",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=240317",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:228501",
+      "title": "변상금부과처분취소",
+      "citation": "대법원 2021-11-25 2020두47915",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=228501",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:210805",
+      "title": "도로변상금부과처분취소",
+      "citation": "대법원 2019-11-28 2017두56339",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=210805",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:209607",
+      "title": "시유재산변상금부과처분취소청구",
+      "citation": "대법원 2019-09-09 2018두48298",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=209607",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:341621",
+      "title": "민원인 - 「도로법」 제62조제1항에 따른 안전사고 방지대책을 이행하지 않았으나 도로관리청이 도로점용허가를 취소하지 않은 경우, 해당 도로를 계속 점용한 자가 「도로법」 제72조제1항에 따른 변상금 징수 대상에 해당하는지 여부(「도로법」 제72조제1항 등 관련)",
+      "citation": "법제처 2025-07-01 25-0342",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=341621",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:315104",
+      "title": "해양수산부 - 점용료ㆍ사용료를 전액 감면받았으나 그 허가기간을 초과하여 점용ㆍ사용한 자에게도 변상금을 징수할 수 있는지(「공유수면 관리 및 매립에 관한 법률」 제15조 등 관련)",
+      "citation": "법제처 2015-06-17 15-0242",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=315104",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:324401",
+      "title": "안전행정부 - 변상금의 산정기준(「공유재산 및 물품 관리법」 제81조 등 관련)",
+      "citation": "법제처 2013-11-04 13-0265",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=324401",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:314799",
+      "title": "민원인 - “「국토의 계획 및 이용에 관한 법률」에 따른 도시ㆍ군계획사업으로 설치된 도로”의 경우에 「도로법」 제94조 본문에 따른 변상금의 징수시기(「도로법 시행령」 제8조 등 관련)",
+      "citation": "법제처 2013-10-10 13-0331",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=314799",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:313815",
+      "title": "기획재정부 - 국유재산의 무단점유자에 대한 변상금 징수시 해당 국유재산 사용용도가 주거용과 비주거용으로 구분되는 경우 대부료 계산법(「국유재산법」 제32조 등 관련)",
+      "citation": "법제처 2011-09-29 11-0503",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=313815",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:272275",
+      "title": "국유재산 변상금 부과처분 취소청구 등",
+      "citation": "국민권익위원회 2025-08-12 2025-05783",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=272275",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:252897",
+      "title": "국유재산 변상금 부과처분 취소청구",
+      "citation": "국민권익위원회 2024-11-29 2024-15547",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=252897",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:251909",
+      "title": "국유재산 변상금 부과처분 취소청구",
+      "citation": "국민권익위원회 2024-05-28 2024-03460",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=251909",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:256877",
+      "title": "도로변상금 부과처분 취소청구",
+      "citation": "서울특별시행정심판위원회 2024-03-11 2023-01421",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=256877",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:250479",
+      "title": "변상금 부과처분 무효확인청구",
+      "citation": "국민권익위원회 2023-12-05 2023-11079",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=250479",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    }
+  ],
+  "picks": [
+    "국유재산법 제72조",
+    "국유재산법 제30조",
+    "변상금부과처분취소"
+  ],
+  "candidates": {
+    "candidates": [
+      {
+        "title": "사용허가 기간 만료 이후 갱신 신청 중인 기간에도 변상금을 부과할 여지가 있음",
+        "reasons": [
+          {
+            "text": "국유재산법 제72조 제1항은 사용허가나 대부계약 없이 국유재산을 사용·수익하거나 점유한 무단점유자에 대하여 변상금을 징수하도록 규정하고 있다.",
+            "quote": "국유재산법 제2조 제9호, 제72조 제1항 본문은 사용허가나 대부계약 없이 국유재산을 사용·수익하거나 점유한 무단점유자에 대하여 변상금을 징수하도록 규정하고 있다.",
+            "source": {
+              "id": "s3",
+              "title": "변상금부과처분취소",
+              "citation": "대법원 2024-06-27 선고 2024두31284",
+              "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=242107"
+            }
+          },
+          {
+            "text": "법률상 아무런 권원 없이 이루어진 경우에는 정상적인 대부료나 사용료를 징수할 수 없기 때문에 그 대신에 변상금을 징수한다는 취지로 해석된다.",
+            "quote": "국유재산에 대한 점유나 사용·수익 자체가 법률상 아무런 권원 없이 이루어진 경우에는 정상적인 대부료나 사용료를 징수할 수 없기 때문에 그 대부료나 사용료 대신에 변상금을 징수한다는 취지라고 풀이된다(대법원 2017. 2. 21. 선고 2015두677 판결 참조).",
+            "source": {
+              "id": "s3",
+              "title": "변상금부과처분취소",
+              "citation": "대법원 2024-06-27 선고 2024두31284",
+              "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=242107"
+            }
+          }
+        ],
+        "counterpoints": [
+          {
+            "text": "변상금 부과 예외사유는 국유재산법 제72조 제1항 단서에 한정되어 있으나, 사용자가 갱신 신청을 했다는 사실만으로 예외 사유로 명시되지 않는다.",
+            "quote": "다만, 다음 각 호의 어느 하나에 해당하는 경우에는 변상금을 징수하지 아니한다.",
+            "source": {
+              "id": "s1",
+              "title": "국유재산법",
+              "citation": "법률 · 재정경제부 · 제72조(변상금의 징수)",
+              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+            }
+          }
+        ]
+      },
+      {
+        "title": "갱신 신청·협의 등 특수사정 있는 경우 변상금 부과에 신중할 여지도 있음",
+        "reasons": [
+          {
+            "text": "변상금 징수의 목적이 무권원 점유에 대한 제재에 해당하나, 사용자가 갱신을 포기하지 않고 적극적으로 신청 중이었다는 점, 변상금 징수 유예 등에 관한 고려사항 규정(경위, 용도, 경제적 사정 등)이 존재함에 비추어 볼 때 유예, 감면 등 신중 검토 필요성이 있다는 견해가 있을 수 있음.",
+            "quote": "제1항의 변상금은 무단점유를 하게 된 경위(經緯), 무단점유지의 용도 및 해당 무단점유자의 경제적 사정 등을 고려하여 대통령령으로 정하는 바에 따라 5년의 범위에서 징수를 미루거나 나누어 내게 할 수 있다.",
+            "source": {
+              "id": "s1",
+              "title": "국유재산법",
+              "citation": "법률 · 재정경제부 · 제72조(변상금의 징수)",
+              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+            }
+          }
+        ],
+        "counterpoints": [
+          {
+            "text": "관련 법령 및 판례상 갱신 신청 등 단순히 사용의사가 남아 있거나 절차가 미완료되었다는 사실만으로 곧바로 사용권원이 부여된다고 볼 수 없으므로, 원칙적으로는 갱신 전 기간은 변상금 대상임을 시사하는 취지가 더 강함.",
+            "quote": "사용허가나 대부계약 없이 국유재산을 사용·수익하거나 점유한 무단점유자에 대하여 변상금을 징수하도록 규정하고 있다.",
+            "source": {
+              "id": "s3",
+              "title": "변상금부과처분취소",
+              "citation": "대법원 2024-06-27 선고 2024두31284",
+              "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=242107"
+            }
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "s1",
+        "title": "국유재산법",
+        "citation": "법률 · 재정경제부 · 제72조(변상금의 징수)",
+        "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+      },
+      {
+        "id": "s2",
+        "title": "국유재산법",
+        "citation": "법률 · 재정경제부 · 제30조(사용허가)",
+        "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+      },
+      {
+        "id": "s3",
+        "title": "변상금부과처분취소",
+        "citation": "대법원 2024-06-27 선고 2024두31284",
+        "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=242107"
+      }
+    ],
+    "excluded": [],
+    "droppedCount": 0
+  },
+  "candidateRecheckDropped": 0,
+  "draft": {
+    "title": "국유지 사용허가 기간 만료 후 갱신 신청 중 변상금 부과에 대한 회신",
+    "background": [
+      {
+        "text": "민원인이 국유지 사용허가 기간이 끝난 후 갱신 없이 계속 사용해 왔으며, 담당 부서는 사용허가 기간 만료 다음 날부터 변상금을 부과하였으나, 민원인은 갱신을 신청 중이었다며 이의를 제기한 사실이 있습니다.",
+        "quote": "국유지 사용허가 기간이 끝났는데도 민원인이 갱신 없이 계속 사용해 왔습니다. 담당 부서는 기간 만료 다음 날부터 변상금을 부과했고, 민원인은 갱신을 신청 중이었다며 이의를 제기했습니다.",
+        "source": {
+          "id": "case",
+          "title": "입력한 사안",
+          "citation": "담당자가 입력한 사안",
+          "sourceUrl": ""
+        }
+      }
+    ],
+    "review": [
+      {
+        "text": "국유재산법 제72조 제1항은 사용허가 등이 없는 상태에서 국유재산을 점유·사용하는 무단점유자에 대하여 변상금을 부과하도록 규정하고 있습니다.",
+        "quote": "국유재산법 제2조 제9호, 제72조 제1항 본문은 사용허가나 대부계약 없이 국유재산을 사용·수익하거나 점유한 무단점유자에 대하여 변상금을 징수하도록 규정하고 있다.",
+        "source": {
+          "id": "s3",
+          "title": "변상금부과처분취소",
+          "citation": "대법원 2024-06-27 선고 2024두31284",
+          "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=242107"
+        }
+      },
+      {
+        "text": "국유재산에 대한 점유나 사용·수익이 법률상 아무런 권원 없이 이루어진 경우, 정상적인 대부료나 사용료를 징수할 수 없으므로 그 대신에 변상금이 부과될 수 있습니다.",
+        "quote": "국유재산에 대한 점유나 사용·수익 자체가 법률상 아무런 권원 없이 이루어진 경우에는 정상적인 대부료나 사용료를 징수할 수 없기 때문에 그 대부료나 사용료 대신에 변상금을 징수한다는 취지라고 풀이된다(대법원 2017. 2. 21. 선고 2015두677 판결 참조).",
+        "source": {
+          "id": "s3",
+          "title": "변상금부과처분취소",
+          "citation": "대법원 2024-06-27 선고 2024두31284",
+          "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=242107"
+        }
+      },
+      {
+        "text": "변상금 부과의 예외는 국유재산법 제72조 제1항 단서에 명시된 사유에 한하며, 단순히 갱신 신청 중인 사실이 예외사유에 포함되지는 않습니다.",
+        "quote": "다만, 다음 각 호의 어느 하나에 해당하는 경우에는 변상금을 징수하지 아니한다.",
+        "source": {
+          "id": "s1",
+          "title": "국유재산법",
+          "citation": "법률 · 재정경제부 · 제72조(변상금의 징수)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+        }
+      }
+    ],
+    "reply": [
+      {
+        "text": "국유재산법 제72조 및 판례에 따르면 사용허가 등이 만료된 이후 갱신 신청 중 사용행위가 계속된 경우에는 법률상 권원이 없는 무단점유로 간주되어 변상금 부과대상이 될 수 있는 것으로 판단됩니다. 다만, 변상금 부과의 예외사유는 법령에 한정적으로 규정되어 있으므로, 단순 갱신 신청 중인 사실만으로 변상금 부과 예외에 해당한다고 보기는 어려운 것으로 판단됩니다.",
+        "quote": "국유재산법 제2조 제9호, 제72조 제1항 본문은 사용허가나 대부계약 없이 국유재산을 사용·수익하거나 점유한 무단점유자에 대하여 변상금을 징수하도록 규정하고 있다.",
+        "source": {
+          "id": "s3",
+          "title": "변상금부과처분취소",
+          "citation": "대법원 2024-06-27 선고 2024두31284",
+          "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=242107"
+        }
+      },
+      {
+        "text": "향후 변상금 부과의 예외 적용 여부는 국유재산법 제72조 제1항 단서에서 규정한 각 사유에 해당하는지 등을 종합적으로 검토하여 판단하여야 할 것으로 사료됩니다.",
+        "quote": "다만, 다음 각 호의 어느 하나에 해당하는 경우에는 변상금을 징수하지 아니한다.",
+        "source": {
+          "id": "s1",
+          "title": "국유재산법",
+          "citation": "법률 · 재정경제부 · 제72조(변상금의 징수)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+        }
+      }
+    ],
+    "sources": [
+      {
+        "id": "s1",
+        "title": "국유재산법",
+        "citation": "법률 · 재정경제부 · 제72조(변상금의 징수)",
+        "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+      },
+      {
+        "id": "s3",
+        "title": "변상금부과처분취소",
+        "citation": "대법원 2024-06-27 선고 2024두31284",
+        "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=242107"
+      }
+    ],
+    "droppedCount": 0
+  },
+  "draftRecheckDropped": 0,
+  "summaries": [
+    {
+      "title": "국유재산법",
+      "sentences": 5,
+      "dropped": 0
+    },
+    {
+      "title": "국유재산법",
+      "sentences": 4,
+      "dropped": 0
+    }
+  ],
+  "seconds": 30
+}

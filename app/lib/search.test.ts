@@ -1,7 +1,7 @@
 // 검색 흐름(search.ts)의 정리 규칙 자동 시험. 실행: npm test
 // AI·법제처를 실제로 부르지 않는 부분만 시험한다(실제 호출은 따로 확인).
 import { describe, expect, it } from "vitest";
-import { cleanTerms, dedupeById, fallbackTerms, preferLocalGov } from "./search";
+import { cleanTerms, dedupeById, fallbackTerms, matchesTerms, preferLocalGov } from "./search";
 import type { LawItem } from "./types";
 
 describe("검색어 정리", () => {
@@ -70,5 +70,22 @@ describe("관련 지자체 조례를 앞으로", () => {
 
   it("비워 두면 그대로", () => {
     expect(preferLocalGov(items, "").map((i) => i.id)).toEqual(["1", "2", "3"]);
+  });
+});
+
+describe("관련성 거름망(matchesTerms)", () => {
+  const terms = { lawNames: ["국유재산법"], keywords: ["변상금", "무단점유"] };
+  it("제목에 법령명이나 검색어가 있으면 남긴다(띄어쓰기·가운뎃점 차이 무시)", () => {
+    expect(matchesTerms("국유재산법 시행령", terms)).toBe(true);
+    expect(matchesTerms("변상금부과처분취소", terms)).toBe(true);
+    expect(matchesTerms("순천시 도로점용료ㆍ변상금 및 과태료 부과징수 조례", terms)).toBe(true);
+    expect(matchesTerms("무단 점유", { lawNames: [], keywords: ["무단점유"] })).toBe(true);
+  });
+  it("제목에 없으면 거른다", () => {
+    expect(matchesTerms("가평군 건축 조례", terms)).toBe(false);
+    expect(matchesTerms("취득세 등 부과 처분 무효 확인 등", terms)).toBe(false);
+  });
+  it("한 글자짜리 검색어로는 맞추지 않는다", () => {
+    expect(matchesTerms("가평군 건축 조례", { lawNames: [], keywords: ["가"] })).toBe(false);
   });
 });

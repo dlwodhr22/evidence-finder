@@ -1,0 +1,24 @@
+{
+  "id": 11,
+  "title": "(음성 시험) 근거가 없는 사안",
+  "negative": true,
+  "errors": [],
+  "terms": {
+    "lawNames": [],
+    "keywords": [
+      "풍선",
+      "색깔",
+      "취향",
+      "민원"
+    ],
+    "source": "ai"
+  },
+  "foundNothing": true,
+  "notices": [],
+  "failedClues": 0,
+  "references": 0,
+  "items": [],
+  "picks": [],
+  "summaries": [],
+  "seconds": 7
+}

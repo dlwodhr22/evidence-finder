@@ -1,0 +1,402 @@
+{
+  "id": 6,
+  "title": "시효취득 주장",
+  "negative": false,
+  "errors": [],
+  "terms": {
+    "lawNames": [
+      "국유재산법"
+    ],
+    "keywords": [
+      "점유취득시효",
+      "변상금",
+      "국유재산"
+    ],
+    "source": "ai"
+  },
+  "foundNothing": false,
+  "notices": [],
+  "failedClues": 0,
+  "references": 0,
+  "items": [
+    {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:283349:",
+      "title": "국유재산법",
+      "citation": "법률 · 재정경제부 · 시행 2026-08-20",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:288713:",
+      "title": "국유재산법 시행령",
+      "citation": "대통령령 · 재정경제부 · 시행 2026-08-20",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=288713",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:282621:",
+      "title": "국유재산법 시행규칙",
+      "citation": "재정경제부령 · 재정경제부 · 시행 2026-01-02",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=282621",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:95736:",
+      "title": "국유재산법 제80조에 따른 청산절차의 특례에 관한 규칙",
+      "citation": "기획재정부령 · 재정경제부 · 시행 2009-07-31",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=95736",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:616709",
+      "title": "토지인도·토지인도[점유취득시효 완성을 원인으로 소유권이전등기절차 이행을 구하는 사건]",
+      "citation": "대법원 2026-02-12 2024다229053",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=616709",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "corrected",
+      "recheckChanges": [
+        "사건번호: 2024다229053 → 2024다229053,229060"
+      ]
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:242107",
+      "title": "변상금부과처분취소",
+      "citation": "대법원 2024-06-27 2024두31284",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=242107",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:240317",
+      "title": "변상금부과처분취소",
+      "citation": "대법원 2023-10-18 2023두42584",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=240317",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:228501",
+      "title": "변상금부과처분취소",
+      "citation": "대법원 2021-11-25 2020두47915",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=228501",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:210805",
+      "title": "도로변상금부과처분취소",
+      "citation": "대법원 2019-11-28 2017두56339",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=210805",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:341621",
+      "title": "민원인 - 「도로법」 제62조제1항에 따른 안전사고 방지대책을 이행하지 않았으나 도로관리청이 도로점용허가를 취소하지 않은 경우, 해당 도로를 계속 점용한 자가 「도로법」 제72조제1항에 따른 변상금 징수 대상에 해당하는지 여부(「도로법」 제72조제1항 등 관련)",
+      "citation": "법제처 2025-07-01 25-0342",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=341621",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:315104",
+      "title": "해양수산부 - 점용료ㆍ사용료를 전액 감면받았으나 그 허가기간을 초과하여 점용ㆍ사용한 자에게도 변상금을 징수할 수 있는지(「공유수면 관리 및 매립에 관한 법률」 제15조 등 관련)",
+      "citation": "법제처 2015-06-17 15-0242",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=315104",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:324401",
+      "title": "안전행정부 - 변상금의 산정기준(「공유재산 및 물품 관리법」 제81조 등 관련)",
+      "citation": "법제처 2013-11-04 13-0265",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=324401",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:314799",
+      "title": "민원인 - “「국토의 계획 및 이용에 관한 법률」에 따른 도시ㆍ군계획사업으로 설치된 도로”의 경우에 「도로법」 제94조 본문에 따른 변상금의 징수시기(「도로법 시행령」 제8조 등 관련)",
+      "citation": "법제처 2013-10-10 13-0331",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=314799",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:313815",
+      "title": "기획재정부 - 국유재산의 무단점유자에 대한 변상금 징수시 해당 국유재산 사용용도가 주거용과 비주거용으로 구분되는 경우 대부료 계산법(「국유재산법」 제32조 등 관련)",
+      "citation": "법제처 2011-09-29 11-0503",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=313815",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:223732",
+      "title": "점유취득시효인정 취소",
+      "citation": "강원특별자치도행정심판위원회 2014-06-02 행심2014-38",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=223732",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:188017",
+      "title": "점유취득시효인정 취소청구",
+      "citation": "국민권익위원회 2014-06-02 행심2014-38",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=188017",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:272275",
+      "title": "국유재산 변상금 부과처분 취소청구 등",
+      "citation": "국민권익위원회 2025-08-12 2025-05783",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=272275",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:252897",
+      "title": "국유재산 변상금 부과처분 취소청구",
+      "citation": "국민권익위원회 2024-11-29 2024-15547",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=252897",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:251909",
+      "title": "국유재산 변상금 부과처분 취소청구",
+      "citation": "국민권익위원회 2024-05-28 2024-03460",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=251909",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    }
+  ],
+  "picks": [
+    "국유재산법 제7조",
+    "국유재산법 제72조",
+    "토지인도·토지인도[점유취득시효 완성을 원인으로 소유권이전등기절차 이행을 구하는 사건]"
+  ],
+  "candidates": {
+    "candidates": [
+      {
+        "title": "국유재산 중 행정재산은 취득시효 대상이 되지 않는 것으로 볼 여지가 있음",
+        "reasons": [
+          {
+            "text": "국유재산법 제7조 제2항에 따라 행정재산은 민법 제245조에도 불구하고 시효취득의 대상이 되지 않는다.",
+            "quote": "행정재산은 「민법」 제245조에도 불구하고 시효취득(時效取得)의 대상이 되지 아니한다.",
+            "source": {
+              "id": "s1",
+              "title": "국유재산법",
+              "citation": "법률 · 재정경제부 · 제7조(국유재산의 보호)",
+              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+            }
+          }
+        ],
+        "counterpoints": []
+      },
+      {
+        "title": "국유재산 중 일반재산(구잡종재산)은 취득시효가 인정될 여지도 조금 있음",
+        "reasons": [
+          {
+            "text": "국유재산법 제7조 제2항은 '행정재산'에 대해 취득시효가 부정됨을 명시하고 있으나, 다른 국유재산 유형(예: 일반재산)에 대한 취득시효 가능성은 직접적으로 규정하지 않고 있음.",
+            "quote": "② 행정재산은 「민법」 제245조에도 불구하고 시효취득(時效取得)의 대상이 되지 아니한다.",
+            "source": {
+              "id": "s1",
+              "title": "국유재산법",
+              "citation": "법률 · 재정경제부 · 제7조(국유재산의 보호)",
+              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+            }
+          }
+        ],
+        "counterpoints": [
+          {
+            "text": "'누구든지 이 법 또는 다른 법률에서 정하는 절차와 방법에 따르지 아니하고는 국유재산을 사용하거나 수익하지 못한다'는 포괄적 금지 규정이 있으므로, 일반재산도 시효취득을 부정할 수 있다는 해석이 가능하다.",
+            "quote": "누구든지 이 법 또는 다른 법률에서 정하는 절차와 방법에 따르지 아니하고는 국유재산을 사용하거나 수익하지 못한다.",
+            "source": {
+              "id": "s1",
+              "title": "국유재산법",
+              "citation": "법률 · 재정경제부 · 제7조(국유재산의 보호)",
+              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+            }
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "s1",
+        "title": "국유재산법",
+        "citation": "법률 · 재정경제부 · 제7조(국유재산의 보호)",
+        "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+      },
+      {
+        "id": "s2",
+        "title": "국유재산법",
+        "citation": "법률 · 재정경제부 · 제72조(변상금의 징수)",
+        "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+      },
+      {
+        "id": "s3",
+        "title": "토지인도·토지인도[점유취득시효 완성을 원인으로 소유권이전등기절차 이행을 구하는 사건]",
+        "citation": "대법원 2026-02-12 선고 2024다229053,229060",
+        "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=616709"
+      }
+    ],
+    "excluded": [],
+    "droppedCount": 0
+  },
+  "candidateRecheckDropped": 0,
+  "draft": {
+    "title": "국유재산 점유취득시효 관련 변상금 부과 및 소유권이전 요구 회신",
+    "background": [
+      {
+        "text": "민원인이 20년 넘게 평온하게 점유해 온 토지가 국유지임이 확인되었습니다. 민원인은 점유취득시효가 완성되었다며 변상금 부과 처분 취소와 소유권 이전을 요구하였습니다.",
+        "quote": "민원인이 20년 넘게 평온하게 점유해 온 토지가 알고 보니 국유지였습니다. 민원인은 점유취득시효가 완성되었다며 변상금 부과 처분 취소와 소유권 이전을 요구합니다.",
+        "source": {
+          "id": "case",
+          "title": "입력한 사안",
+          "citation": "담당자가 입력한 사안",
+          "sourceUrl": ""
+        }
+      }
+    ],
+    "review": [
+      {
+        "text": "국유재산법 제7조 제2항에 따르면 행정재산은 민법 제245조에도 불구하고 시효취득의 대상이 되지 않으므로, 행정재산에 대해서는 점유취득시효가 인정되지 않을 수 있습니다.",
+        "quote": "행정재산은 「민법」 제245조에도 불구하고 시효취득(時效取得)의 대상이 되지 아니한다.",
+        "source": {
+          "id": "s1",
+          "title": "국유재산법",
+          "citation": "법률 · 재정경제부 · 제7조(국유재산의 보호)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+        }
+      }
+    ],
+    "reply": [
+      {
+        "text": "민원인께서 국유지를 20년 이상 평온하게 점유하였더라도 해당 토지가 행정재산인 경우에는 국유재산법 제7조 제2항에 따라 민법상 점유취득시효가 적용되지 않을 수 있음에 유의하시기 바랍니다. 따라서 변상금 부과 처분 취소 및 소유권 이전 요구는 수용되기 어렵다고 판단됩니다.",
+        "quote": "행정재산은 「민법」 제245조에도 불구하고 시효취득(時效取得)의 대상이 되지 아니한다.",
+        "source": {
+          "id": "s1",
+          "title": "국유재산법",
+          "citation": "법률 · 재정경제부 · 제7조(국유재산의 보호)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+        }
+      }
+    ],
+    "sources": [
+      {
+        "id": "s1",
+        "title": "국유재산법",
+        "citation": "법률 · 재정경제부 · 제7조(국유재산의 보호)",
+        "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+      }
+    ],
+    "droppedCount": 0
+  },
+  "draftRecheckDropped": 0,
+  "summaries": [
+    {
+      "title": "국유재산법",
+      "sentences": 2,
+      "dropped": 0
+    },
+    {
+      "title": "국유재산법",
+      "sentences": 4,
+      "dropped": 0
+    }
+  ],
+  "seconds": 25
+}

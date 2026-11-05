@@ -1,0 +1,427 @@
+{
+  "id": 9,
+  "title": "지자체 공유재산 변상금",
+  "negative": false,
+  "errors": [],
+  "terms": {
+    "lawNames": [
+      "공유재산 및 물품 관리법"
+    ],
+    "keywords": [
+      "무단점유",
+      "변상금",
+      "감면",
+      "농지"
+    ],
+    "source": "ai"
+  },
+  "foundNothing": false,
+  "notices": [],
+  "failedClues": 0,
+  "references": 0,
+  "items": [
+    {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:291145:",
+      "title": "공유재산 및 물품 관리법",
+      "citation": "법률 · 행정안전부 · 시행 2026-10-13",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=291145",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:288163:",
+      "title": "공유재산 및 물품 관리법 시행령",
+      "citation": "대통령령 · 행정안전부 · 시행 2026-07-21",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=288163",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "조례·규칙",
+      "web": false,
+      "key": "law:ordin:1309383:",
+      "title": "순천시 도로점용료·변상금 및 과태료 부과징수 조례",
+      "citation": "조례 · 전남광주통합특별시 순천시 · 시행 2017-10-30",
+      "sourceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1309383",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "corrected",
+      "recheckChanges": [
+        "이름: 순천시 도로점용료·변상금 및 과태료 부과징수 조례 → 순천시 도로점용료ㆍ변상금 및 과태료 부과징수 조례"
+      ],
+      "currentRecheck": "corrected",
+      "currentMismatch": false
+    },
+    {
+      "group": "판례",
+      "web": true,
+      "key": "case:prec:209607",
+      "title": "시유재산변상금부과처분취소청구",
+      "citation": "대법원 2019-09-09 2018두48298",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=209607",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:419838",
+      "title": "경계를 침범하여 해당 토지의 일부를 무단 점유한 경우 재산을 사실상 소유하고 있는 자에 해당하는지 여부",
+      "citation": "대법원 2010-02-23 2010두467",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=419838",
+      "hasSource": true,
+      "proxyRelevant": false,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:229737",
+      "title": "국유재산무단점유변상금부과처분취소",
+      "citation": "대법원 2000-03-24 98두7732",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=229737",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:242107",
+      "title": "변상금부과처분취소",
+      "citation": "대법원 2024-06-27 2024두31284",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=242107",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:240317",
+      "title": "변상금부과처분취소",
+      "citation": "대법원 2023-10-18 2023두42584",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=240317",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:prec:228501",
+      "title": "변상금부과처분취소",
+      "citation": "대법원 2021-11-25 2020두47915",
+      "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=228501",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:326791",
+      "title": "산림청 - 무단점유 국유림이 산림유전자원보호구역에 해당하는 경우 산림청장이 임시특례에 따른 산지전용허가 등을 하려면 산림유전자원보호구역의 지정해제 여부를 검토해야 하는지(구 「국유림의 경영 및 관리에 관한 법률」 부칙 제2조제2항 등 관련)",
+      "citation": "법제처 2019-05-20 18-0819",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=326791",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:330549",
+      "title": "산림청 - 무단점유 국유림의 지목이 변경된 경우 이를 「국유재산법」에 따라 매각 또는 교환할 수 있는지 여부(2015. 3. 27. 법률 제13252호로 일부개정되어 2015. 9. 28. 시행된 「국유림의 경영 및 관리에 관한 법률」 부칙 제2조제5항 등 관련)",
+      "citation": "법제처 2016-10-10 16-0361",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=330549",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:313815",
+      "title": "기획재정부 - 국유재산의 무단점유자에 대한 변상금 징수시 해당 국유재산 사용용도가 주거용과 비주거용으로 구분되는 경우 대부료 계산법(「국유재산법」 제32조 등 관련)",
+      "citation": "법제처 2011-09-29 11-0503",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=313815",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:341621",
+      "title": "민원인 - 「도로법」 제62조제1항에 따른 안전사고 방지대책을 이행하지 않았으나 도로관리청이 도로점용허가를 취소하지 않은 경우, 해당 도로를 계속 점용한 자가 「도로법」 제72조제1항에 따른 변상금 징수 대상에 해당하는지 여부(「도로법」 제72조제1항 등 관련)",
+      "citation": "법제처 2025-07-01 25-0342",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=341621",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:315104",
+      "title": "해양수산부 - 점용료ㆍ사용료를 전액 감면받았으나 그 허가기간을 초과하여 점용ㆍ사용한 자에게도 변상금을 징수할 수 있는지(「공유수면 관리 및 매립에 관한 법률」 제15조 등 관련)",
+      "citation": "법제처 2015-06-17 15-0242",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=315104",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:258401",
+      "title": "공유재산 무단점유 변상금 부과처분 취소청구",
+      "citation": "경기도행정심판위원회 2023-09-04 2023경기행심1079",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=258401",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:257989",
+      "title": "공유재산 무단점유 변상금 부과처분 등 취소청구",
+      "citation": "경기도행정심판위원회 2023-07-10 2023경기행심512",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=257989",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:257401",
+      "title": "공유재산 무단점유 변상금 부과처분 취소청구",
+      "citation": "경기도행정심판위원회 2023-05-15 2023경기행심304",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=257401",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:257475",
+      "title": "공유재산 무단점유 변상금 부과처분 취소청구",
+      "citation": "경기도행정심판위원회 2023-04-17 2023경기행심165",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=257475",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:257275",
+      "title": "사유지 무단점유에 따른 부당이득반환 등 의무이행청구",
+      "citation": "경기도행정심판위원회 2023-01-16 2022경기행심1491",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=257275",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    }
+  ],
+  "picks": [
+    "공유재산 및 물품 관리법 제81조",
+    "시유재산변상금부과처분취소청구",
+    "국유재산무단점유변상금부과처분취소"
+  ],
+  "candidates": {
+    "candidates": [
+      {
+        "title": "무단점유에 해당하여 변상금 부과가 가능한 것으로 볼 여지가 있음",
+        "reasons": [
+          {
+            "text": "공유재산을 사용·수익허가 없이 유형적·고정적으로 특정한 목적을 위하여 사용·수익하거나 점유하는 경우에는 공유재산 및 물품관리법 제81조 제1항에서 정한 변상금 부과대상인 ‘무단점유’에 해당한다.",
+            "quote": "사용·수익허가 없이 행정재산을 유형적·고정적으로 특정한 목적을 위하여 사용·수익하거나 점유하는 경우 공유재산법 제81조 제1항에서 정한 변상금 부과대상인 ‘무단점유’에 해당하고, 반드시 그 사용이 독점적·배타적일 필요는 없으며, 점유 부분이 동시에 일반 공중의 이용에 제공되고 있다고 하여 점유가 아니라고 할 수는 없다.",
+            "source": {
+              "id": "s2",
+              "title": "시유재산변상금부과처분취소청구",
+              "citation": "대법원 2019-09-09 선고 2018두48298",
+              "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=209607"
+            }
+          }
+        ],
+        "counterpoints": [
+          {
+            "text": "오랜 기간 별다른 문제 제기 없이 경작해 왔다는 점에서 무단점유 경위, 오랜 관행 등 특별한 사정이 있는 경우에는 변상금 징수 미루기나 분할납부 등의 감면적 요소도 함께 고려될 수 있음.",
+            "quote": "지방자치단체의 장은 무단점유자의 무단점유 경위(經緯) 및 경제적 사정과 무단점유지의 용도 등을 고려하여 대통령령으로 정하는 바에 따라 5년의 범위에서 변상금의 징수를 미루거나 나누어 내게 할 수 있다.",
+            "source": {
+              "id": "s1",
+              "title": "공유재산 및 물품 관리법",
+              "citation": "법률 · 행정안전부 · 제81조(변상금의 징수)",
+              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=291145"
+            }
+          }
+        ]
+      },
+      {
+        "title": "장기간의 관행 및 경위 등을 고려하여 변상금 징수 자체를 유예하거나 감면할 소지가 있음",
+        "reasons": [
+          {
+            "text": "지방자치단체의 장은 무단점유자의 무단점유 경위 및 경제적 사정과 무단점유지의 용도 등을 고려하여 5년의 범위에서 변상금의 징수를 미루거나 나누어 내게 할 수 있다.",
+            "quote": "지방자치단체의 장은 무단점유자의 무단점유 경위(經緯) 및 경제적 사정과 무단점유지의 용도 등을 고려하여 대통령령으로 정하는 바에 따라 5년의 범위에서 변상금의 징수를 미루거나 나누어 내게 할 수 있다.",
+            "source": {
+              "id": "s1",
+              "title": "공유재산 및 물품 관리법",
+              "citation": "법률 · 행정안전부 · 제81조(변상금의 징수)",
+              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=291145"
+            }
+          }
+        ],
+        "counterpoints": [
+          {
+            "text": "다만, ‘징수를 아니하는 경우’(즉 변상금 부과 자체의 면제)는 공부상 명의인을 믿고 정당하게 권리를 취득한 경우 등 일부 예외에 한정되어, 단순히 장기간 점유 또는 오랜 관행만으로 면제가 인정되는 것은 아님.",
+            "quote": "다만, 다음 각 호의 어느 하나에 해당하는 경우에는 변상금을 징수하지 아니한다.",
+            "source": {
+              "id": "s1",
+              "title": "공유재산 및 물품 관리법",
+              "citation": "법률 · 행정안전부 · 제81조(변상금의 징수)",
+              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=291145"
+            }
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "s1",
+        "title": "공유재산 및 물품 관리법",
+        "citation": "법률 · 행정안전부 · 제81조(변상금의 징수)",
+        "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=291145"
+      },
+      {
+        "id": "s2",
+        "title": "시유재산변상금부과처분취소청구",
+        "citation": "대법원 2019-09-09 선고 2018두48298",
+        "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=209607"
+      },
+      {
+        "id": "s3",
+        "title": "국유재산무단점유변상금부과처분취소",
+        "citation": "대법원 2000-03-24 선고 98두7732",
+        "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=229737"
+      }
+    ],
+    "excluded": [],
+    "droppedCount": 1
+  },
+  "candidateRecheckDropped": 0,
+  "draft": {
+    "title": "하천 부지 무단점유에 따른 변상금 부과 및 감면 관련 회신",
+    "background": [
+      {
+        "text": "시 소유 공유재산인 하천 부지를 허가 없이 농지로 사용한 주민에게 변상금을 부과하였으며, 주민은 오랫동안 문제없이 경작해 왔다며 이의를 제기하였습니다.",
+        "quote": "시 소유 공유재산인 하천 부지를 허가 없이 농지로 사용한 주민에게 변상금을 부과했습니다. 주민은 오랫동안 문제없이 경작해 왔다며 이의를 제기했습니다.",
+        "source": {
+          "id": "case",
+          "title": "입력한 사안",
+          "citation": "담당자가 입력한 사안",
+          "sourceUrl": ""
+        }
+      }
+    ],
+    "review": [
+      {
+        "text": "공유재산 및 물품관리법 및 관련 판례에 따르면, 사용·수익허가 없이 행정재산을 유형적·고정적으로 특정한 목적을 위하여 사용·수익하거나 점유하는 경우 변상금 부과대상인 무단점유에 해당한다는 점이 인정됩니다.",
+        "quote": "사용·수익허가 없이 행정재산을 유형적·고정적으로 특정한 목적을 위하여 사용·수익하거나 점유하는 경우 공유재산법 제81조 제1항에서 정한 변상금 부과대상인 ‘무단점유’에 해당하고, 반드시 그 사용이 독점적·배타적일 필요는 없으며, 점유 부분이 동시에 일반 공중의 이용에 제공되고 있다고 하여 점유가 아니라고 할 수는 없다.",
+        "source": {
+          "id": "s2",
+          "title": "시유재산변상금부과처분취소청구",
+          "citation": "대법원 2019-09-09 선고 2018두48298",
+          "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=209607"
+        }
+      },
+      {
+        "text": "다만, 공유재산 및 물품 관리법에는 무단점유자의 무단점유 경위 및 경제적 사정, 무단점유지의 용도 등을 고려하여 경우에 따라 변상금의 징수를 미루거나 분할납부할 수 있도록 감면적 요소도 규정하고 있습니다.",
+        "quote": "지방자치단체의 장은 무단점유자의 무단점유 경위(經緯) 및 경제적 사정과 무단점유지의 용도 등을 고려하여 대통령령으로 정하는 바에 따라 5년의 범위에서 변상금의 징수를 미루거나 나누어 내게 할 수 있다.",
+        "source": {
+          "id": "s1",
+          "title": "공유재산 및 물품 관리법",
+          "citation": "법률 · 행정안전부 · 제81조(변상금의 징수)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=291145"
+        }
+      }
+    ],
+    "reply": [
+      {
+        "text": "귀하의 하천 부지 경작 행위는 사용·수익허가 없이 시 소유 공유재산을 특정한 목적(농지 경작)으로 유형적·고정적으로 사용한 것으로서, 관련 법령 및 판례에 따라 변상금 부과대상인 무단점유로 평가할 여지가 있습니다. 다만, 귀하가 오랜 기간 별다른 문제 제기 없이 경작해 온 경위 등 특별한 사정이 있는 경우에는 변상금 징수의 유예 또는 분할납부 등 감면적 조치가 가능할 수 있으니 이 점을 참고하시기 바랍니다.",
+        "quote": "지방자치단체의 장은 무단점유자의 무단점유 경위(經緯) 및 경제적 사정과 무단점유지의 용도 등을 고려하여 대통령령으로 정하는 바에 따라 5년의 범위에서 변상금의 징수를 미루거나 나누어 내게 할 수 있다.",
+        "source": {
+          "id": "s1",
+          "title": "공유재산 및 물품 관리법",
+          "citation": "법률 · 행정안전부 · 제81조(변상금의 징수)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=291145"
+        }
+      }
+    ],
+    "sources": [
+      {
+        "id": "s1",
+        "title": "공유재산 및 물품 관리법",
+        "citation": "법률 · 행정안전부 · 제81조(변상금의 징수)",
+        "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=291145"
+      },
+      {
+        "id": "s2",
+        "title": "시유재산변상금부과처분취소청구",
+        "citation": "대법원 2019-09-09 선고 2018두48298",
+        "sourceUrl": "https://www.law.go.kr/precInfoP.do?precSeq=209607"
+      }
+    ],
+    "droppedCount": 0
+  },
+  "draftRecheckDropped": 0,
+  "summaries": [
+    {
+      "title": "공유재산 및 물품 관리법",
+      "sentences": 3,
+      "dropped": 1
+    },
+    {
+      "title": "시유재산변상금부과처분취소청구",
+      "sentences": 2,
+      "dropped": 1
+    }
+  ],
+  "seconds": 26
+}

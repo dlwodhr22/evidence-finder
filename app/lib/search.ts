@@ -154,6 +154,25 @@ async function collect<T extends { id: string }>(
   return { items: dedupeById(items), failed };
 }
 
+/** 비교용: 띄어쓰기·가운뎃점·괄호 표기 차이를 없앤다 */
+function normalizeForMatch(text: string): string {
+  return text.replace(/\s+/g, "").replace(/[ㆍ·・]/g, "·").replace(/[「」]/g, "");
+}
+
+/**
+ * 관련성 거름망: 자료의 제목에 AI가 뽑은 법령명·검색어가 하나라도 들어 있어야 남긴다.
+ * 법제처 본문 검색은 결과를 가나다순으로 주어, 사안과 상관없는 자료가 섞여 올라오기 때문이다
+ * (시험 세트 2026-11-05: 조례의 추정 관련 비율 16%, 근거 없는 사안에서도 25건이 나옴).
+ * 이 거름은 "관련 없는 것을 줄이는" 용도일 뿐이며, 자료의 존재 여부는 이미 법제처 조회로 확인된 것이다.
+ */
+export function matchesTerms(title: string, terms: Pick<SearchTerms, "lawNames" | "keywords">): boolean {
+  const t = normalizeForMatch(title);
+  return [...terms.lawNames, ...terms.keywords].some((term) => {
+    const n = normalizeForMatch(term);
+    return n.length >= 2 && t.includes(n);
+  });
+}
+
 /**
  * 사안으로 근거를 찾는다.
  * @param input 입력 규칙(caseInputSchema)을 통과한 입력
@@ -222,13 +241,14 @@ export async function searchEvidence(input: CaseInput): Promise<SearchResponse> 
     notices.push(`법제처에서 ${failedKinds.join("·")} 일부를 가져오지 못했습니다. 잠시 뒤 다시 시도해 주세요.`);
   }
 
+  const relevant = <T extends { title: string }>(items: T[]): T[] => items.filter((i) => matchesTerms(i.title, terms));
   const results: SearchResults = {
-    statutes: statutes.items.slice(0, MAX_PER_KIND),
-    ordinances: preferLocalGov(ordinances.items, masked.localGov).slice(0, MAX_PER_KIND),
+    statutes: relevant(statutes.items).slice(0, MAX_PER_KIND),
+    ordinances: preferLocalGov(relevant(ordinances.items), masked.localGov).slice(0, MAX_PER_KIND),
     // 법원 판례와 헌재 결정은 일련번호 체계가 달라 합칠 때 번호로 중복을 지우지 않는다.
-    cases: [...precedents.items, ...constitutional.items].slice(0, MAX_PER_KIND),
-    interpretations: interpretations.items.slice(0, MAX_PER_KIND),
-    tribunals: tribunals.items.slice(0, MAX_PER_KIND),
+    cases: relevant([...precedents.items, ...constitutional.items]).slice(0, MAX_PER_KIND),
+    interpretations: relevant(interpretations.items).slice(0, MAX_PER_KIND),
+    tribunals: relevant(tribunals.items).slice(0, MAX_PER_KIND),
   };
 
   const foundNothing = Object.values(results).every((list) => list.length === 0);

@@ -1,0 +1,341 @@
+{
+  "id": 3,
+  "title": "사용료 감면 요청",
+  "negative": false,
+  "errors": [],
+  "terms": {
+    "lawNames": [
+      "국유재산법",
+      "공유재산 및 물품 관리법"
+    ],
+    "keywords": [
+      "사용료 감면",
+      "공익 목적",
+      "허가 갱신"
+    ],
+    "source": "ai"
+  },
+  "foundNothing": false,
+  "notices": [],
+  "failedClues": 0,
+  "references": 0,
+  "items": [
+    {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:283349:",
+      "title": "국유재산법",
+      "citation": "법률 · 재정경제부 · 시행 2026-08-20",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:288713:",
+      "title": "국유재산법 시행령",
+      "citation": "대통령령 · 재정경제부 · 시행 2026-08-20",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=288713",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:282621:",
+      "title": "국유재산법 시행규칙",
+      "citation": "재정경제부령 · 재정경제부 · 시행 2026-01-02",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=282621",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:95736:",
+      "title": "국유재산법 제80조에 따른 청산절차의 특례에 관한 규칙",
+      "citation": "기획재정부령 · 재정경제부 · 시행 2009-07-31",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=95736",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "법령",
+      "web": false,
+      "key": "law:law:291145:",
+      "title": "공유재산 및 물품 관리법",
+      "citation": "법률 · 행정안전부 · 시행 2026-10-13",
+      "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=291145",
+      "hasSource": true,
+      "proxyRelevant": false,
+      "currentLabel": "현행",
+      "recheck": "confirmed",
+      "recheckChanges": [],
+      "currentRecheck": "confirmed",
+      "currentMismatch": false
+    },
+    {
+      "group": "판례",
+      "web": false,
+      "key": "case:detc:57030",
+      "title": "공유재산 및 물품 관리법 제81조 제1항 본문 위헌소원",
+      "citation": "헌법재판소 2017-07-27 2016헌바374",
+      "sourceUrl": "https://www.law.go.kr/detcInfoP.do?detcSeq=57030",
+      "hasSource": true,
+      "proxyRelevant": false,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:338889",
+      "title": "경기도 고양시 - 법률에서 사용료를 면제 또는 경감할 수 있다고 규정하면서 위임 조례에서 그 감면 기준을 정하고 있는 경우가 「공유재산 및 물품관리법」 제16조제2항제5호에 따른 “그 밖에 다른 법률에 따라 사용료 또는 대부료를 감면하는 경우”에 해당되는지 등(「공유재산 및 물품관리법」 제16조제2항제5호 등 관련)",
+      "citation": "법제처 2024-06-19 24-0411",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=338889",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:338871",
+      "title": "경기도 고양시 - 법률에서 사용료를 면제 또는 경감할 수 있다고 규정하면서 위임 조례에서 그 감면 기준을 정하고 있는 경우가 「공유재산 및 물품관리법」 제16조제2항제5호에 따른 “그 밖에 다른 법률에 따라 사용료 또는 대부료를 감면하는 경우”에 해당되는지 등(「공유재산 및 물품관리법」 제16조제2항제5호 등 관련)",
+      "citation": "법제처 2024-06-19 24-0134",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=338871",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:313169",
+      "title": "정보통신부-「전파법」 제67조(전파사용료 감면대상)",
+      "citation": "법제처 2006-07-07 06-0071",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=313169",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:327689",
+      "title": "기획재정부 - 공익법인이 출연재산의 매각대금으로 운용기간 6개월 이상인 수익용 재산을 취득한 경우 “직접 공익목적사업에 사용한 실적”에 포함되는지 여부(「상속세 및 증여세법 시행령」 제38조제4항 등 관련)",
+      "citation": "법제처 2017-01-26 16-0422",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=327689",
+      "hasSource": true,
+      "proxyRelevant": false,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "법령해석례",
+      "web": false,
+      "key": "interpretation:339089",
+      "title": "충청북도 충주시 - 지방자치단체의 장이 행정재산의 사용료를 면제할 수 있는 사유에 ‘국가철도공단의 비영리 사업을 위한 경우’가 포함되는지 여부(「공유재산 및 물품 관리법 시행령」 제17조제5항제2호의2 등 관련)",
+      "citation": "법제처 2023-12-27 23-0873",
+      "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=339089",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    },
+    {
+      "group": "행정심판례",
+      "web": false,
+      "key": "tribunal:262263",
+      "title": "공유수면 점용료·사용료 감면 의무이행청구",
+      "citation": "경기도행정심판위원회 2020-07-13 2020경기행심531",
+      "sourceUrl": "https://www.law.go.kr/deccInfoP.do?deccSeq=262263",
+      "hasSource": true,
+      "proxyRelevant": true,
+      "recheck": "confirmed",
+      "recheckChanges": []
+    }
+  ],
+  "picks": [
+    "국유재산법 제34조",
+    "경기도 고양시 - 법률에서 사용료를 면제 또는 경감할 수 있다고 규정하면서 위임 조례에서 그 감면 기준을 정하고 있는 경우가 「공유재산 및 물품관리법」 제16조제2항제5호에 따른 “그 밖에 다른 법률에 따라 사용료 또는 대부료를 감면하는 경우”에 해당되는지 등(「공유재산 및 물품관리법」 제16조제2항제5호 등 관련)",
+    "경기도 고양시 - 법률에서 사용료를 면제 또는 경감할 수 있다고 규정하면서 위임 조례에서 그 감면 기준을 정하고 있는 경우가 「공유재산 및 물품관리법」 제16조제2항제5호에 따른 “그 밖에 다른 법률에 따라 사용료 또는 대부료를 감면하는 경우”에 해당되는지 등(「공유재산 및 물품관리법」 제16조제2항제5호 등 관련)"
+  ],
+  "candidates": {
+    "candidates": [
+      {
+        "title": "국유재산법상 감면 대상으로 볼 여지가 있음",
+        "reasons": [
+          {
+            "text": "국유재산법 제34조제3항에 따르면 행정재산의 형태·규모·내용연수 등을 고려하여 활용성이 낮거나 보수가 필요한 재산 등 대통령령으로 정하는 행정재산을 사용허가하는 경우에는 대통령령으로 정하는 바에 따라 사용료를 감면할 수 있음.",
+            "quote": "③ 중앙관서의 장은 행정재산의 형태ㆍ규모ㆍ내용연수 등을 고려하여 활용성이 낮거나 보수가 필요한 재산 등 대통령령으로 정하는 행정재산을 사용허가하는 경우에는 대통령령으로 정하는 바에 따라 사용료를 감면할 수 있다.",
+            "source": {
+              "id": "s1",
+              "title": "국유재산법",
+              "citation": "법률 · 재정경제부 · 제34조(사용료의 감면)",
+              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+            }
+          }
+        ],
+        "counterpoints": [
+          {
+            "text": "사회복지법인이 공익 목적 시설로 사용한다는 이유만으로 법 제34조의 감면 요건에 당연히 해당하는지 여부는 법령상 명확히 특정되어 있지 않으므로, 감면 대상 여부는 개별 판단이 필요할 수 있음.",
+            "quote": "① 중앙관서의 장은 다음 각 호의 어느 하나에 해당하면 대통령령으로 정하는 바에 따라 그 사용료를 면제할 수 있다.",
+            "source": {
+              "id": "s1",
+              "title": "국유재산법",
+              "citation": "법률 · 재정경제부 · 제34조(사용료의 감면)",
+              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+            }
+          }
+        ]
+      },
+      {
+        "title": "감면 비율은 대통령령 및 조례에 따를 여지가 있음",
+        "reasons": [
+          {
+            "text": "감면 비율·구체 기준 등은 국유재산법에서 대통령령(및 필요시 조례)에 위임하고 있으므로, 실제 감면 비율은 해당 규정 확인이 선행되어야 할 것으로 보임.",
+            "quote": "대통령령으로 정하는 바에 따라 사용료를 감면할 수 있다.",
+            "source": {
+              "id": "s1",
+              "title": "국유재산법",
+              "citation": "법률 · 재정경제부 · 제34조(사용료의 감면)",
+              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+            }
+          }
+        ],
+        "counterpoints": [
+          {
+            "text": "국유재산법 본문이나 해당 자료들에서는 구체적인 감면비율 자체에 대해서는 명확하게 규정하지 않고 있음.",
+            "quote": "대통령령으로 정하는 바에 따라",
+            "source": {
+              "id": "s1",
+              "title": "국유재산법",
+              "citation": "법률 · 재정경제부 · 제34조(사용료의 감면)",
+              "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+            }
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "s1",
+        "title": "국유재산법",
+        "citation": "법률 · 재정경제부 · 제34조(사용료의 감면)",
+        "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+      },
+      {
+        "id": "s2",
+        "title": "경기도 고양시 - 법률에서 사용료를 면제 또는 경감할 수 있다고 규정하면서 위임 조례에서 그 감면 기준을 정하고 있는 경우가 「공유재산 및 물품관리법」 제16조제2항제5호에 따른 “그 밖에 다른 법률에 따라 사용료 또는 대부료를 감면하는 경우”에 해당되는지 등(「공유재산 및 물품관리법」 제16조제2항제5호 등 관련)",
+        "citation": "안건번호 24-0411 · 회신 2024-06-19 · 법제처",
+        "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=338889"
+      },
+      {
+        "id": "s3",
+        "title": "경기도 고양시 - 법률에서 사용료를 면제 또는 경감할 수 있다고 규정하면서 위임 조례에서 그 감면 기준을 정하고 있는 경우가 「공유재산 및 물품관리법」 제16조제2항제5호에 따른 “그 밖에 다른 법률에 따라 사용료 또는 대부료를 감면하는 경우”에 해당되는지 등(「공유재산 및 물품관리법」 제16조제2항제5호 등 관련)",
+        "citation": "안건번호 24-0134 · 회신 2024-06-19 · 법제처",
+        "sourceUrl": "https://www.law.go.kr/expcInfoP.do?expcSeq=338871"
+      }
+    ],
+    "excluded": [],
+    "droppedCount": 0
+  },
+  "candidateRecheckDropped": 0,
+  "draft": {
+    "title": "국유재산 사용료 감면 요청에 대한 회신",
+    "background": [
+      {
+        "text": "민원인은 국유지를 사용허가받아 이용 중인 사회복지법인으로, 공익 목적 시설이라는 이유로 사용료 감면을 요청하였고, 허가 갱신 시점에 감면 신청서를 제출하였습니다.",
+        "quote": "국유지를 사용허가받아 쓰는 사회복지법인이 공익 목적 시설이라는 이유로 사용료 감면을 요청했습니다. 허가 갱신 시점에 감면 신청서를 제출했습니다.",
+        "source": {
+          "id": "case",
+          "title": "입력한 사안",
+          "citation": "담당자가 입력한 사안",
+          "sourceUrl": ""
+        }
+      }
+    ],
+    "review": [
+      {
+        "text": "국유재산법 제34조제3항에 따르면 중앙관서의 장은 행정재산의 형태ㆍ규모ㆍ내용연수 등을 고려하여 대통령령으로 정하는 바에 따라 사용료를 감면할 수 있음을 규정하고 있어, 사회복지법인이 사용허가를 받았더라도 해당 법령에서 정하는 감면 요건에 해당할 경우 감면이 가능합니다.",
+        "quote": "③ 중앙관서의 장은 행정재산의 형태ㆍ규모ㆍ내용연수 등을 고려하여 활용성이 낮거나 보수가 필요한 재산 등 대통령령으로 정하는 행정재산을 사용허가하는 경우에는 대통령령으로 정하는 바에 따라 사용료를 감면할 수 있다.",
+        "source": {
+          "id": "s1",
+          "title": "국유재산법",
+          "citation": "법률 · 재정경제부 · 제34조(사용료의 감면)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+        }
+      },
+      {
+        "text": "다만, 사회복지법인이 공익 목적 시설로 사용한다는 사정만으로 곧바로 국유재산법상 감면 대상에 해당한다고 단정할 수 없고, 감면 대상 및 비율은 관련 법령 및 대통령령 등에 따른 구체적 기준에 따라 개별적으로 판단해야 함을 유의할 필요가 있습니다.",
+        "quote": "① 중앙관서의 장은 다음 각 호의 어느 하나에 해당하면 대통령령으로 정하는 바에 따라 그 사용료를 면제할 수 있다.",
+        "source": {
+          "id": "s1",
+          "title": "국유재산법",
+          "citation": "법률 · 재정경제부 · 제34조(사용료의 감면)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+        }
+      }
+    ],
+    "reply": [
+      {
+        "text": "귀 법인의 국유재산 사용료 감면 요청 건과 관련하여, 국유재산법 제34조제3항에 따라 행정재산의 형태, 규모, 내용연수 등 법령상 요건 및 대통령령에서 정한 기준에 해당하는 경우 사용료 감면이 가능할 수 있음을 안내드립니다. 사회복지법인으로서 공익 목적 시설을 운영한다는 사정만으로 감면이 반드시 적용되는 것은 아니며, 구체적인 감면 대상 및 감면비율은 관계 법령 및 관련 규정에 따라 개별적으로 검토되어야 할 것으로 판단됩니다.",
+        "quote": "③ 중앙관서의 장은 행정재산의 형태ㆍ규모ㆍ내용연수 등을 고려하여 활용성이 낮거나 보수가 필요한 재산 등 대통령령으로 정하는 행정재산을 사용허가하는 경우에는 대통령령으로 정하는 바에 따라 사용료를 감면할 수 있다.",
+        "source": {
+          "id": "s1",
+          "title": "국유재산법",
+          "citation": "법률 · 재정경제부 · 제34조(사용료의 감면)",
+          "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+        }
+      }
+    ],
+    "sources": [
+      {
+        "id": "s1",
+        "title": "국유재산법",
+        "citation": "법률 · 재정경제부 · 제34조(사용료의 감면)",
+        "sourceUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=283349"
+      }
+    ],
+    "droppedCount": 0
+  },
+  "draftRecheckDropped": 0,
+  "summaries": [
+    {
+      "title": "국유재산법",
+      "sentences": 4,
+      "dropped": 0
+    },
+    {
+      "title": "경기도 고양시 - 법률에서 사용료를 면제 또는 경감할 수 있다고 규정하면서 위임 조례에서 그 감면 기준을 정하고 있는 경우가 「공유재산 및 물품관리법」 제16조제2항제5호에 따른 “그 밖에 다른 법률에 따라 사용료 또는 대부료를 감면하는 경우”에 해당되는지 등(「공유재산 및 물품관리법」 제16조제2항제5호 등 관련)",
+      "sentences": 2,
+      "dropped": 3
+    }
+  ],
+  "seconds": 30
+}
