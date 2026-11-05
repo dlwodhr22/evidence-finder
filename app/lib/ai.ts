@@ -12,7 +12,7 @@ import { zodTextFormat } from "openai/helpers/zod";
 import { z } from "zod";
 
 // 기본 모델. .env에 OPENAI_MODEL을 넣으면 그 모델을 쓴다.
-const DEFAULT_MODEL = "gpt-5.5";
+const DEFAULT_MODEL = "gpt-4o-mini";
 const TIMEOUT_MS = 60_000;
 const WEB_SEARCH_TIMEOUT_MS = 90_000; // 웹검색은 여러 페이지를 열어 보느라 더 오래 걸린다
 
