@@ -5,9 +5,12 @@
 //
 // 부모가 key를 항목마다 다르게 주어, 항목을 바꾸면 이 화면이 새로 시작된다.
 import { useEffect, useState } from "react";
+import { buildSourceAndOriginalText, buildSourceText } from "../lib/copy-text";
 import { refOf, type DocumentView, type SummaryView } from "../lib/document-types";
 import { isLawGoKrUrl } from "../lib/links";
 import type { VerifiedItem } from "../lib/types";
+
+const COPY_BUTTON = "rounded-md border border-black/15 px-2 py-1 text-sm dark:border-white/20";
 
 type Loaded<T> = { key: string; result: { ok: true; data: T } | { ok: false; message: string } };
 
@@ -68,6 +71,21 @@ export default function DocumentViewer({ item, onClose }: { item: VerifiedItem; 
     };
   }, [query, hasText]);
 
+  // 복사: 눌렀다는 표시는 잠깐만 보여준다
+  const [copied, setCopied] = useState<"source" | "original" | null>(null);
+  const [copyError, setCopyError] = useState(false);
+  async function copy(which: "source" | "original", text: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopyError(false);
+      setCopied(which);
+      setTimeout(() => setCopied(null), 2000);
+    } catch {
+      setCopied(null);
+      setCopyError(true);
+    }
+  }
+
   const docState = doc?.key === query ? doc.result : null;
   const summaryState = summary?.key === query ? summary.result : null;
   const link = isLawGoKrUrl(docReady?.sourceUrl ?? item.sourceUrl) ? (docReady?.sourceUrl ?? item.sourceUrl) : "";
@@ -88,12 +106,38 @@ export default function DocumentViewer({ item, onClose }: { item: VerifiedItem; 
         </button>
       </div>
 
-      {link ? (
-        <a href={link} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-700 underline dark:text-blue-300">
-          법제처 원문 보기 ↗
-        </a>
-      ) : (
-        <p className="text-sm text-red-700">출처 링크를 확인할 수 없습니다</p>
+      <div className="flex flex-wrap items-center gap-3">
+        {link ? (
+          <a href={link} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-700 underline dark:text-blue-300">
+            법제처 원문 보기 ↗
+          </a>
+        ) : (
+          <p className="text-sm text-red-700">출처 링크를 확인할 수 없습니다</p>
+        )}
+        {docReady && link && (
+          <>
+            <button type="button" onClick={() => copy("source", buildSourceText(item.title, docReady))} className={COPY_BUTTON}>
+              {copied === "source" ? "복사됨 ✓" : "출처 복사"}
+            </button>
+            {hasText && (
+              <button
+                type="button"
+                onClick={() => copy("original", buildSourceAndOriginalText(item.title, docReady))}
+                className={COPY_BUTTON}
+              >
+                {copied === "original" ? "복사됨 ✓" : "출처와 원문 복사"}
+              </button>
+            )}
+          </>
+        )}
+      </div>
+      {copyError && (
+        <p role="alert" className="text-sm text-red-700">
+          복사하지 못했습니다. 원문을 직접 선택해서 복사해 주세요.
+        </p>
+      )}
+      {docReady && hasText && (
+        <p className="text-xs text-zinc-600 dark:text-zinc-400">복사에는 법제처 원문과 출처만 담깁니다. AI 요약은 들어가지 않습니다.</p>
       )}
 
       {!docState && <p className="text-sm text-zinc-600 dark:text-zinc-400">법제처에서 원문을 가져오는 중입니다…</p>}
