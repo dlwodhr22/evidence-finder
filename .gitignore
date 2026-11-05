@@ -33,6 +33,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# 휴지통 폴더 (CLAUDE.md 규칙: 삭제 대신 옮겨 두는 곳, 커밋하지 않음)
+/trash-can/
+
 # vercel
 .vercel
 
